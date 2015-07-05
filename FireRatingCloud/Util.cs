@@ -13,8 +13,7 @@ namespace FireRatingCloud
   {
     public const string SharedParameterGroupName = "API Parameters";
     public const string SharedParameterName = "API FireRating";
-
-    const string _shared_param_file_path = "C:/tmp/SharedParams.txt";
+    public const string SharedParameterFilePath = "C:/tmp/SharedParams.txt";
 
     /// <summary>
     /// Get shared parameters file.
@@ -29,10 +28,10 @@ namespace FireRatingCloud
       {
 
         StreamWriter stream;
-        stream = new StreamWriter( _shared_param_file_path );
+        stream = new StreamWriter( SharedParameterFilePath );
         stream.Close();
 
-        app.SharedParametersFilename = _shared_param_file_path;
+        app.SharedParametersFilename = SharedParameterFilePath;
         sharedParamsFileName = app.SharedParametersFilename;
       }
 

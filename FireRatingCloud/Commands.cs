@@ -7,6 +7,7 @@ using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Text.RegularExpressions;
 #endregion
 
 namespace FireRatingCloud
@@ -18,18 +19,22 @@ namespace FireRatingCloud
   [Transaction( TransactionMode.Manual )]
   public class Cmd_1_CreateAndBindSharedParameter : IExternalCommand
   {
-    // What element type are we interested in? the standard SDK FireRating
-    // sample uses BuiltInCategory.OST_Doors. we also test using
-    // BuiltInCategory.OST_Walls to demonstrate that the same technique
-    // works with system families just as well as with standard ones.
+    // What element type are we interested in? The standard 
+    // SDK FireRating sample uses BuiltInCategory.OST_Doors. 
+    // We also test using BuiltInCategory.OST_Walls to 
+    // demonstrate that the same technique works with system 
+    // families just as well as with standard ones.
     //
-    // To test attaching shared parameters to inserted DWG files,
-    // which generate their own category on the fly, we also identify
-    // the category by category name.
+    // To test attaching shared parameters to inserted 
+    // DWG files, which generate their own category on 
+    // the fly, we also identify the category by 
+    // category name.
     //
-    // The last test is for attaching shared parameters to model groups.
+    // The last test is for attaching shared parameters 
+    // to model groups.
 
     static public BuiltInCategory Target = BuiltInCategory.OST_Doors;
+
     //static public BuiltInCategory Target = BuiltInCategory.OST_Walls;
     //static public string Target = "Drawing1.dwg";
     //static public BuiltInCategory Target = BuiltInCategory.OST_IOSModelGroups; // doc.Settings.Categories.get_Item returns null
@@ -98,11 +103,13 @@ namespace FireRatingCloud
       // If it is false, it may not be bound to visible
       // shared parameters using the BindingMap. Note
       // that non-user-visible parameters can still be
-      // bound to these categories.
+      // bound to these categories. In our case, we
+      // make the shared parameter user visibly, if
+      // the category allows it.
 
       bool visible = cat.AllowsBoundParameters;
 
-      // Get or create the shared params definition
+      // Get or create the shared parameter definition.
 
       Definition def = sharedParamsGroup.Definitions
         .get_Item( Util.SharedParameterName );
@@ -120,11 +127,11 @@ namespace FireRatingCloud
           opt );
       }
 
-      //if( null == def )
-      //{
-      //  message = "Error creating shared parameter.";
-      //  return Result.Failed;
-      //}
+      if( null == def )
+      {
+        message = "Error creating shared parameter.";
+        return Result.Failed;
+      }
 
       // Create the category set for binding and
       // add the category of interest to it.
@@ -141,14 +148,15 @@ namespace FireRatingCloud
 
         Binding binding = app.Create.NewInstanceBinding( catSet );
 
-        // We could check if already bound, but looks
-        // like Insert will just ignore it in that case.
+        // We could check if it is already bound; if so,
+        // Insert will apparently just ignore it.
 
         doc.ParameterBindings.Insert( def, binding );
 
         // You can also specify the parameter group here:
 
-        //doc.ParameterBindings.Insert( fireRatingParamDef, binding, BuiltInParameterGroup.PG_GEOMETRY );
+        //doc.ParameterBindings.Insert( def, binding, 
+        //  BuiltInParameterGroup.PG_GEOMETRY );
 
         t.Commit();
       }
@@ -174,10 +182,10 @@ namespace FireRatingCloud
       Application app = uiapp.Application;
       Document doc = uiapp.ActiveUIDocument.Document;
 
-      Category cat = doc.Settings.Categories.get_Item(
-        Cmd_1_CreateAndBindSharedParameter.Target );
-
       #region OLD_CODE
+      //Category cat = doc.Settings.Categories.get_Item(
+      //  Cmd_1_CreateAndBindSharedParameter.Target );
+
       // Launch Excel (same as in Lab 4_2, so we really
       // should have better created some utils...)
 
@@ -204,10 +212,6 @@ namespace FireRatingCloud
       //worksheet.get_Range( "A1", "Z1" ).Font.Bold = true;
       #endregion // OLD_CODE
 
-      FilteredElementCollector collector
-        = Util.GetTargetInstances( doc,
-          Cmd_1_CreateAndBindSharedParameter.Target );
-
       // Get shared parameter GUID.
 
       Guid paramGuid = Util.SharedParamGuid( app,
@@ -220,8 +224,12 @@ namespace FireRatingCloud
         return Result.Failed;
       }
 
-      // Loop through all selected elements and export
-      // parameter value for each.
+      // Loop through all elements of the given category 
+      // and export the parameter value for each.
+
+      FilteredElementCollector collector
+        = Util.GetTargetInstances( doc,
+          Cmd_1_CreateAndBindSharedParameter.Target );
 
       int n = collector.Count<Element>();
 
@@ -268,6 +276,8 @@ namespace FireRatingCloud
 
       Debug.Print( json );
 
+      // [[194b64e6-8132-4497-ae66-74904f7a7710-0004b28a,Level 1,1,0]]
+
       return Result.Succeeded;
     }
   }
@@ -275,28 +285,49 @@ namespace FireRatingCloud
 
   #region Cmd_3_ImportSharedParameterValues
   /// <summary>
-  /// Import updated FireRating param values from Excel.
+  /// Import updated FireRating parameter values 
+  /// from external database.
   /// </summary>
   [Transaction( TransactionMode.Manual )]
   public class Cmd_3_ImportSharedParameterValues : IExternalCommand
   {
+    //StringSplitOptions _opt = new StringSplitOptions();
+
     /// <summary>
     /// Extract a list of strings representing the
     /// elements from the given JSON-formatted list.
     /// Return true on success, false otherwise.
+    /// This is totally hard-wired for a single list
+    /// of lists, and nothing else!
+    /// The first version used Split(',').
+    /// That does not work for lists of lists, since
+    /// the commas in the internal lists will be used 
+    /// as separators jut like in the top-level one!
+    /// After that this evolved into the most horrible 
+    /// of hacks!
     /// </summary>
-    bool GetJsonListElements(
+    bool GetJsonListRecords(
       string json,
       out string[] elements )
     {
+      elements = null;
+
       json.Trim();
 
       int n = json.Length;
 
-      elements = ( '[' == json[0] && ']' == json[n - 1] )
-        ? json.Substring( 1, n - 2 ).Split( ',' )
-        : null;
-
+      if( '[' == json[0] && ']' == json[n - 1] )
+      {
+        json = json.Substring( 1, n - 2 );
+        json.Trim();
+        n = json.Length;
+        if( '[' == json[0] && ']' == json[n - 1] )
+        {
+          json = json.Substring( 1, n - 2 );
+          json.Trim();
+          elements = Regex.Split( json, @"\],\[" );
+        }
+      }
       return null != elements;
     }
 
@@ -347,11 +378,11 @@ namespace FireRatingCloud
       //X.Worksheet worksheet = workbook.ActiveSheet as X.Worksheet;
       #endregion // OLD_CODE
 
-      string json = ""; // [[id,level,tag,firerating],...]
+      string json = "[[194b64e6-8132-4497-ae66-74904f7a7710-0004b28a,Level 1,1,123.45]]";
 
       string[] records;
 
-      if( !GetJsonListElements( json, out records ) )
+      if( !GetJsonListRecords( json, out records ) )
       {
         message = "Error parsing JSON input.";
         return Result.Failed;
@@ -367,11 +398,14 @@ namespace FireRatingCloud
 
         foreach( string record in records )
         {
-          if( !GetJsonListElements( record, out values ) )
-          {
-            message = "Error parsing JSON input.";
-            return Result.Failed;
-          }
+          values = record.Split( ',' );
+
+          //if( !GetJsonListElements( record, out values ) )
+          //{
+          //  message = "Error parsing JSON input.";
+          //  return Result.Failed;
+          //}
+
           Element e = doc.GetElement( values[0] );
 
           if( null == e )

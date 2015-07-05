@@ -1,11 +1,29 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <RevitAddIns>
   <AddIn Type="Command">
-    <Text>Command FireRatingCloud</Text>
-    <Description>Some description for FireRatingCloud</Description>
+    <Text>FireRating in the Cloud 1: Bind</Text>
+    <Description>Create and bind shared parameter definition</Description>
     <Assembly>FireRatingCloud.dll</Assembly>
-    <FullClassName>FireRatingCloud.Command</FullClassName>
-    <ClientId>c0aa668e-f331-4eea-aad1-c2bf74ffa021</ClientId>
+    <FullClassName>FireRatingCloud.Cmd_1_CreateAndBindSharedParameter</FullClassName>
+    <ClientId>6edebe7f-8664-43a0-ad8f-a711a46d915f</ClientId>
+    <VendorId>TBC_</VendorId>
+    <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
+  </AddIn>
+  <AddIn Type="Command">
+    <Text>FireRating in the Cloud 2: Export</Text>
+    <Description>Export shared parameter values</Description>
+    <Assembly>FireRatingCloud.dll</Assembly>
+    <FullClassName>FireRatingCloud.Cmd_2_ExportSharedParameterValues</FullClassName>
+    <ClientId>f8093574-a012-41e5-9ade-5d08219fb3fc</ClientId>
+    <VendorId>TBC_</VendorId>
+    <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
+  </AddIn>
+  <AddIn Type="Command">
+    <Text>FireRating in the Cloud 3: Import</Text>
+    <Description>Import shared parameter values</Description>
+    <Assembly>FireRatingCloud.dll</Assembly>
+    <FullClassName>FireRatingCloud.Cmd_3_ImportSharedParameterValues</FullClassName>
+    <ClientId>21b76486-7490-454b-88d2-1197b5eea218</ClientId>
     <VendorId>TBC_</VendorId>
     <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
   </AddIn>
