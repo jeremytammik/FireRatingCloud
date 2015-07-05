@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Command">
+    <Text>Command FireRatingCloud</Text>
+    <Description>Some description for FireRatingCloud</Description>
+    <Assembly>FireRatingCloud.dll</Assembly>
+    <FullClassName>FireRatingCloud.Command</FullClassName>
+    <ClientId>c0aa668e-f331-4eea-aad1-c2bf74ffa021</ClientId>
+    <VendorId>TBC_</VendorId>
+    <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
+  </AddIn>
+  <AddIn Type="Application">
+    <Name>Application FireRatingCloud</Name>
+    <Assembly>FireRatingCloud.dll</Assembly>
+    <FullClassName>FireRatingCloud.App</FullClassName>
+    <ClientId>6e836140-e5b7-4e1a-b4d4-0147838f75ce</ClientId>
+    <VendorId>TBC_</VendorId>
+    <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
+  </AddIn>
+</RevitAddIns>
