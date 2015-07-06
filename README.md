@@ -7,7 +7,7 @@ For more information, please refer to
 [The Building Coder](http://thebuildingcoder.typepad.com) and
 the detailed articles describing the entire implementation and evolution:
 
-- [My first mongo database](http://the3dwebcoder.typepad.com/blog/2015/06/my-first-mongo-database.html):
+- [My first mongo database](http://the3dwebcoder.typepad.com/blog/2015/06/my-first-mongo-database.html)
   - Define the over-all goal and what to store, namely building projects, door instances hosted in them, and each door's fire rating value, based on the venerable old Revit SDK FireRating sample.
 - [Implementing relationships](http://the3dwebcoder.typepad.com/blog/2015/07/implementing-mongo-database-relationships.html)
   - Define a more complete schema that includes information about the container projects, i.e., the Revit RVT BIM or building information model project files.
