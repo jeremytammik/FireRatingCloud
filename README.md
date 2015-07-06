@@ -5,14 +5,14 @@ Revit add-in multi-project re-implementation of the FireRating SDK sample using 
 For more information, please refer to
 [The 3D Web Coder](http://the3dwebcoder.typepad.com),
 [The Building Coder](http://thebuildingcoder.typepad.com) and
-the detailed articles describing the original implementation:
+the detailed articles describing the entire implementation and evolution:
 
 - [My first mongo database](http://the3dwebcoder.typepad.com/blog/2015/06/my-first-mongo-database.html):
   - Define the over-all goal and what to store, namely building projects, door instances hosted in them, and each door's fire rating value, based on the venerable old Revit SDK FireRating sample.
 - [Implementing relationships](http://the3dwebcoder.typepad.com/blog/2015/07/implementing-mongo-database-relationships.html)
   - Define a more complete schema that includes information about the container projects, i.e., the Revit RVT BIM or building information model project files.
   - Define and maintain the relationships between the door family instances and their container projects.
-[Starting to Implement the FireRating REST API](http://the3dwebcoder.typepad.com/blog/2015/07/starting-to-implement-the-firerating-rest-api.html)
+- [Starting to Implement the FireRating REST API](http://the3dwebcoder.typepad.com/blog/2015/07/starting-to-implement-the-firerating-rest-api.html)
   - Adding a REST API to populate and query the database programmatically.
 - Implement and test REST API PUT, POST and DELETE requests.
 - Implement a Revit add-in exercising the REST API from C# .NET.
