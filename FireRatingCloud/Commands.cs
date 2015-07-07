@@ -19,6 +19,9 @@ using System.Web.Script.Serialization;
 
 namespace FireRatingCloud
 {
+  /// <summary>
+  /// Data holder to use JavaScriptSerializer.
+  /// </summary>
   public class ProjectData
   {
     public string projectinfo_uid { get; set; }
@@ -194,6 +197,44 @@ namespace FireRatingCloud
     /// <summary>
     /// POST JSON data to the specified mongoDB collection.
     /// </summary>
+    string PostJsonData(
+      string collection_name,
+      string json )
+    {
+      string uri = Util.RestApiUri + "/" + collection_name;
+
+      HttpWebRequest request = HttpWebRequest.Create( 
+        uri ) as HttpWebRequest;
+
+      request.ContentType = "application/json; charset=utf-8";
+      request.Accept = "application/json, text/javascript, */*";
+      request.Method = "POST";
+
+      using( StreamWriter writer = new StreamWriter( 
+        request.GetRequestStream() ) )
+      {
+        writer.Write( json );
+      }
+
+      WebResponse response = request.GetResponse();
+      Stream stream = response.GetResponseStream();
+      string jsonResponse = string.Empty;
+
+      using( StreamReader reader = new StreamReader( 
+        stream ) )
+      {
+        while( !reader.EndOfStream )
+        {
+          jsonResponse += reader.ReadLine();
+        }
+      }
+      return jsonResponse;
+    }
+
+#if LOTS_OF_TEST_CODE
+    /// <summary>
+    /// POST JSON data to the specified mongoDB collection.
+    /// </summary>
     async void PostJsonDataAsyncAttempt(
       string collection_name,
       string json )
@@ -235,43 +276,6 @@ namespace FireRatingCloud
       }
     }
 
-    /// <summary>
-    /// POST JSON data to the specified mongoDB collection.
-    /// </summary>
-    string PostJsonData(
-      string collection_name,
-      string json )
-    {
-      string uri = Util.RestApiUri + "/" + collection_name;
-
-      HttpWebRequest request = HttpWebRequest.Create( 
-        uri ) as HttpWebRequest;
-
-      request.ContentType = "application/json; charset=utf-8";
-      request.Accept = "application/json, text/javascript, */*";
-      request.Method = "POST";
-
-      using( StreamWriter writer = new StreamWriter( 
-        request.GetRequestStream() ) )
-      {
-        writer.Write( json );
-      }
-
-      WebResponse response = request.GetResponse();
-      Stream stream = response.GetResponseStream();
-      string jsonResponse = string.Empty;
-
-      using( StreamReader reader = new StreamReader( stream ) )
-      {
-        while( !reader.EndOfStream )
-        {
-          jsonResponse += reader.ReadLine();
-        }
-      }
-      return jsonResponse;
-    }
-
-#if LOTS_OF_TEST_CODE
     static async void DownloadPageAsync()
     {
       // ... Target page.
@@ -419,7 +423,7 @@ namespace FireRatingCloud
     /// <summary>
     /// Retrieve the project identification information 
     /// to store in the external database and return it
-    /// as a JSON formatted string.
+    /// as a dictionary in a JSON formatted string.
     /// </summary>
     string GetProjectDataJson( Document doc )
     {
@@ -432,6 +436,8 @@ namespace FireRatingCloud
       string central_server_path = null!= model_path 
         ? model_path.CentralServerPath
         : string.Empty;
+
+      // Do my own hand-written JSON formatting.
 
       return string.Format(
         "{7} \"projectinfo_uid\": \"{0}\","
@@ -450,7 +456,9 @@ namespace FireRatingCloud
         System.Environment.MachineName,
         '{', '}' );
 
-      var project_data = new ProjectData()
+      // Use JavaScriptSerializer to format JSON data.
+
+      ProjectData project_data = new ProjectData()
       {
         projectinfo_uid = doc.ProjectInformation.UniqueId,
         versionguid = doc_version.VersionGUID.ToString(),
@@ -463,22 +471,6 @@ namespace FireRatingCloud
 
       return new JavaScriptSerializer().Serialize( 
         project_data );
-
-      // {"projectinfo_uid":"8764c510-57b7-44c3-bddf-266d86c26380-0000c160",
-      //  "versionguid":"194b64e6-8132-4497-ae66-74904f7a7710",
-      //  "numberofsaves":2,
-      //  "title":"little_house_2016.rvt",
-      //  "centralserverpath":"",
-      //  "path":"Z:\\a\\rvt\\little_house_2016.rvt",
-      //  "computername":"JEREMYTAMMIB1D2"}
-
-      //{ "projectinfo_uid": "8764c510-57b7-44c3-bddf-266d86c26380-0000c160",
-      // "versionguid": "194b64e6-8132-4497-ae66-74904f7a7710",
-      // "numberofsaves": 2,
-      // "title": "little_house_2016.rvt",
-      // "centralserverpath": "",
-      // "path": "Z:\a\rvt\little_house_2016.rvt","computername": "JEREMYTAMMIB1D2" }
-
     }
 
     public Result Execute(
@@ -507,6 +499,8 @@ namespace FireRatingCloud
       Debug.Print( json );
 
       string jsonResponse = PostJsonData( "projects", json );
+
+      Debug.Print( jsonResponse );
 
       #region OLD_CODE
       //Category cat = doc.Settings.Categories.get_Item(
@@ -550,8 +544,9 @@ namespace FireRatingCloud
         return Result.Failed;
       }
 
-      // Loop through all elements of the given category 
-      // and export the parameter value for each.
+      // Loop through all elements of the given target
+      // category and export the shared parameter value 
+      // specified by paramGuid for each.
 
       FilteredElementCollector collector
         = Util.GetTargetInstances( doc,
