@@ -32,5 +32,9 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion( "2016.0.0.0" )]
-[assembly: AssemblyFileVersion( "2016.0.0.0" )]
+//
+// 2015-07-06 2016.0.0.0 extracted base code from FireRating SDK sample and AdnRevitApiLabsXtra
+// 2015-07-07 2016.0.0.1 implemented HTTP request to store project data
+//
+[assembly: AssemblyVersion( "2016.0.0.1" )]
+[assembly: AssemblyFileVersion( "2016.0.0.1" )]

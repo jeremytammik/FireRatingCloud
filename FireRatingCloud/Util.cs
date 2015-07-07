@@ -1,4 +1,5 @@
-﻿using Autodesk.Revit.ApplicationServices;
+﻿#region Namespaces
+using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 using System;
 using System.Collections.Generic;
@@ -6,11 +7,43 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+#endregion // Namespaces
 
 namespace FireRatingCloud
 {
   class Util
   {
+    #region HTTP Access
+    /// <summary>
+    /// HTTP access constant to toggle between local and global server.
+    /// </summary>
+    public static bool UseLocalServer = true;
+
+    // HTTP access constants.
+
+    const string _base_url_local = "http://127.0.0.1:3001";
+    const string _base_url_global = "https://fireratingdb.herokuapp.com";
+    const string _api_version = "api/v1";
+
+    /// <summary>
+    /// Return REST API URI.
+    /// </summary>
+    public static string RestApiUri
+    {
+      get
+      {
+        string base_url = UseLocalServer
+          ? _base_url_local
+          : _base_url_global;
+
+        return base_url + "/" + _api_version;
+      }
+    }
+    #endregion // HTTP Access
+
+    #region Shared Parameter Definition
+    // Shared parameter definition constants.
+
     public const string SharedParameterGroupName = "API Parameters";
     public const string SharedParameterName = "API FireRating";
     public const string SharedParameterFilePath = "C:/tmp/SharedParams.txt";
@@ -99,6 +132,6 @@ namespace FireRatingCloud
       ExternalDefinition externalDefinition = definition as ExternalDefinition;
       return externalDefinition.GUID;
     }
-
+    #endregion // Shared Parameter Definition
   }
 }

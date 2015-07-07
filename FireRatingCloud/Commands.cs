@@ -3,15 +3,33 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using System.Text.RegularExpressions;
+using System.IO;
+using System.Web.Script.Serialization;
 #endregion
 
 namespace FireRatingCloud
 {
+  public class ProjectData
+  {
+    public string projectinfo_uid { get; set; }
+    public string versionguid { get; set; }
+    public int numberofsaves { get; set; }
+    public string title { get; set; }
+    public string centralserverpath { get; set; }
+    public string path { get; set; }
+    public string computername { get; set; }
+  }
+
   #region Cmd_1_CreateAndBindSharedParameter
   /// <summary>
   /// Create and bind shared parameter.
@@ -173,6 +191,296 @@ namespace FireRatingCloud
   [Transaction( TransactionMode.ReadOnly )]
   public class Cmd_2_ExportSharedParameterValues : IExternalCommand
   {
+    /// <summary>
+    /// POST JSON data to the specified mongoDB collection.
+    /// </summary>
+    async void PostJsonDataAsyncAttempt(
+      string collection_name,
+      string json )
+    {
+      using( System.Net.Http.HttpClient httpClient
+        = new System.Net.Http.HttpClient() )
+      {
+        try
+        {
+          string resourceAddress = Util.RestApiUri
+            + "/" + collection_name;
+
+          string postBody = json;
+
+          httpClient.DefaultRequestHeaders.Accept.Add(
+            new MediaTypeWithQualityHeaderValue(
+              "application/json" ) );
+
+          HttpResponseMessage wcfResponse
+            = await httpClient.PostAsync(
+              resourceAddress, new StringContent(
+                postBody, Encoding.UTF8,
+                "application/json" ) );
+
+          //await DisplayTextResult( wcfResponse, OutputField );
+        }
+        catch( HttpRequestException hre )
+        {
+          Debug.Print( "Error:" + hre.Message );
+        }
+        catch( TaskCanceledException )
+        {
+          Debug.Print( "Request canceled." );
+        }
+        catch( Exception ex )
+        {
+          Debug.Print( ex.Message );
+        }
+      }
+    }
+
+    /// <summary>
+    /// POST JSON data to the specified mongoDB collection.
+    /// </summary>
+    string PostJsonData(
+      string collection_name,
+      string json )
+    {
+      string uri = Util.RestApiUri + "/" + collection_name;
+
+      HttpWebRequest request = HttpWebRequest.Create( 
+        uri ) as HttpWebRequest;
+
+      request.ContentType = "application/json; charset=utf-8";
+      request.Accept = "application/json, text/javascript, */*";
+      request.Method = "POST";
+
+      using( StreamWriter writer = new StreamWriter( 
+        request.GetRequestStream() ) )
+      {
+        writer.Write( json );
+      }
+
+      WebResponse response = request.GetResponse();
+      Stream stream = response.GetResponseStream();
+      string jsonResponse = string.Empty;
+
+      using( StreamReader reader = new StreamReader( stream ) )
+      {
+        while( !reader.EndOfStream )
+        {
+          jsonResponse += reader.ReadLine();
+        }
+      }
+      return jsonResponse;
+    }
+
+#if LOTS_OF_TEST_CODE
+    static async void DownloadPageAsync()
+    {
+      // ... Target page.
+      string page = "http://en.wikipedia.org/";
+
+      // ... Use HttpClient.
+      using( HttpClient client = new HttpClient() )
+      using( HttpResponseMessage response = await client.GetAsync( page ) )
+      using( HttpContent content = response.Content )
+      {
+        // ... Read the string.
+        string result = await content.ReadAsStringAsync();
+
+        // ... Display the result.
+        if( result != null &&
+        result.Length >= 50 )
+        {
+          Console.WriteLine( result.Substring( 0, 50 ) + "..." );
+        }
+      }
+    }
+
+#if FUTURE_SAMPLE_CODE
+    static void DownloadPageAsync2( string[] args )
+    {
+      string uri = Util.RestApiUri;
+
+      // Create an HttpClient instance 
+      HttpClient client = new HttpClient();
+
+      // Send a request asynchronously continue when complete 
+      client.GetAsync( uri ).ContinueWith(
+          ( requestTask ) =>
+          {
+            // Get HTTP response from completed task. 
+            HttpResponseMessage response = requestTask.Result;
+
+            // Check that response was successful or throw exception 
+            response.EnsureSuccessStatusCode();
+
+            // Read response asynchronously as JsonValue and write out top facts for each country 
+            response.Content.ReadAsAsync<JsonArray>().ContinueWith(
+                ( readTask ) =>
+                {
+                  Console.WriteLine( "First 50 countries listed by The World Bank..." );
+                  foreach( var country in readTask.Result[1] )
+                  {
+                    Console.WriteLine( "   {0}, Country Code: {1}, Capital: {2}, Latitude: {3}, Longitude: {4}",
+                        country.Value["name"],
+                        country.Value["iso2Code"],
+                        country.Value["capitalCity"],
+                        country.Value["latitude"],
+                        country.Value["longitude"] );
+                  }
+                } );
+          } );
+
+      Console.WriteLine( "Hit ENTER to exit..." );
+      Console.ReadLine();
+    }
+#endif // FUTURE_SAMPLE_CODE
+
+#if USE_CODE_FROM_TWGL_EXPORT
+    /// <summary>
+    /// HTTP POST with the given JSON data in the 
+    /// request body. Use a local or global base URL.
+    /// </summary>
+    static public bool PostJsonData( string json )
+    {
+      bool rc = false;
+
+      string uri = Util.RestApiUri + "/" + projects;
+
+      HttpWebRequest req = WebRequest.Create( uri ) as HttpWebRequest;
+
+      req.KeepAlive = false;
+      req.Method = WebRequestMethods.Http.Post;
+
+      // Turn our request string into a byte stream.
+
+      byte[] postBytes = Encoding.UTF8.GetBytes( json );
+
+      req.ContentLength = postBytes.Length;
+
+      // Specify content type.
+
+      req.ContentType = "application/json; charset=UTF-8"; // or just "text/json"?
+      req.Accept = "application/json";
+      req.ContentLength = postBytes.Length;
+
+      Stream requestStream = req.GetRequestStream();
+      requestStream.Write( postBytes, 0, postBytes.Length );
+      requestStream.Close();
+
+      HttpWebResponse res = req.GetResponse() as HttpWebResponse;
+
+      string result;
+
+      using( StreamReader reader = new StreamReader(
+        res.GetResponseStream() ) )
+      {
+        result = reader.ReadToEnd();
+      }
+
+      // Get JavaScript modules from server public folder.
+
+      result = result.Replace( "<script src=\"/",
+        "<script src=\"" + base_url + "/" );
+
+      string filename = Path.GetTempFileName();
+      filename = Path.ChangeExtension( filename, "html" );
+
+      //string dir = Path.GetDirectoryName( filename );
+
+      //// Get JavaScript modules from current directory.
+
+      //string path = dir
+      //  .Replace( Path.GetPathRoot( dir ), "" )
+      //  .Replace( '\\', '/' );
+
+      ////result = result.Replace( "<script src=\"/",
+      ////  "<script src=\"file:///" + dir + "/" ); // XMLHttpRequest cannot load file:///C:/Users/tammikj/AppData/Local/Temp/vs.js. Cross origin requests are only supported for protocol schemes: http, data, chrome, chrome-extension, https, chrome-extension-resource.
+
+      //result = result.Replace( "<script src=\"/", 
+      //  "<script src=\"" );
+
+      //if( EnsureJsModulesPresent( dir ) )
+
+      {
+        using( StreamWriter writer = File.CreateText( filename ) )
+        {
+          writer.Write( result );
+          writer.Close();
+        }
+
+        System.Diagnostics.Process.Start( filename );
+
+        rc = true;
+      }
+      return rc;
+    }
+#endif // USE_CODE_FROM_TWGL_EXPORT
+#endif // LOTS_OF_TEST_CODE
+
+    /// <summary>
+    /// Retrieve the project identification information 
+    /// to store in the external database and return it
+    /// as a JSON formatted string.
+    /// </summary>
+    string GetProjectDataJson( Document doc )
+    {
+      string path = doc.PathName.Replace( '\\', '/' );
+
+      BasicFileInfo file_info = BasicFileInfo.Extract( path );
+      DocumentVersion doc_version = file_info.GetDocumentVersion();
+      ModelPath model_path = doc.GetWorksharingCentralModelPath();
+
+      string central_server_path = null!= model_path 
+        ? model_path.CentralServerPath
+        : string.Empty;
+
+      return string.Format(
+        "{7} \"projectinfo_uid\": \"{0}\","
+        + "\"versionguid\": \"{1}\","
+        + "\"numberofsaves\": {2},"
+        + "\"title\": \"{3}\","
+        + "\"centralserverpath\": \"{4}\","
+        + "\"path\": \"{5}\","
+        + "\"computername\": \"{6}\" {8}",
+        doc.ProjectInformation.UniqueId,
+        doc_version.VersionGUID,
+        doc_version.NumberOfSaves,
+        doc.Title,
+        central_server_path,
+        path,
+        System.Environment.MachineName,
+        '{', '}' );
+
+      var project_data = new ProjectData()
+      {
+        projectinfo_uid = doc.ProjectInformation.UniqueId,
+        versionguid = doc_version.VersionGUID.ToString(),
+        numberofsaves = doc_version.NumberOfSaves,
+        title = doc.Title,
+        centralserverpath = central_server_path,
+        path = path,
+        computername = System.Environment.MachineName
+      };
+
+      return new JavaScriptSerializer().Serialize( 
+        project_data );
+
+      // {"projectinfo_uid":"8764c510-57b7-44c3-bddf-266d86c26380-0000c160",
+      //  "versionguid":"194b64e6-8132-4497-ae66-74904f7a7710",
+      //  "numberofsaves":2,
+      //  "title":"little_house_2016.rvt",
+      //  "centralserverpath":"",
+      //  "path":"Z:\\a\\rvt\\little_house_2016.rvt",
+      //  "computername":"JEREMYTAMMIB1D2"}
+
+      //{ "projectinfo_uid": "8764c510-57b7-44c3-bddf-266d86c26380-0000c160",
+      // "versionguid": "194b64e6-8132-4497-ae66-74904f7a7710",
+      // "numberofsaves": 2,
+      // "title": "little_house_2016.rvt",
+      // "centralserverpath": "",
+      // "path": "Z:\a\rvt\little_house_2016.rvt","computername": "JEREMYTAMMIB1D2" }
+
+    }
+
     public Result Execute(
       ExternalCommandData commandData,
       ref string message,
@@ -181,6 +489,24 @@ namespace FireRatingCloud
       UIApplication uiapp = commandData.Application;
       Application app = uiapp.Application;
       Document doc = uiapp.ActiveUIDocument.Document;
+
+      // Post project data.
+
+      // curl -i -X POST -H 'Content-Type: application/json' -d '{ 
+      //   "projectinfo_uid": "8764c510-57b7-44c3-bddf-266d86c26380-0000c160", 
+      //   "versionguid": "f498e8b1-7311-4409-a669-2fd290356bb4", 
+      //   "numberofsaves": 271, 
+      //   "title": "rac_basic_sample_project.rvt", 
+      //   "centralserverpath": "", 
+      //   "path": "C:/Program Files/Autodesk/Revit 2016/Samples/rac_basic_sample_project.rvt", 
+      //   "computername": "JEREMYTAMMIB1D2" }' 
+      //   http://localhost:3001/api/v1/projects
+
+      string json = GetProjectDataJson( doc );
+
+      Debug.Print( json );
+
+      string jsonResponse = PostJsonData( "projects", json );
 
       #region OLD_CODE
       //Category cat = doc.Settings.Categories.get_Item(
@@ -272,7 +598,7 @@ namespace FireRatingCloud
           e.get_Parameter( paramGuid ).AsDouble() );
       }
 
-      string json = "[" + string.Join( ",", records ) + "]";
+      json = "[" + string.Join( ",", records ) + "]";
 
       Debug.Print( json );
 
