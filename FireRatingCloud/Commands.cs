@@ -19,6 +19,7 @@ using System.Web.Script.Serialization;
 
 namespace FireRatingCloud
 {
+#if USE_JavaScriptSerializer
   /// <summary>
   /// Data holder to use JavaScriptSerializer.
   /// </summary>
@@ -32,6 +33,7 @@ namespace FireRatingCloud
     public string path { get; set; }
     public string computername { get; set; }
   }
+#endif // USE_JavaScriptSerializer
 
   #region Cmd_1_CreateAndBindSharedParameter
   /// <summary>
@@ -203,14 +205,14 @@ namespace FireRatingCloud
     {
       string uri = Util.RestApiUri + "/" + collection_name;
 
-      HttpWebRequest request = HttpWebRequest.Create( 
+      HttpWebRequest request = HttpWebRequest.Create(
         uri ) as HttpWebRequest;
 
       request.ContentType = "application/json; charset=utf-8";
       request.Accept = "application/json, text/javascript, */*";
       request.Method = "POST";
 
-      using( StreamWriter writer = new StreamWriter( 
+      using( StreamWriter writer = new StreamWriter(
         request.GetRequestStream() ) )
       {
         writer.Write( json );
@@ -220,7 +222,7 @@ namespace FireRatingCloud
       Stream stream = response.GetResponseStream();
       string jsonResponse = string.Empty;
 
-      using( StreamReader reader = new StreamReader( 
+      using( StreamReader reader = new StreamReader(
         stream ) )
       {
         while( !reader.EndOfStream )
@@ -433,11 +435,11 @@ namespace FireRatingCloud
       DocumentVersion doc_version = file_info.GetDocumentVersion();
       ModelPath model_path = doc.GetWorksharingCentralModelPath();
 
-      string central_server_path = null!= model_path 
+      string central_server_path = null != model_path
         ? model_path.CentralServerPath
         : string.Empty;
 
-      // Do my own hand-written JSON formatting.
+      // Hand-written JSON formatting.
 
       return string.Format(
         "{7} \"projectinfo_uid\": \"{0}\","
@@ -456,6 +458,7 @@ namespace FireRatingCloud
         System.Environment.MachineName,
         '{', '}' );
 
+#if USE_JavaScriptSerializer
       // Use JavaScriptSerializer to format JSON data.
 
       ProjectData project_data = new ProjectData()
@@ -469,8 +472,9 @@ namespace FireRatingCloud
         computername = System.Environment.MachineName
       };
 
-      return new JavaScriptSerializer().Serialize( 
+      return new JavaScriptSerializer().Serialize(
         project_data );
+#endif // USE_JavaScriptSerializer
     }
 
     public Result Execute(
