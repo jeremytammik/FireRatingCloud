@@ -2,6 +2,7 @@
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -90,6 +91,52 @@ namespace FireRatingCloud
         }
       }
       return jsonResponse;
+    }
+
+    /// <summary>
+    /// Return the project database id for the given 
+    /// Revit document.
+    /// </summary>
+    public static string GetProjectDbId( Document doc )
+    {
+      string project_id = null;
+
+      // Determine project database id.
+
+      // Using the ProjectInformation UniqueId is
+      // utterly unreliable, we can stop that right
+      // away. Use computer name and full project
+      // path instead for the time being.
+
+      //string query = "projects/uid/"
+      //  + doc.ProjectInformation.UniqueId;
+
+      string query = string.Format(
+        "projects?computername={0}&path={1}",
+        System.Environment.MachineName,
+        doc.PathName );
+
+      string jsonResponse = Util.QueryOrUpsert( query,
+        string.Empty, "GET" );
+
+      if( 2 < jsonResponse.Length )
+      {
+        object obj = JsonParser.JsonDecode(
+          jsonResponse );
+
+        ArrayList a = obj as ArrayList;
+
+        Debug.Assert( 1 == a.Count,
+          "expected only one project entry for a given computer name and project path" );
+
+        Debug.Assert( a[0] is Hashtable,
+          "expected hash table entry for project document" );
+
+        Hashtable d = a[0] as Hashtable;
+
+        project_id = d["_id"] as string;
+      }
+      return project_id;
     }
 
     #region Test Code

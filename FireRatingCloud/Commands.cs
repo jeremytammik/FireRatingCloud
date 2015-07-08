@@ -303,7 +303,6 @@ namespace FireRatingCloud
 
       object obj;
       Hashtable d;
-      string project_id = null;
 
       // curl -i -X POST -H 'Content-Type: application/json' -d '{ 
       //   "projectinfo_uid": "8764c510-57b7-44c3-bddf-266d86c26380-0000c160", 
@@ -321,30 +320,12 @@ namespace FireRatingCloud
 
       // Determine project database id.
 
-      // Using the ProjectInformation UniqueId is
-      // utterly unreliable, we can stop that right
-      // away. Use computer name and full project
-      // path instead for the time being.
+      string project_id = Util.GetProjectDbId( doc );
 
-      //string query = "projects/uid/"
-      //  + doc.ProjectInformation.UniqueId;
+      string jsonResponse;
 
-      string query = string.Format(
-        "projects?computername={0}&path={1}",
-        System.Environment.MachineName,
-        doc.PathName );
-
-      string jsonResponse = Util.QueryOrUpsert( query,
-        string.Empty, "GET" );
-
-      if( 0 < jsonResponse.Length )
+      if( null != project_id )
       {
-        obj = JsonParser.JsonDecode(
-          jsonResponse );
-
-        d = obj as Hashtable;
-        project_id = d["_id"] as string;
-
         jsonResponse = Util.QueryOrUpsert(
           "projects/" + project_id, json, "PUT" );
 
@@ -401,11 +382,11 @@ namespace FireRatingCloud
 
           Debug.Print( json );
 
-          //jsonResponse = Util.QueryOrUpsert(
-          //  "doors", json, "POST" );
-
           jsonResponse = Util.QueryOrUpsert(
-            "doors/" + e.UniqueId, json, "PUT" );
+            "doors", json, "POST" );
+
+          //jsonResponse = Util.QueryOrUpsert(
+          //  "doors/" + e.UniqueId, json, "PUT" );
 
           Debug.Print( jsonResponse );
         }
@@ -449,38 +430,18 @@ namespace FireRatingCloud
 
       // Determine project database id.
 
-      // Using the ProjectInformation UniqueId is
-      // utterly unreliable, we can stop that right
-      // away. Use computer name and full project
-      // path instead for the time being.
+      string project_id = Util.GetProjectDbId( doc );
 
-      //string query = "projects/uid/"
-      //  + doc.ProjectInformation.UniqueId;
-
-      string query = string.Format(
-        "projects?computername={0}&path={1}",
-        System.Environment.MachineName,
-        doc.PathName );
-
-      string jsonResponse = Util.QueryOrUpsert( query,
-        string.Empty, "GET" );
-
-      if( 0 < jsonResponse.Length )
+      if( null != project_id )
       {
-        object obj = JsonParser.JsonDecode(
-          jsonResponse );
-
-        Hashtable d = obj as Hashtable;
-        string project_id = d["_id"] as string;
-
         // Get all doors referencing this project.
 
-        query = "doors?project_id=" + project_id;
+        string query = "doors?project_id=" + project_id;
 
-        jsonResponse = Util.QueryOrUpsert( query,
+        string jsonResponse = Util.QueryOrUpsert( query,
           string.Empty, "GET" );
 
-        obj = JsonParser.JsonDecode( jsonResponse );
+        object obj = JsonParser.JsonDecode( jsonResponse );
 
         if( null != obj )
         {
@@ -497,7 +458,7 @@ namespace FireRatingCloud
 
               foreach( object door in doors )
               {
-                d = door as Hashtable;
+                Hashtable d = door as Hashtable;
                 string uid = d["_id"] as string;
                 Element e = doc.GetElement( uid );
 
