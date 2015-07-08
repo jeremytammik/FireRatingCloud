@@ -198,20 +198,22 @@ namespace FireRatingCloud
   public class Cmd_2_ExportSharedParameterValues : IExternalCommand
   {
     /// <summary>
-    /// POST JSON data to the specified mongoDB collection.
+    /// PUT or POST JSON document data to 
+    /// the specified mongoDB collection.
     /// </summary>
-    string PostJsonData(
-      string collection_name,
-      string json )
+    string UpsertDocument(
+      string collection_name_id,
+      string json,
+      string method )
     {
-      string uri = Util.RestApiUri + "/" + collection_name;
+      string uri = Util.RestApiUri + "/" + collection_name_id;
 
       HttpWebRequest request = HttpWebRequest.Create(
         uri ) as HttpWebRequest;
 
       request.ContentType = "application/json; charset=utf-8";
       request.Accept = "application/json, text/javascript, */*";
-      request.Method = "POST";
+      request.Method = method;
 
       using( StreamWriter writer = new StreamWriter(
         request.GetRequestStream() ) )
@@ -543,7 +545,7 @@ namespace FireRatingCloud
 
       Debug.Print( json );
 
-      string jsonResponse = PostJsonData( "projects", json );
+      string jsonResponse = UpsertDocument( "projects", json, "POST" );
 
       Debug.Print( jsonResponse );
 
@@ -598,8 +600,6 @@ namespace FireRatingCloud
 
         //int row = 2;
 
-        int i = 0;
-
         foreach( Element e in collector )
         {
           #region OLD_CODE
@@ -632,11 +632,13 @@ namespace FireRatingCloud
           //  e.get_Parameter( BuiltInParameter.ALL_MODEL_MARK ).AsString(),
           //  e.get_Parameter( paramGuid ).AsDouble() );
 
-          json = GetDoorDataJson( e, project_id, paramGuid );
+          json = GetDoorDataJson( e, project_id, 
+            paramGuid );
 
           Debug.Print( json );
 
-          jsonResponse = PostJsonData( "doors", json );
+          jsonResponse = UpsertDocument( 
+            "doors/" + e.UniqueId, json, "PUT" );
 
           Debug.Print( jsonResponse );
         }
