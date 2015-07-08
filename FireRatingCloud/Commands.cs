@@ -198,29 +198,35 @@ namespace FireRatingCloud
   public class Cmd_2_ExportSharedParameterValues : IExternalCommand
   {
     /// <summary>
-    /// PUT or POST JSON document data to 
+    /// GET, PUT or POST JSON document data from or to 
     /// the specified mongoDB collection.
     /// </summary>
-    string UpsertDocument(
-      string collection_name_id,
+    string QueryOrUpsert(
+      string collection_name_id_query,
       string json,
       string method )
     {
-      string uri = Util.RestApiUri + "/" + collection_name_id;
+      string uri = Util.RestApiUri + "/" + collection_name_id_query;
 
       HttpWebRequest request = HttpWebRequest.Create(
         uri ) as HttpWebRequest;
 
       request.ContentType = "application/json; charset=utf-8";
       request.Accept = "application/json, text/javascript, */*";
+      request.Timeout = Util.Timeout;
       request.Method = method;
 
-      using( StreamWriter writer = new StreamWriter(
-        request.GetRequestStream() ) )
+      if( 0 < json.Length )
       {
-        writer.Write( json );
-      }
+        Debug.Assert( !method.Equals( "GET" ),
+          "content is not allowed with GET" );
 
+        using( StreamWriter writer = new StreamWriter(
+          request.GetRequestStream() ) )
+        {
+          writer.Write( json );
+        }
+      }
       WebResponse response = request.GetResponse();
       Stream stream = response.GetResponseStream();
       string jsonResponse = string.Empty;
@@ -531,6 +537,10 @@ namespace FireRatingCloud
 
       // Post project data.
 
+      object obj;
+      Hashtable d;
+      string project_id;
+
       // curl -i -X POST -H 'Content-Type: application/json' -d '{ 
       //   "projectinfo_uid": "8764c510-57b7-44c3-bddf-266d86c26380-0000c160", 
       //   "versionguid": "f498e8b1-7311-4409-a669-2fd290356bb4", 
@@ -545,16 +555,37 @@ namespace FireRatingCloud
 
       Debug.Print( json );
 
-      string jsonResponse = UpsertDocument( "projects", json, "POST" );
+      string query = "projects/uid/"
+        + doc.ProjectInformation.UniqueId;
+
+      string jsonResponse = QueryOrUpsert( query,
+        string.Empty, "GET" );
+
+      if( 0 < jsonResponse.Length )
+      {
+        obj = JsonParser.JsonDecode(
+          jsonResponse );
+
+        d = obj as Hashtable;
+        project_id = d["_id"] as string;
+
+        jsonResponse = QueryOrUpsert(
+          "projects/" + project_id, json, "PUT" );
+      }
+      else
+      {
+        jsonResponse = QueryOrUpsert(
+          "projects", json, "POST" );
+      }
 
       Debug.Print( jsonResponse );
 
-      object obj = JsonParser.JsonDecode( jsonResponse );
+      obj = JsonParser.JsonDecode( jsonResponse );
 
       if( null != obj )
       {
-        Hashtable d = obj as Hashtable;
-        string project_id = d["_id"] as string;
+        d = obj as Hashtable;
+        project_id = d["_id"] as string;
 
         #region OLD_CODE
         //Category cat = doc.Settings.Categories.get_Item(
@@ -632,12 +663,12 @@ namespace FireRatingCloud
           //  e.get_Parameter( BuiltInParameter.ALL_MODEL_MARK ).AsString(),
           //  e.get_Parameter( paramGuid ).AsDouble() );
 
-          json = GetDoorDataJson( e, project_id, 
+          json = GetDoorDataJson( e, project_id,
             paramGuid );
 
           Debug.Print( json );
 
-          jsonResponse = UpsertDocument( 
+          jsonResponse = QueryOrUpsert(
             "doors/" + e.UniqueId, json, "PUT" );
 
           Debug.Print( jsonResponse );

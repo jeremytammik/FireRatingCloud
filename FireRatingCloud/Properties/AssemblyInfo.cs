@@ -35,6 +35,9 @@ using System.Runtime.InteropServices;
 //
 // 2015-07-06 2016.0.0.0 extracted base code from FireRating SDK sample and AdnRevitApiLabsXtra
 // 2015-07-07 2016.0.0.1 implemented HTTP request to store project data
+// 2015-07-08 2016.0.0.2 retrieve project db id and POST door instance data
+// 2015-07-08 2016.0.0.3 implement UpsertDocument and use PUT instead of POST for doors
+// 2015-07-08 2016.0.0.4 implement QueryOrUpsert and use GET to check for pre-existing project
 //
-[assembly: AssemblyVersion( "2016.0.0.1" )]
-[assembly: AssemblyFileVersion( "2016.0.0.1" )]
+[assembly: AssemblyVersion( "2016.0.0.4" )]
+[assembly: AssemblyFileVersion( "2016.0.0.4" )]

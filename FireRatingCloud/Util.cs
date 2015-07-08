@@ -15,6 +15,11 @@ namespace FireRatingCloud
   {
     #region HTTP Access
     /// <summary>
+    /// Timeout for HTTP calls.
+    /// </summary>
+    public static int Timeout = 500;
+
+    /// <summary>
     /// HTTP access constant to toggle between local and global server.
     /// </summary>
     public static bool UseLocalServer = true;
