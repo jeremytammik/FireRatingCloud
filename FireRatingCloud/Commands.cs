@@ -309,7 +309,7 @@ namespace FireRatingCloud
 
       object obj;
       Hashtable d;
-      string project_id;
+      string project_id = null;
 
       // curl -i -X POST -H 'Content-Type: application/json' -d '{ 
       //   "projectinfo_uid": "8764c510-57b7-44c3-bddf-266d86c26380-0000c160", 
@@ -341,22 +341,34 @@ namespace FireRatingCloud
 
         jsonResponse = Util.QueryOrUpsert(
           "projects/" + project_id, json, "PUT" );
+
+        Debug.Assert( 
+          jsonResponse.Equals( "Accepted" ), 
+          "expected successful db update response" );
+
+        if( !jsonResponse.Equals( "Accepted" ) )
+        {
+          project_id = null;
+        }
       }
       else
       {
         jsonResponse = Util.QueryOrUpsert(
           "projects", json, "POST" );
+
+        Debug.Print( jsonResponse );
+
+        obj = JsonParser.JsonDecode( jsonResponse );
+
+        if( null != obj )
+        {
+          d = obj as Hashtable;
+          project_id = d["_id"] as string;
+        }
       }
 
-      Debug.Print( jsonResponse );
-
-      obj = JsonParser.JsonDecode( jsonResponse );
-
-      if( null != obj )
+      if( null != project_id )
       {
-        d = obj as Hashtable;
-        project_id = d["_id"] as string;
-
         // Loop through all elements of the given target
         // category and export the shared parameter value 
         // specified by paramGuid for each.
@@ -384,7 +396,10 @@ namespace FireRatingCloud
           Debug.Print( json );
 
           jsonResponse = Util.QueryOrUpsert(
-            "doors/" + e.UniqueId, json, "PUT" );
+            "doors", json, "POST" );
+
+          //jsonResponse = Util.QueryOrUpsert(
+          //  "doors/" + e.UniqueId, json, "PUT" );
 
           Debug.Print( jsonResponse );
         }
@@ -464,6 +479,28 @@ namespace FireRatingCloud
         message = "Shared parameter GUID not found.";
         return Result.Failed;
       }
+
+      // Determine project database id from
+      // project info uniqe id.
+
+      string query = "projects/uid/"
+        + doc.ProjectInformation.UniqueId;
+
+      string jsonResponse = Util.QueryOrUpsert( query,
+        string.Empty, "GET" );
+
+      if( 0 < jsonResponse.Length )
+      {
+        object obj = JsonParser.JsonDecode(
+          jsonResponse );
+
+        Hashtable d = obj as Hashtable;
+        string project_id = d["_id"] as string;
+
+        // Get all doors referencing this project.
+
+      }
+
 
       string json = "[[194b64e6-8132-4497-ae66-74904f7a7710-0004b28a,Level 1,1,123.45]]";
 
