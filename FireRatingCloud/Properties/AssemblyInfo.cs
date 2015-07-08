@@ -38,6 +38,7 @@ using System.Runtime.InteropServices;
 // 2015-07-08 2016.0.0.2 retrieve project db id and POST door instance data
 // 2015-07-08 2016.0.0.3 implement UpsertDocument and use PUT instead of POST for doors
 // 2015-07-08 2016.0.0.4 implement QueryOrUpsert and use GET to check for pre-existing project
+// 2015-07-08 2016.0.0.5 eliminated project documents completely and use hash id to identify owner project in door document instead
 //
-[assembly: AssemblyVersion( "2016.0.0.4" )]
-[assembly: AssemblyFileVersion( "2016.0.0.4" )]
+[assembly: AssemblyVersion( "2016.0.0.5" )]
+[assembly: AssemblyFileVersion( "2016.0.0.5" )]
