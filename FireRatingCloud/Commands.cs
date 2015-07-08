@@ -370,7 +370,6 @@ namespace FireRatingCloud
 
         foreach( Element e in collector )
         {
-
           //records[i++] = string.Format( "[{0},{1},{2},{3}]",
           //  e.UniqueId,
           //  doc.GetElement( e.LevelId ).Name,
@@ -383,11 +382,18 @@ namespace FireRatingCloud
           Debug.Print( json );
 
           jsonResponse = Util.QueryOrUpsert(
-            "doors", json, "POST" );
+            "doors/" + e.UniqueId, string.Empty, "GET" );
 
-          //jsonResponse = Util.QueryOrUpsert(
-          //  "doors/" + e.UniqueId, json, "PUT" );
-
+          if( 0 == jsonResponse.Length )
+          {
+            jsonResponse = Util.QueryOrUpsert(
+              "doors", json, "POST" );
+          }
+          else
+          {
+            jsonResponse = Util.QueryOrUpsert(
+              "doors/" + e.UniqueId, json, "PUT" );
+          }
           Debug.Print( jsonResponse );
         }
 
