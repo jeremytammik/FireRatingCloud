@@ -531,7 +531,7 @@ namespace FireRatingCloud
 
       if( paramGuid.Equals( Guid.Empty ) )
       {
-        message = "FireRating shared parameter GUID not found.";
+        message = "Shared parameter GUID not found.";
         return Result.Failed;
       }
 
@@ -587,36 +587,6 @@ namespace FireRatingCloud
         d = obj as Hashtable;
         project_id = d["_id"] as string;
 
-        #region OLD_CODE
-        //Category cat = doc.Settings.Categories.get_Item(
-        //  Cmd_1_CreateAndBindSharedParameter.Target );
-
-        // Launch Excel (same as in Lab 4_2, so we really
-        // should have better created some utils...)
-
-        //X.Application excel = new X.ApplicationClass();
-        //if( null == excel )
-        //{
-        //  Util.ErrorMsg( "Failed to get or start Excel." );
-        //  return Result.Failed;
-        //}
-        //excel.Visible = true;
-        //X.Workbook workbook = excel.Workbooks.Add( Missing.Value );
-        //X.Worksheet worksheet;
-        ////while( 1 < workbook.Sheets.Count )
-        ////{
-        ////  worksheet = workbook.Sheets.get_Item( 0 ) as X.Worksheet;
-        ////  worksheet.Delete();
-        ////}
-        //worksheet = excel.ActiveSheet as X.Worksheet;
-        //worksheet.Name = "Revit " + cat.Name;
-        //worksheet.Cells[1, 1] = "ID";
-        //worksheet.Cells[1, 2] = "Level";
-        //worksheet.Cells[1, 3] = "Tag";
-        //worksheet.Cells[1, 4] = Util.SharedParamsDefFireRating;
-        //worksheet.get_Range( "A1", "Z1" ).Font.Bold = true;
-        #endregion // OLD_CODE
-
         // Loop through all elements of the given target
         // category and export the shared parameter value 
         // specified by paramGuid for each.
@@ -627,35 +597,10 @@ namespace FireRatingCloud
 
         int n = collector.Count<Element>();
 
-        string[] records = new string[n];
-
-        //int row = 2;
+        //string[] records = new string[n];
 
         foreach( Element e in collector )
         {
-          #region OLD_CODE
-          //worksheet.Cells[row, 1] = e.Id.IntegerValue; // ID
-
-          ////worksheet.Cells[row, 2] = e.Level.Name; // Level // 2013
-          //worksheet.Cells[row, 2] = doc.GetElement( e.LevelId ).Name; // Level // 2014
-
-          //// Tag:
-
-          //Parameter tagParameter = e.get_Parameter( BuiltInParameter.ALL_MODEL_MARK );
-          //if( null != tagParameter )
-          //{
-          //  worksheet.Cells[row, 3] = tagParameter.AsString();
-          //}
-
-          //// FireRating:
-
-          //Parameter parameter = e.get_Parameter( paramGuid );
-          //if( null != parameter )
-          //{
-          //  worksheet.Cells[row, 4] = parameter.AsDouble();
-          //}
-          //++row;
-          #endregion // OLD_CODE
 
           //records[i++] = string.Format( "[{0},{1},{2},{3}]",
           //  e.UniqueId,
@@ -750,34 +695,6 @@ namespace FireRatingCloud
         return Result.Failed;
       }
 
-      #region OLD_CODE
-      // Let user select the Excel file.
-
-      //WinForms.OpenFileDialog dlg = new WinForms.OpenFileDialog();
-      //dlg.Title = "Select source Excel file from which to update Revit shared parameters";
-      //dlg.Filter = "Excel spreadsheet files (*.xls;*.xlsx)|*.xls;*.xlsx|All files (*)|*";
-      //if( WinForms.DialogResult.OK != dlg.ShowDialog() )
-      //{
-      //  return Result.Cancelled;
-      //}
-
-      // Launch/Get Excel via COM Interop:
-
-      //X.Application excel = new X.Application();
-      //if( null == excel )
-      //{
-      //  Util.ErrorMsg( "Failed to get or start Excel." );
-      //  return Result.Failed;
-      //}
-      //excel.Visible = true;
-      //X.Workbook workbook = excel.Workbooks.Open( dlg.FileName,
-      //  Missing.Value, Missing.Value, Missing.Value,
-      //  Missing.Value, Missing.Value, Missing.Value, Missing.Value,
-      //  Missing.Value, Missing.Value, Missing.Value, Missing.Value,
-      //  Missing.Value, Missing.Value, Missing.Value );
-      //X.Worksheet worksheet = workbook.ActiveSheet as X.Worksheet;
-      #endregion // OLD_CODE
-
       string json = "[[194b64e6-8132-4497-ae66-74904f7a7710-0004b28a,Level 1,1,123.45]]";
 
       string[] records;
@@ -825,55 +742,8 @@ namespace FireRatingCloud
               values[0] );
             return Result.Failed;
           }
-
           p.Set( double.Parse( values[3] ) );
         }
-
-        #region OLD_CODE
-        //int id;
-        //double fireRatingValue;
-        //int row = 2;
-        //while( true )
-        //{
-        //  try
-        //  {
-        //    // Extract relevant XLS values.
-
-        //    X.Range r = worksheet.Cells[row, 1] as X.Range;
-        //    if( null == r.Value2 )
-        //    {
-        //      break;
-        //    }
-        //    double d = (double) r.Value2;
-        //    id = (int) d;
-        //    if( 0 >= id )
-        //    {
-        //      break;
-        //    }
-        //    r = worksheet.Cells[row, 4] as X.Range;
-        //    fireRatingValue = (double) r.Value2;
-
-        //    // Get document's door element via Id
-
-        //    ElementId elementId = new ElementId( id );
-        //    Element door = doc.GetElement( elementId );
-
-        //    // Set the param
-
-        //    if( null != door )
-        //    {
-        //      //Parameter parameter = door.get_Parameter( Util.SharedParamsDefFireRating );
-        //      Parameter parameter = door.get_Parameter( paramGuid );
-        //      parameter.Set( fireRatingValue );
-        //    }
-        //  }
-        //  catch( Exception )
-        //  {
-        //    break;
-        //  }
-        //  ++row;
-        #endregion // OLD_CODE
-
         t.Commit();
       }
       return Result.Succeeded;
