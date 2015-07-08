@@ -319,8 +319,20 @@ namespace FireRatingCloud
 
       Debug.Print( json );
 
-      string query = "projects/uid/"
-        + doc.ProjectInformation.UniqueId;
+      // Determine project database id.
+
+      // Using the ProjectInformation UniqueId is
+      // utterly unreliable, we can stop that right
+      // away. Use computer name and full project
+      // path instead for the time being.
+
+      //string query = "projects/uid/"
+      //  + doc.ProjectInformation.UniqueId;
+
+      string query = string.Format(
+        "projects?computername={0}&path={1}",
+        System.Environment.MachineName,
+        doc.PathName );
 
       string jsonResponse = Util.QueryOrUpsert( query,
         string.Empty, "GET" );
@@ -435,11 +447,20 @@ namespace FireRatingCloud
         return Result.Failed;
       }
 
-      // Determine project database id from
-      // project info unique id.
+      // Determine project database id.
 
-      string query = "projects/uid/"
-        + doc.ProjectInformation.UniqueId;
+      // Using the ProjectInformation UniqueId is
+      // utterly unreliable, we can stop that right
+      // away. Use computer name and full project
+      // path instead for the time being.
+
+      //string query = "projects/uid/"
+      //  + doc.ProjectInformation.UniqueId;
+
+      string query = string.Format(
+        "projects?computername={0}&path={1}",
+        System.Environment.MachineName,
+        doc.PathName );
 
       string jsonResponse = Util.QueryOrUpsert( query,
         string.Empty, "GET" );
@@ -454,7 +475,7 @@ namespace FireRatingCloud
 
         // Get all doors referencing this project.
 
-        query = "doors/project/" + project_id;
+        query = "doors?project_id=" + project_id;
 
         jsonResponse = Util.QueryOrUpsert( query,
           string.Empty, "GET" );
