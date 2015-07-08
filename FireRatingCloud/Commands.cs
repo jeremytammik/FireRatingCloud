@@ -421,46 +421,6 @@ namespace FireRatingCloud
   [Transaction( TransactionMode.Manual )]
   public class Cmd_3_ImportSharedParameterValues : IExternalCommand
   {
-    //StringSplitOptions _opt = new StringSplitOptions();
-
-    /// <summary>
-    /// Extract a list of strings representing the
-    /// elements from the given JSON-formatted list.
-    /// Return true on success, false otherwise.
-    /// This is totally hard-wired for a single list
-    /// of lists, and nothing else!
-    /// The first version used Split(',').
-    /// That does not work for lists of lists, since
-    /// the commas in the internal lists will be used 
-    /// as separators jut like in the top-level one!
-    /// After that this evolved into the most horrible 
-    /// of hacks!
-    /// </summary>
-    bool GetJsonListRecords(
-      string json,
-      out string[] elements )
-    {
-      elements = null;
-
-      json.Trim();
-
-      int n = json.Length;
-
-      if( '[' == json[0] && ']' == json[n - 1] )
-      {
-        json = json.Substring( 1, n - 2 );
-        json.Trim();
-        n = json.Length;
-        if( '[' == json[0] && ']' == json[n - 1] )
-        {
-          json = json.Substring( 1, n - 2 );
-          json.Trim();
-          elements = Regex.Split( json, @"\],\[" );
-        }
-      }
-      return null != elements;
-    }
-
     public Result Execute(
       ExternalCommandData commandData,
       ref string message,
@@ -481,7 +441,7 @@ namespace FireRatingCloud
       }
 
       // Determine project database id from
-      // project info uniqe id.
+      // project info unique id.
 
       string query = "projects/uid/"
         + doc.ProjectInformation.UniqueId;
@@ -516,7 +476,8 @@ namespace FireRatingCloud
             {
               t.Start( "Import Fire Rating Values" );
 
-              // Retrieve element unique id and FireRating parameter values.
+              // Retrieve element unique id and 
+              // FireRating parameter values.
 
               foreach( object door in doors )
               {
@@ -552,61 +513,6 @@ namespace FireRatingCloud
           }
         }
       }
-
-#if OLD_CODE
-      string json = "[[194b64e6-8132-4497-ae66-74904f7a7710-0004b28a,Level 1,1,123.45]]";
-
-      string[] records;
-
-      if( !GetJsonListRecords( json, out records ) )
-      {
-        message = "Error parsing JSON input.";
-        return Result.Failed;
-      }
-
-      using( Transaction t = new Transaction( doc ) )
-      {
-        t.Start( "Import Fire Rating Values" );
-
-        // Retrieve element unique id and FireRating parameter values.
-
-        string[] values;
-
-        foreach( string record in records )
-        {
-          values = record.Split( ',' );
-
-          //if( !GetJsonListElements( record, out values ) )
-          //{
-          //  message = "Error parsing JSON input.";
-          //  return Result.Failed;
-          //}
-
-          Element e = doc.GetElement( values[0] );
-
-          if( null == e )
-          {
-            message = string.Format(
-              "Error retrieving element for unique id {0}.",
-              values[0] );
-            return Result.Failed;
-          }
-
-          Parameter p = e.get_Parameter( paramGuid );
-
-          if( null == p )
-          {
-            message = string.Format(
-              "Error retrieving shared parameter on element with unique id {0}.",
-              values[0] );
-            return Result.Failed;
-          }
-          p.Set( double.Parse( values[3] ) );
-        }
-        t.Commit();
-      }
-#endif // OLD_CODE
-
       return Result.Succeeded;
     }
   }
