@@ -97,7 +97,8 @@ namespace FireRatingCloud
     /// Return the project database id for the given 
     /// Revit document.
     /// </summary>
-    public static string GetProjectDbId( Document doc )
+    public static string GetProjectDbIdObsolete(
+      Document doc )
     {
       string project_id = null;
 
@@ -111,8 +112,15 @@ namespace FireRatingCloud
       //string query = "projects/uid/"
       //  + doc.ProjectInformation.UniqueId;
 
+      // Using a query string does not work either.
+
+      //string query = string.Format(
+      //  "projects?computername={0}&path={1}",
+      //  System.Environment.MachineName,
+      //  doc.PathName );
+
       string query = string.Format(
-        "projects?computername={0}&path={1}",
+        "projects/pcnamepath/{0}+{1}",
         System.Environment.MachineName,
         doc.PathName );
 
@@ -136,6 +144,20 @@ namespace FireRatingCloud
 
         project_id = d["_id"] as string;
       }
+      return project_id;
+    }
+
+    /// <summary>
+    /// Define my own project database id for the 
+    /// given Revit document.
+    /// </summary>
+    public static string GetProjectDbId( 
+      Document doc )
+    {
+      string project_id = null;
+
+      // Determine project database id.
+
       return project_id;
     }
 
