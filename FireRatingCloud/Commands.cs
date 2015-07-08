@@ -395,11 +395,11 @@ namespace FireRatingCloud
 
           Debug.Print( json );
 
-          jsonResponse = Util.QueryOrUpsert(
-            "doors", json, "POST" );
-
           //jsonResponse = Util.QueryOrUpsert(
-          //  "doors/" + e.UniqueId, json, "PUT" );
+          //  "doors", json, "POST" );
+
+          jsonResponse = Util.QueryOrUpsert(
+            "doors/" + e.UniqueId, json, "PUT" );
 
           Debug.Print( jsonResponse );
         }
