@@ -499,9 +499,61 @@ namespace FireRatingCloud
 
         // Get all doors referencing this project.
 
+        query = "doors/project/" + project_id;
+
+        jsonResponse = Util.QueryOrUpsert( query,
+          string.Empty, "GET" );
+
+        obj = JsonParser.JsonDecode( jsonResponse );
+
+        if( null != obj )
+        {
+          ArrayList doors = obj as ArrayList;
+
+          if( null != doors && 0 < doors.Count )
+          {
+            using( Transaction t = new Transaction( doc ) )
+            {
+              t.Start( "Import Fire Rating Values" );
+
+              // Retrieve element unique id and FireRating parameter values.
+
+              foreach( object door in doors )
+              {
+                d = door as Hashtable;
+                string uid = d["_id"] as string;
+                Element e = doc.GetElement( uid );
+
+                if( null == e )
+                {
+                  message = string.Format(
+                    "Error retrieving element for unique id {0}.",
+                    uid );
+
+                  return Result.Failed;
+                }
+
+                Parameter p = e.get_Parameter( paramGuid );
+
+                if( null == p )
+                {
+                  message = string.Format(
+                    "Error retrieving shared parameter on element with unique id {0}.",
+                    uid );
+
+                  return Result.Failed;
+                }
+                object fire_rating = d["firerating"];
+
+                p.Set( (double) fire_rating );
+              }
+              t.Commit();
+            }
+          }
+        }
       }
 
-
+#if OLD_CODE
       string json = "[[194b64e6-8132-4497-ae66-74904f7a7710-0004b28a,Level 1,1,123.45]]";
 
       string[] records;
@@ -553,6 +605,8 @@ namespace FireRatingCloud
         }
         t.Commit();
       }
+#endif // OLD_CODE
+
       return Result.Succeeded;
     }
   }
