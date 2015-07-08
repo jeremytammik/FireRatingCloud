@@ -8,6 +8,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 #endregion // Namespaces
@@ -147,6 +148,20 @@ namespace FireRatingCloud
       return project_id;
     }
 
+    static byte[] GetBytes( string str )
+    {
+      byte[] bytes = new byte[str.Length * sizeof( char )];
+      System.Buffer.BlockCopy( str.ToCharArray(), 0, bytes, 0, bytes.Length );
+      return bytes;
+    }
+
+    static string GetString( byte[] bytes )
+    {
+      char[] chars = new char[bytes.Length / sizeof( char )];
+      System.Buffer.BlockCopy( bytes, 0, chars, 0, bytes.Length );
+      return new string( chars );
+    }
+
     /// <summary>
     /// Define my own project database id for the 
     /// given Revit document.
@@ -154,11 +169,11 @@ namespace FireRatingCloud
     public static string GetProjectDbId( 
       Document doc )
     {
-      string project_id = null;
-
-      // Determine project database id.
-
-      return project_id;
+      SHA256 hasher = SHA256Managed.Create();
+      string key = System.Environment.MachineName + doc.PathName;
+      byte[] hashValue = hasher.ComputeHash( GetBytes( key ) );
+      string hashb64 = Convert.ToBase64String( hashValue );
+      return hashb64;
     }
 
     #region Test Code
@@ -444,6 +459,17 @@ namespace FireRatingCloud
       Definition definition = group.Definitions.get_Item( defName );
       ExternalDefinition externalDefinition = definition as ExternalDefinition;
       return externalDefinition.GUID;
+    }
+
+    public static bool GetSharedParamGuid(
+      Application app,
+      out Guid paramGuid )
+    {
+      paramGuid = Util.SharedParamGuid( app,
+        Util.SharedParameterGroupName,
+        Util.SharedParameterName );
+
+      return !paramGuid.Equals( Guid.Empty );
     }
     #endregion // Shared Parameter Definition
   }

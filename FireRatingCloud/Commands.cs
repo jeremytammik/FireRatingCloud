@@ -289,11 +289,8 @@ namespace FireRatingCloud
 
       // Get shared parameter GUID.
 
-      Guid paramGuid = Util.SharedParamGuid( app,
-        Util.SharedParameterGroupName,
-        Util.SharedParameterName );
-
-      if( paramGuid.Equals( Guid.Empty ) )
+      Guid paramGuid;
+      if( !Util.GetSharedParamGuid( app, out paramGuid ) )
       {
         message = "Shared parameter GUID not found.";
         return Result.Failed;
@@ -424,11 +421,8 @@ namespace FireRatingCloud
       Application app = uiapp.Application;
       Document doc = uiapp.ActiveUIDocument.Document;
 
-      Guid paramGuid = Util.SharedParamGuid( app,
-        Util.SharedParameterGroupName,
-        Util.SharedParameterName );
-
-      if( paramGuid.Equals( Guid.Empty ) )
+      Guid paramGuid;
+      if( !Util.GetSharedParamGuid( app, out paramGuid ) )
       {
         message = "Shared parameter GUID not found.";
         return Result.Failed;
