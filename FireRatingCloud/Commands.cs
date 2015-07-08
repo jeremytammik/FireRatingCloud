@@ -34,7 +34,7 @@ namespace FireRatingCloud
   /// Create and bind shared parameter.
   /// </summary>
   [Transaction( TransactionMode.Manual )]
-  public class Cmd_1_CreateAndBindSharedParameter 
+  public class Cmd_1_CreateAndBindSharedParameter
     : IExternalCommand
   {
     // What element type are we interested in? The standard 
@@ -164,7 +164,7 @@ namespace FireRatingCloud
       {
         t.Start( "Bind FireRating Shared Parameter" );
 
-        Binding binding = app.Create.NewInstanceBinding( 
+        Binding binding = app.Create.NewInstanceBinding(
           catSet );
 
         // We could check if it is already bound; if so,
@@ -190,15 +190,19 @@ namespace FireRatingCloud
   /// FireRating parameter values to external database.
   /// </summary>
   [Transaction( TransactionMode.ReadOnly )]
-  public class Cmd_2_ExportSharedParameterValues 
+  public class Cmd_2_ExportSharedParameterValues
     : IExternalCommand
   {
+    #region Project
+#if NEED_PROJECT_DOCUMENT
     /// <summary>
     /// Retrieve the project identification information 
     /// to store in the external database and return it
     /// as a dictionary in a JSON formatted string.
     /// </summary>
-    string GetProjectDataJson( Document doc )
+    string GetProjectDataJson(
+      //string project_id, 
+      Document doc )
     {
       string path = doc.PathName.Replace( '\\', '/' );
 
@@ -213,24 +217,28 @@ namespace FireRatingCloud
       // Hand-written JSON formatting.
 
       string s = string.Format(
+        //"\"_id\": \"{0}\","
         "\"projectinfo_uid\": \"{0}\","
         + "\"versionguid\": \"{1}\","
         + "\"numberofsaves\": {2},"
         + "\"title\": \"{3}\","
         + "\"centralserverpath\": \"{4}\","
         + "\"path\": \"{5}\","
-        + "\"computername\": \"{6}\"",
+        + "\"computername\": \"{6}\","
+        + "\"jid\": \"{7}\"",
+        //project_id,
         doc.ProjectInformation.UniqueId,
         doc_version.VersionGUID,
         doc_version.NumberOfSaves,
         doc.Title,
         central_server_path,
         path,
-        System.Environment.MachineName );
+        System.Environment.MachineName,
+        Util.GetProjectIdentifier( doc ) );
 
       return "{" + s + "}";
 
-      #region Use JavaScriptSerializer
+    #region Use JavaScriptSerializer
 #if USE_JavaScriptSerializer
       // Use JavaScriptSerializer to format JSON data.
 
@@ -250,6 +258,8 @@ namespace FireRatingCloud
 #endif // USE_JavaScriptSerializer
       #endregion // Use JavaScriptSerializer
     }
+#endif // NEED_PROJECT_DOCUMENT
+    #endregion // Project
 
     /// <summary>
     /// Retrieve the door instance data to store in 
@@ -296,8 +306,15 @@ namespace FireRatingCloud
         return Result.Failed;
       }
 
+      // Determine custom project identifier.
+
+      string project_id = Util.GetProjectIdentifier( doc );
+
+      #region Project
+#if NEED_PROJECT_DOCUMENT
       // Post project data.
 
+      string project_id = string.Empty;
       object obj;
       Hashtable d;
 
@@ -315,84 +332,115 @@ namespace FireRatingCloud
 
       Debug.Print( json );
 
-      // Determine project database id.
+      string jsonResponse = string.Empty;
 
-      string project_id = Util.GetProjectDbId( doc );
-
-      string jsonResponse;
-
-      if( null != project_id )
+      try
       {
         jsonResponse = Util.QueryOrUpsert(
-          "projects/" + project_id, json, "PUT" );
+          "projects/jid/" + jid, string.Empty, "GET" );
+      }
+      catch( System.Net.WebException ex )
+      {
+      }
 
-        Debug.Assert( 
-          jsonResponse.Equals( "Accepted" ), 
-          "expected successful db update response" );
-
-        if( !jsonResponse.Equals( "Accepted" ) )
-        {
-          project_id = null;
-        }
+      if( 0 == jsonResponse.Length )
+      {
+        jsonResponse = Util.QueryOrUpsert(
+          "projects", json, "POST" );
       }
       else
       {
         jsonResponse = Util.QueryOrUpsert(
-          "projects", json, "POST" );
-
-        Debug.Print( jsonResponse );
-
-        obj = JsonParser.JsonDecode( jsonResponse );
-
-        if( null != obj )
-        {
-          d = obj as Hashtable;
-          project_id = d["_id"] as string;
-        }
+          "projects/" + project_id, json, "PUT" );
       }
 
-      if( null != project_id )
+      Debug.Print( jsonResponse );
+
+      obj = JsonParser.JsonDecode( jsonResponse );
+
+      if( null != obj )
       {
-        // Loop through all elements of the given target
-        // category and export the shared parameter value 
-        // specified by paramGuid for each.
+        d = obj as Hashtable;
+        project_id = d["_id"] as string;
+      }
 
-        FilteredElementCollector collector
-          = Util.GetTargetInstances( doc,
-            Cmd_1_CreateAndBindSharedParameter.Target );
+      //if( null != project_id )
+      //{
+      //  jsonResponse = Util.QueryOrUpsert(
+      //    "projects/" + project_id, json, "PUT" );
 
-        int n = collector.Count<Element>();
+      //  Debug.Assert( 
+      //    jsonResponse.Equals( "Accepted" ), 
+      //    "expected successful db update response" );
 
-        //string[] records = new string[n];
+      //  if( !jsonResponse.Equals( "Accepted" ) )
+      //  {
+      //    project_id = null;
+      //  }
+      //}
+      //else
+      //{
+      //  jsonResponse = Util.QueryOrUpsert(
+      //    "projects", json, "POST" );
 
-        foreach( Element e in collector )
+      //  Debug.Print( jsonResponse );
+
+      //  obj = JsonParser.JsonDecode( jsonResponse );
+
+      //  if( null != obj )
+      //  {
+      //    d = obj as Hashtable;
+      //    project_id = d["_id"] as string;
+      //  }
+      //}
+
+      if( !string.IsNullOrEmpty( project_id ) )
+      {
+#endif // NEED_PROJECT_DOCUMENT
+      #endregion // Project
+
+      // Loop through all elements of the given target
+      // category and export the shared parameter value 
+      // specified by paramGuid for each.
+
+      FilteredElementCollector collector
+        = Util.GetTargetInstances( doc,
+          Cmd_1_CreateAndBindSharedParameter.Target );
+
+      int n = collector.Count<Element>();
+
+      //string[] records = new string[n];
+
+      string json;
+      string jsonResponse;
+
+      foreach( Element e in collector )
+      {
+        //records[i++] = string.Format( "[{0},{1},{2},{3}]",
+        //  e.UniqueId,
+        //  doc.GetElement( e.LevelId ).Name,
+        //  e.get_Parameter( BuiltInParameter.ALL_MODEL_MARK ).AsString(),
+        //  e.get_Parameter( paramGuid ).AsDouble() );
+
+        json = GetDoorDataJson( e, project_id,
+          paramGuid );
+
+        Debug.Print( json );
+
+        jsonResponse = Util.QueryOrUpsert(
+          "doors/" + e.UniqueId, string.Empty, "GET" );
+
+        if( 0 == jsonResponse.Length )
         {
-          //records[i++] = string.Format( "[{0},{1},{2},{3}]",
-          //  e.UniqueId,
-          //  doc.GetElement( e.LevelId ).Name,
-          //  e.get_Parameter( BuiltInParameter.ALL_MODEL_MARK ).AsString(),
-          //  e.get_Parameter( paramGuid ).AsDouble() );
-
-          json = GetDoorDataJson( e, project_id,
-            paramGuid );
-
-          Debug.Print( json );
-
           jsonResponse = Util.QueryOrUpsert(
-            "doors/" + e.UniqueId, string.Empty, "GET" );
-
-          if( 0 == jsonResponse.Length )
-          {
-            jsonResponse = Util.QueryOrUpsert(
-              "doors", json, "POST" );
-          }
-          else
-          {
-            jsonResponse = Util.QueryOrUpsert(
-              "doors/" + e.UniqueId, json, "PUT" );
-          }
-          Debug.Print( jsonResponse );
+            "doors", json, "POST" );
         }
+        else
+        {
+          jsonResponse = Util.QueryOrUpsert(
+            "doors/" + e.UniqueId, json, "PUT" );
+        }
+        Debug.Print( jsonResponse );
 
         //json = "[" + string.Join( ",", records ) + "]";
         //Debug.Print( json );
@@ -409,7 +457,7 @@ namespace FireRatingCloud
   /// from external database.
   /// </summary>
   [Transaction( TransactionMode.Manual )]
-  public class Cmd_3_ImportSharedParameterValues 
+  public class Cmd_3_ImportSharedParameterValues
     : IExternalCommand
   {
     public Result Execute(
@@ -428,65 +476,62 @@ namespace FireRatingCloud
         return Result.Failed;
       }
 
-      // Determine project database id.
+      // Determine custom project identifier.
 
-      string project_id = Util.GetProjectDbId( doc );
+      string project_id = Util.GetProjectIdentifier( doc );
 
-      if( null != project_id )
+      // Get all doors referencing this project.
+
+      string query = "doors/project/" + project_id;
+
+      string jsonResponse = Util.QueryOrUpsert( query,
+        string.Empty, "GET" );
+
+      object obj = JsonParser.JsonDecode( jsonResponse );
+
+      if( null != obj )
       {
-        // Get all doors referencing this project.
+        ArrayList doors = obj as ArrayList;
 
-        string query = "doors?project_id=" + project_id;
-
-        string jsonResponse = Util.QueryOrUpsert( query,
-          string.Empty, "GET" );
-
-        object obj = JsonParser.JsonDecode( jsonResponse );
-
-        if( null != obj )
+        if( null != doors && 0 < doors.Count )
         {
-          ArrayList doors = obj as ArrayList;
-
-          if( null != doors && 0 < doors.Count )
+          using( Transaction t = new Transaction( doc ) )
           {
-            using( Transaction t = new Transaction( doc ) )
+            t.Start( "Import Fire Rating Values" );
+
+            // Retrieve element unique id and 
+            // FireRating parameter values.
+
+            foreach( object door in doors )
             {
-              t.Start( "Import Fire Rating Values" );
+              Hashtable d = door as Hashtable;
+              string uid = d["_id"] as string;
+              Element e = doc.GetElement( uid );
 
-              // Retrieve element unique id and 
-              // FireRating parameter values.
-
-              foreach( object door in doors )
+              if( null == e )
               {
-                Hashtable d = door as Hashtable;
-                string uid = d["_id"] as string;
-                Element e = doc.GetElement( uid );
+                message = string.Format(
+                  "Error retrieving element for unique id {0}.",
+                  uid );
 
-                if( null == e )
-                {
-                  message = string.Format(
-                    "Error retrieving element for unique id {0}.",
-                    uid );
-
-                  return Result.Failed;
-                }
-
-                Parameter p = e.get_Parameter( paramGuid );
-
-                if( null == p )
-                {
-                  message = string.Format(
-                    "Error retrieving shared parameter on element with unique id {0}.",
-                    uid );
-
-                  return Result.Failed;
-                }
-                object fire_rating = d["firerating"];
-
-                p.Set( (double) fire_rating );
+                return Result.Failed;
               }
-              t.Commit();
+
+              Parameter p = e.get_Parameter( paramGuid );
+
+              if( null == p )
+              {
+                message = string.Format(
+                  "Error retrieving shared parameter on element with unique id {0}.",
+                  uid );
+
+                return Result.Failed;
+              }
+              object fire_rating = d["firerating"];
+
+              p.Set( (double) fire_rating );
             }
+            t.Commit();
           }
         }
       }
