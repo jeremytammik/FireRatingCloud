@@ -480,12 +480,12 @@ namespace FireRatingCloud
     }
 
     /// <summary>
-    /// Retrieve the door instance data
-    /// to store in the external database and return it
-    /// as a dictionary in a JSON formatted string.
+    /// Retrieve the door instance data to store in 
+    /// the external database and return it as a
+    /// dictionary in a JSON formatted string.
     /// </summary>
-    string GetDoorDataJson( 
-      Element door, 
+    string GetDoorDataJson(
+      Element door,
       string project_id,
       Guid paramGuid )
     {
@@ -499,7 +499,7 @@ namespace FireRatingCloud
         + "\"firerating\": {4}",
         door.UniqueId,
         project_id,
-        doc.GetElement(door.LevelId).Name,
+        doc.GetElement( door.LevelId ).Name,
         door.get_Parameter( BuiltInParameter.ALL_MODEL_MARK ).AsString(),
         door.get_Parameter( paramGuid ).AsDouble() );
 
