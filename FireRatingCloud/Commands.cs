@@ -1,17 +1,8 @@
 #region Namespaces
 using System;
-//using System.Collections.Generic;
-//using System.IO;
 using System.Collections;
 using System.Diagnostics;
 using System.Linq;
-//using System.Net;
-//using System.Net.Http;
-//using System.Net.Http.Headers;
-//using System.Text;
-using System.Text.RegularExpressions;
-//using System.Threading.Tasks;
-//using System.Web.Script.Serialization;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
@@ -43,7 +34,8 @@ namespace FireRatingCloud
   /// Create and bind shared parameter.
   /// </summary>
   [Transaction( TransactionMode.Manual )]
-  public class Cmd_1_CreateAndBindSharedParameter : IExternalCommand
+  public class Cmd_1_CreateAndBindSharedParameter 
+    : IExternalCommand
   {
     // What element type are we interested in? The standard 
     // SDK FireRating sample uses BuiltInCategory.OST_Doors. 
@@ -170,9 +162,10 @@ namespace FireRatingCloud
 
       using( Transaction t = new Transaction( doc ) )
       {
-        t.Start( "Bind Fire Rating Shared Parameter" );
+        t.Start( "Bind FireRating Shared Parameter" );
 
-        Binding binding = app.Create.NewInstanceBinding( catSet );
+        Binding binding = app.Create.NewInstanceBinding( 
+          catSet );
 
         // We could check if it is already bound; if so,
         // Insert will apparently just ignore it.
@@ -197,7 +190,8 @@ namespace FireRatingCloud
   /// FireRating parameter values to external database.
   /// </summary>
   [Transaction( TransactionMode.ReadOnly )]
-  public class Cmd_2_ExportSharedParameterValues : IExternalCommand
+  public class Cmd_2_ExportSharedParameterValues 
+    : IExternalCommand
   {
     /// <summary>
     /// Retrieve the project identification information 
@@ -419,7 +413,8 @@ namespace FireRatingCloud
   /// from external database.
   /// </summary>
   [Transaction( TransactionMode.Manual )]
-  public class Cmd_3_ImportSharedParameterValues : IExternalCommand
+  public class Cmd_3_ImportSharedParameterValues 
+    : IExternalCommand
   {
     public Result Execute(
       ExternalCommandData commandData,
