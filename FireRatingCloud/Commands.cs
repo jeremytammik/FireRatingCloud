@@ -15,6 +15,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using System.IO;
 using System.Web.Script.Serialization;
+using System.Collections;
 #endregion
 
 namespace FireRatingCloud
@@ -441,22 +442,23 @@ namespace FireRatingCloud
 
       // Hand-written JSON formatting.
 
-      return string.Format(
-        "{7} \"projectinfo_uid\": \"{0}\","
+      string s = string.Format(
+        "\"projectinfo_uid\": \"{0}\","
         + "\"versionguid\": \"{1}\","
         + "\"numberofsaves\": {2},"
         + "\"title\": \"{3}\","
         + "\"centralserverpath\": \"{4}\","
         + "\"path\": \"{5}\","
-        + "\"computername\": \"{6}\" {8}",
+        + "\"computername\": \"{6}\"",
         doc.ProjectInformation.UniqueId,
         doc_version.VersionGUID,
         doc_version.NumberOfSaves,
         doc.Title,
         central_server_path,
         path,
-        System.Environment.MachineName,
-        '{', '}' );
+        System.Environment.MachineName );
+
+      return "{" + s + "}";
 
 #if USE_JavaScriptSerializer
       // Use JavaScriptSerializer to format JSON data.
@@ -477,6 +479,33 @@ namespace FireRatingCloud
 #endif // USE_JavaScriptSerializer
     }
 
+    /// <summary>
+    /// Retrieve the door instance data
+    /// to store in the external database and return it
+    /// as a dictionary in a JSON formatted string.
+    /// </summary>
+    string GetDoorDataJson( 
+      Element door, 
+      string project_id,
+      Guid paramGuid )
+    {
+      Document doc = door.Document;
+
+      string s = string.Format(
+        "\"_id\": \"{0}\","
+        + "\"project_id\": \"{1}\","
+        + "\"level\": \"{2}\","
+        + "\"tag\": \"{3}\","
+        + "\"firerating\": {4}",
+        door.UniqueId,
+        project_id,
+        doc.GetElement(door.LevelId).Name,
+        door.get_Parameter( BuiltInParameter.ALL_MODEL_MARK ).AsString(),
+        door.get_Parameter( paramGuid ).AsDouble() );
+
+      return "{" + s + "}";
+    }
+
     public Result Execute(
       ExternalCommandData commandData,
       ref string message,
@@ -485,6 +514,18 @@ namespace FireRatingCloud
       UIApplication uiapp = commandData.Application;
       Application app = uiapp.Application;
       Document doc = uiapp.ActiveUIDocument.Document;
+
+      // Get shared parameter GUID.
+
+      Guid paramGuid = Util.SharedParamGuid( app,
+        Util.SharedParameterGroupName,
+        Util.SharedParameterName );
+
+      if( paramGuid.Equals( Guid.Empty ) )
+      {
+        message = "FireRating shared parameter GUID not found.";
+        return Result.Failed;
+      }
 
       // Post project data.
 
@@ -506,103 +547,104 @@ namespace FireRatingCloud
 
       Debug.Print( jsonResponse );
 
-      #region OLD_CODE
-      //Category cat = doc.Settings.Categories.get_Item(
-      //  Cmd_1_CreateAndBindSharedParameter.Target );
+      object obj = JsonParser.JsonDecode( jsonResponse );
 
-      // Launch Excel (same as in Lab 4_2, so we really
-      // should have better created some utils...)
-
-      //X.Application excel = new X.ApplicationClass();
-      //if( null == excel )
-      //{
-      //  Util.ErrorMsg( "Failed to get or start Excel." );
-      //  return Result.Failed;
-      //}
-      //excel.Visible = true;
-      //X.Workbook workbook = excel.Workbooks.Add( Missing.Value );
-      //X.Worksheet worksheet;
-      ////while( 1 < workbook.Sheets.Count )
-      ////{
-      ////  worksheet = workbook.Sheets.get_Item( 0 ) as X.Worksheet;
-      ////  worksheet.Delete();
-      ////}
-      //worksheet = excel.ActiveSheet as X.Worksheet;
-      //worksheet.Name = "Revit " + cat.Name;
-      //worksheet.Cells[1, 1] = "ID";
-      //worksheet.Cells[1, 2] = "Level";
-      //worksheet.Cells[1, 3] = "Tag";
-      //worksheet.Cells[1, 4] = Util.SharedParamsDefFireRating;
-      //worksheet.get_Range( "A1", "Z1" ).Font.Bold = true;
-      #endregion // OLD_CODE
-
-      // Get shared parameter GUID.
-
-      Guid paramGuid = Util.SharedParamGuid( app,
-        Util.SharedParameterGroupName,
-        Util.SharedParameterName );
-
-      if( paramGuid.Equals( Guid.Empty ) )
+      if( null != obj )
       {
-        message = "Shared parameter GUID not found.";
-        return Result.Failed;
-      }
+        Hashtable d = obj as Hashtable;
+        string project_id = d["_id"] as string;
 
-      // Loop through all elements of the given target
-      // category and export the shared parameter value 
-      // specified by paramGuid for each.
-
-      FilteredElementCollector collector
-        = Util.GetTargetInstances( doc,
-          Cmd_1_CreateAndBindSharedParameter.Target );
-
-      int n = collector.Count<Element>();
-
-      string[] records = new string[n];
-
-      //int row = 2;
-
-      int i = 0;
-
-      foreach( Element e in collector )
-      {
         #region OLD_CODE
-        //worksheet.Cells[row, 1] = e.Id.IntegerValue; // ID
+        //Category cat = doc.Settings.Categories.get_Item(
+        //  Cmd_1_CreateAndBindSharedParameter.Target );
 
-        ////worksheet.Cells[row, 2] = e.Level.Name; // Level // 2013
-        //worksheet.Cells[row, 2] = doc.GetElement( e.LevelId ).Name; // Level // 2014
+        // Launch Excel (same as in Lab 4_2, so we really
+        // should have better created some utils...)
 
-        //// Tag:
-
-        //Parameter tagParameter = e.get_Parameter( BuiltInParameter.ALL_MODEL_MARK );
-        //if( null != tagParameter )
+        //X.Application excel = new X.ApplicationClass();
+        //if( null == excel )
         //{
-        //  worksheet.Cells[row, 3] = tagParameter.AsString();
+        //  Util.ErrorMsg( "Failed to get or start Excel." );
+        //  return Result.Failed;
         //}
-
-        //// FireRating:
-
-        //Parameter parameter = e.get_Parameter( paramGuid );
-        //if( null != parameter )
-        //{
-        //  worksheet.Cells[row, 4] = parameter.AsDouble();
-        //}
-        //++row;
+        //excel.Visible = true;
+        //X.Workbook workbook = excel.Workbooks.Add( Missing.Value );
+        //X.Worksheet worksheet;
+        ////while( 1 < workbook.Sheets.Count )
+        ////{
+        ////  worksheet = workbook.Sheets.get_Item( 0 ) as X.Worksheet;
+        ////  worksheet.Delete();
+        ////}
+        //worksheet = excel.ActiveSheet as X.Worksheet;
+        //worksheet.Name = "Revit " + cat.Name;
+        //worksheet.Cells[1, 1] = "ID";
+        //worksheet.Cells[1, 2] = "Level";
+        //worksheet.Cells[1, 3] = "Tag";
+        //worksheet.Cells[1, 4] = Util.SharedParamsDefFireRating;
+        //worksheet.get_Range( "A1", "Z1" ).Font.Bold = true;
         #endregion // OLD_CODE
 
-        records[i++] = string.Format( "[{0},{1},{2},{3}]",
-          e.UniqueId,
-          doc.GetElement( e.LevelId ).Name,
-          e.get_Parameter( BuiltInParameter.ALL_MODEL_MARK ).AsString(),
-          e.get_Parameter( paramGuid ).AsDouble() );
+        // Loop through all elements of the given target
+        // category and export the shared parameter value 
+        // specified by paramGuid for each.
+
+        FilteredElementCollector collector
+          = Util.GetTargetInstances( doc,
+            Cmd_1_CreateAndBindSharedParameter.Target );
+
+        int n = collector.Count<Element>();
+
+        string[] records = new string[n];
+
+        //int row = 2;
+
+        int i = 0;
+
+        foreach( Element e in collector )
+        {
+          #region OLD_CODE
+          //worksheet.Cells[row, 1] = e.Id.IntegerValue; // ID
+
+          ////worksheet.Cells[row, 2] = e.Level.Name; // Level // 2013
+          //worksheet.Cells[row, 2] = doc.GetElement( e.LevelId ).Name; // Level // 2014
+
+          //// Tag:
+
+          //Parameter tagParameter = e.get_Parameter( BuiltInParameter.ALL_MODEL_MARK );
+          //if( null != tagParameter )
+          //{
+          //  worksheet.Cells[row, 3] = tagParameter.AsString();
+          //}
+
+          //// FireRating:
+
+          //Parameter parameter = e.get_Parameter( paramGuid );
+          //if( null != parameter )
+          //{
+          //  worksheet.Cells[row, 4] = parameter.AsDouble();
+          //}
+          //++row;
+          #endregion // OLD_CODE
+
+          //records[i++] = string.Format( "[{0},{1},{2},{3}]",
+          //  e.UniqueId,
+          //  doc.GetElement( e.LevelId ).Name,
+          //  e.get_Parameter( BuiltInParameter.ALL_MODEL_MARK ).AsString(),
+          //  e.get_Parameter( paramGuid ).AsDouble() );
+
+          json = GetDoorDataJson( e, project_id, paramGuid );
+
+          Debug.Print( json );
+
+          jsonResponse = PostJsonData( "doors", json );
+
+          Debug.Print( jsonResponse );
+        }
+
+        //json = "[" + string.Join( ",", records ) + "]";
+        //Debug.Print( json );
+        // [[194b64e6-8132-4497-ae66-74904f7a7710-0004b28a,Level 1,1,0]]
       }
-
-      json = "[" + string.Join( ",", records ) + "]";
-
-      Debug.Print( json );
-
-      // [[194b64e6-8132-4497-ae66-74904f7a7710-0004b28a,Level 1,1,0]]
-
       return Result.Succeeded;
     }
   }
