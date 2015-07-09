@@ -157,6 +157,9 @@ namespace FireRatingCloud
 #endif // NEED_PROJECT_DOCUMENT
     #endregion Project
 
+    /// <summary>
+    /// Convert a string to a byte array.
+    /// </summary>
     static byte[] GetBytes( string str )
     {
       byte[] bytes = new byte[str.Length * sizeof( char )];
@@ -164,6 +167,9 @@ namespace FireRatingCloud
       return bytes;
     }
 
+    /// <summary>
+    /// Convert a byte array to a string.
+    /// </summary>
     static string GetString( byte[] bytes )
     {
       char[] chars = new char[bytes.Length / sizeof( char )];
@@ -171,46 +177,22 @@ namespace FireRatingCloud
       return new string( chars );
     }
 
-    ///<summary>
-    /// Base 64 Encoding with URL and Filename Safe 
-    /// Alphabet using UTF-8 character set.
-    ///</summary>
-    ///<param name="str">The origianl string</param>
-    ///<returns>The Base64 encoded string</returns>
-    public static string Base64ForUrlEncode( string str )
-    {
-      byte[] encbuff = Encoding.UTF8.GetBytes( str );
-      return HttpServerUtility.UrlTokenEncode( encbuff );
-    }
-
-    ///<summary>
-    /// Decode Base64 encoded string with URL and 
-    /// Filename Safe Alphabet using UTF-8.
-    ///</summary>
-    ///<param name="str">Base64 code</param>
-    ///<returns>The decoded string.</returns>
-    public static string Base64ForUrlDecode( string str )
-    {
-      byte[] decbuff = HttpServerUtility.UrlTokenDecode( str );
-      return Encoding.UTF8.GetString( decbuff );
-    }
-
     /// <summary>
     /// Define a project identifier for the 
     /// given Revit document.
     /// </summary>
-    public static string GetProjectIdentifier( 
+    public static string GetProjectIdentifier(
       Document doc )
     {
       SHA256 hasher = SHA256Managed.Create();
 
-      string key = System.Environment.MachineName 
+      string key = System.Environment.MachineName
         + ":" + doc.PathName;
-      
-      byte[] hashValue = hasher.ComputeHash( GetBytes( 
+
+      byte[] hashValue = hasher.ComputeHash( GetBytes(
         key ) );
 
-      string hashb64 = Convert.ToBase64String( 
+      string hashb64 = Convert.ToBase64String(
         hashValue );
 
       return hashb64.Replace( '/', '_' );
@@ -404,6 +386,30 @@ namespace FireRatingCloud
       return rc;
     }
 #endif // USE_CODE_FROM_TWGL_EXPORT
+
+    ///<summary>
+    /// Base 64 Encoding with URL and Filename Safe 
+    /// Alphabet using UTF-8 character set.
+    ///</summary>
+    ///<param name="str">The origianl string</param>
+    ///<returns>The Base64 encoded string</returns>
+    public static string Base64ForUrlEncode( string str )
+    {
+      byte[] encbuff = Encoding.UTF8.GetBytes( str );
+      return HttpServerUtility.UrlTokenEncode( encbuff );
+    }
+
+    ///<summary>
+    /// Decode Base64 encoded string with URL and 
+    /// Filename Safe Alphabet using UTF-8.
+    ///</summary>
+    ///<param name="str">Base64 code</param>
+    ///<returns>The decoded string.</returns>
+    public static string Base64ForUrlDecode( string str )
+    {
+      byte[] decbuff = HttpServerUtility.UrlTokenDecode( str );
+      return Encoding.UTF8.GetString( decbuff );
+    }
 #endif // LOTS_OF_TEST_CODE
     #endregion // Test Code
 
@@ -437,7 +443,7 @@ namespace FireRatingCloud
       }
 
       // Get the current file object and return it
-      
+
       DefinitionFile sharedParametersFile = app
         .OpenSharedParameterFile();
 
@@ -453,10 +459,10 @@ namespace FireRatingCloud
       Document doc,
       object targetCategory )
     {
-      FilteredElementCollector collector 
+      FilteredElementCollector collector
         = new FilteredElementCollector( doc );
 
-      bool isName = targetCategory.GetType().Equals( 
+      bool isName = targetCategory.GetType().Equals(
         typeof( string ) );
 
       if( isName )
@@ -489,9 +495,9 @@ namespace FireRatingCloud
     /// <param name="defGroup">Definition group name</param>
     /// <param name="defName">Definition name</param>
     /// <returns>GUID</returns>
-    public static Guid SharedParamGuid( 
-      Application app, 
-      string defGroup, 
+    public static Guid SharedParamGuid(
+      Application app,
+      string defGroup,
       string defName )
     {
       DefinitionFile file = app.OpenSharedParameterFile();
