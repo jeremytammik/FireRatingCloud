@@ -37,7 +37,14 @@ the detailed articles describing the entire project implementation and evolution
   - [Storing door instance documents in mongo](http://the3dwebcoder.typepad.com/blog/2015/07/get-and-put-c-net-rest-api-mongodb-storage.html#3)
   - [Using PUT instead of POST when the database id is known](http://the3dwebcoder.typepad.com/blog/2015/07/get-and-put-c-net-rest-api-mongodb-storage.html#4)
   - [Checking for project existence before adding new](http://the3dwebcoder.typepad.com/blog/2015/07/get-and-put-c-net-rest-api-mongodb-storage.html#5)
-- Complete cloud-based Revit FireRating SDK sample functionality.
+-  [Complete FireRatingCloud Round Trip](http://the3dwebcoder.typepad.com/blog/2015/07/fireratingcloud-round-trip-and-on-mongolab.html)
+  - [Revit project identification](http://the3dwebcoder.typepad.com/blog/2015/07/fireratingcloud-round-trip-and-on-mongolab.html#2)
+  - [Complete Revit Add-in Implementation](http://the3dwebcoder.typepad.com/blog/2015/07/fireratingcloud-round-trip-and-on-mongolab.html#3)
+  - [Demo Run Log](http://the3dwebcoder.typepad.com/blog/2015/07/fireratingcloud-round-trip-and-on-mongolab.html#4)
+  - [Demo Video](http://the3dwebcoder.typepad.com/blog/2015/07/fireratingcloud-round-trip-and-on-mongolab.html#5)
+  - [FireRating Database on Mongolab &ndash; really in the cloud](http://the3dwebcoder.typepad.com/blog/2015/07/fireratingcloud-round-trip-and-on-mongolab.html#6)
+  - [Postman does more than cURL](http://the3dwebcoder.typepad.com/blog/2015/07/fireratingcloud-round-trip-and-on-mongolab.html#7)
+  - [Wrap-up and Download](http://the3dwebcoder.typepad.com/blog/2015/07/fireratingcloud-round-trip-and-on-mongolab.html#8)
 
 
 ## Author
