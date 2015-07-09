@@ -59,7 +59,8 @@ namespace FireRatingCloud
       string json,
       string method )
     {
-      string uri = Util.RestApiUri + "/" + collection_name_id_query;
+      string uri = Util.RestApiUri + "/"
+        + collection_name_id_query;
 
       HttpWebRequest request = HttpWebRequest.Create(
         uri ) as HttpWebRequest;
@@ -162,8 +163,12 @@ namespace FireRatingCloud
     /// </summary>
     static byte[] GetBytes( string str )
     {
-      byte[] bytes = new byte[str.Length * sizeof( char )];
-      System.Buffer.BlockCopy( str.ToCharArray(), 0, bytes, 0, bytes.Length );
+      byte[] bytes = new byte[str.Length
+        * sizeof( char )];
+
+      System.Buffer.BlockCopy( str.ToCharArray(),
+        0, bytes, 0, bytes.Length );
+
       return bytes;
     }
 
