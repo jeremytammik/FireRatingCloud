@@ -27,12 +27,12 @@ namespace FireRatingCloud
     /// <summary>
     /// HTTP access constant to toggle between local and global server.
     /// </summary>
-    public static bool UseLocalServer = true;
+    public static bool UseLocalServer = false;
 
     // HTTP access constants.
 
     const string _base_url_local = "http://127.0.0.1:3001";
-    const string _base_url_global = "https://fireratingdb.herokuapp.com";
+    const string _base_url_global = "http://fireratingdb.herokuapp.com";
     const string _api_version = "api/v1";
 
     /// <summary>
