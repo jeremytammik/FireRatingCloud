@@ -45,6 +45,10 @@ the detailed articles describing the entire project implementation and evolution
   - [FireRating Database on Mongolab &ndash; really in the cloud](http://the3dwebcoder.typepad.com/blog/2015/07/fireratingcloud-round-trip-and-on-mongolab.html#6)
   - [Postman does more than cURL](http://the3dwebcoder.typepad.com/blog/2015/07/fireratingcloud-round-trip-and-on-mongolab.html#7)
   - [Wrap-up and Download](http://the3dwebcoder.typepad.com/blog/2015/07/fireratingcloud-round-trip-and-on-mongolab.html#8)
+- [FireRatingCloud fully deplyoed to Heroku + Mongolab](http://the3dwebcoder.typepad.com/blog/2015/07/fireratingcloud-fully-deployed-on-heroku-and-mongolab.html)
+  - Database hosted on [mongolab.com](https://mongolab.com)
+  - Node.js web server hosted on [Heroku](http://heroku.com)
+  - [Using the Mongo Console on a Remote Database](http://the3dwebcoder.typepad.com/blog/2015/07/fireratingcloud-fully-deployed-on-heroku-and-mongolab.html#3)
 
 
 ## Author
