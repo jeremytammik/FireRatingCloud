@@ -1,6 +1,6 @@
 # FireRatingCloud
 Revit add-in multi-project re-implementation of the FireRating SDK sample using a cloud-based database managed by the
-[firerating](https://github.com/jeremytammik/firerating) node.js mongoDB web server.
+[fireratingdb](https://github.com/jeremytammik/firerating) node.js mongoDB web server.
 
 For more information, please refer to
 [The 3D Web Coder](http://the3dwebcoder.typepad.com),
