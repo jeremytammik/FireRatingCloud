@@ -273,16 +273,17 @@ namespace FireRatingCloud
     {
       Document doc = door.Document;
 
-      string levelName = doc.GetElement( 
+      string levelName = doc.GetElement(
         door.LevelId ).Name;
 
       string tagValue = door.get_Parameter(
         BuiltInParameter.ALL_MODEL_MARK ).AsString();
 
-      double fireratingValue = door.get_Parameter( 
+      double fireratingValue = door.get_Parameter(
         paramGuid ).AsDouble();
 
-      object data = new {
+      object data = new
+      {
         _id = door.UniqueId,
         project_id = project_id,
         level = levelName,
