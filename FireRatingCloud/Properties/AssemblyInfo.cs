@@ -41,6 +41,7 @@ using System.Runtime.InteropServices;
 // 2015-07-08 2016.0.0.5 eliminated project documents completely and use hash id to identify owner project in door document instead
 // 2015-07-09 2016.0.0.6 cleanup and publication
 // 2015-07-09 2016.0.0.7 switched from local database server to Heroku-hosted cloud-based
+// 2015-09-10 2016.0.0.8 implemented Util.Put using RestSharp instead of HttpWebRequest
 //
-[assembly: AssemblyVersion( "2016.0.0.7" )]
-[assembly: AssemblyFileVersion( "2016.0.0.7" )]
+[assembly: AssemblyVersion( "2016.0.0.8" )]
+[assembly: AssemblyFileVersion( "2016.0.0.8" )]

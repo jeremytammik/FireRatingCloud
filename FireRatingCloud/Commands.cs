@@ -264,28 +264,33 @@ namespace FireRatingCloud
     /// <summary>
     /// Retrieve the door instance data to store in 
     /// the external database and return it as a
-    /// dictionary in a JSON formatted string.
+    /// dictionary-like object.
     /// </summary>
-    string GetDoorDataJson(
+    object GetDoorData(
       Element door,
       string project_id,
       Guid paramGuid )
     {
       Document doc = door.Document;
 
-      string s = string.Format(
-        "\"_id\": \"{0}\","
-        + "\"project_id\": \"{1}\","
-        + "\"level\": \"{2}\","
-        + "\"tag\": \"{3}\","
-        + "\"firerating\": {4}",
-        door.UniqueId,
-        project_id,
-        doc.GetElement( door.LevelId ).Name,
-        door.get_Parameter( BuiltInParameter.ALL_MODEL_MARK ).AsString(),
-        door.get_Parameter( paramGuid ).AsDouble() );
+      string levelName = doc.GetElement( 
+        door.LevelId ).Name;
 
-      return "{" + s + "}";
+      string tagValue = door.get_Parameter(
+        BuiltInParameter.ALL_MODEL_MARK ).AsString();
+
+      double fireratingValue = door.get_Parameter( 
+        paramGuid ).AsDouble();
+
+      object data = new {
+        _id = door.UniqueId,
+        project_id = project_id,
+        level = levelName,
+        tag = tagValue,
+        firerating = fireratingValue
+      };
+
+      return data;
     }
 
     public Result Execute(
@@ -409,42 +414,19 @@ namespace FireRatingCloud
 
       int n = collector.Count<Element>();
 
-      //string[] records = new string[n];
-
-      string json;
+      object doorData;
       string jsonResponse;
 
       foreach( Element e in collector )
       {
-        //records[i++] = string.Format( "[{0},{1},{2},{3}]",
-        //  e.UniqueId,
-        //  doc.GetElement( e.LevelId ).Name,
-        //  e.get_Parameter( BuiltInParameter.ALL_MODEL_MARK ).AsString(),
-        //  e.get_Parameter( paramGuid ).AsDouble() );
+        doorData = GetDoorData( e, project_id, paramGuid );
 
-        json = GetDoorDataJson( e, project_id,
-          paramGuid );
+        Debug.Print( e.Id.IntegerValue.ToString() );
 
-        Debug.Print( json );
+        jsonResponse = Util.Put(
+          "doors/" + e.UniqueId, doorData );
 
-        jsonResponse = Util.QueryOrUpsert(
-          "doors/" + e.UniqueId, string.Empty, "GET" );
-
-        if( 0 == jsonResponse.Length )
-        {
-          jsonResponse = Util.QueryOrUpsert(
-            "doors", json, "POST" );
-        }
-        else
-        {
-          jsonResponse = Util.QueryOrUpsert(
-            "doors/" + e.UniqueId, json, "PUT" );
-        }
         Debug.Print( jsonResponse );
-
-        //json = "[" + string.Join( ",", records ) + "]";
-        //Debug.Print( json );
-        // [[194b64e6-8132-4497-ae66-74904f7a7710-0004b28a,Level 1,1,0]]
       }
       return Result.Succeeded;
     }

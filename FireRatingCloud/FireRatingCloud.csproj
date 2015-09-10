@@ -44,6 +44,9 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="RestSharp">
+      <HintPath>..\packages\RestSharp.105.2.3\lib\net45\RestSharp.dll</HintPath>
+    </Reference>
     <Reference Include="RevitAPI">
       <HintPath>$(ProgramW6432)\Autodesk\Revit 2016\RevitAPI.dll</HintPath>
       <Private>False</Private>
@@ -67,6 +70,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="FireRatingCloud.addin" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterClean">
@@ -75,6 +79,6 @@
   </Target>
   <PropertyGroup>
     <PostBuildEvent>copy "$(ProjectDir)FireRatingCloud.addin" "$(AppData)\Autodesk\REVIT\Addins\2016"
-copy "$(ProjectDir)bin\debug\FireRatingCloud.dll" "$(AppData)\Autodesk\REVIT\Addins\2016"</PostBuildEvent>
+copy "$(ProjectDir)bin\debug\*.dll" "$(AppData)\Autodesk\REVIT\Addins\2016"</PostBuildEvent>
   </PropertyGroup>
 </Project>
