@@ -49,6 +49,11 @@ the detailed articles describing the entire project implementation and evolution
   - Database hosted on [mongolab.com](https://mongolab.com)
   - Node.js web server hosted on [Heroku](http://heroku.com)
   - [Using the Mongo Console on a Remote Database](http://the3dwebcoder.typepad.com/blog/2015/07/fireratingcloud-fully-deployed-on-heroku-and-mongolab.html#3)
+- Replace `HttpWebRequest` by `RestSharp` and improve the REST API PUT implementation:
+  - [GET, PUT and POST stupidity creating versus updating a record](http://the3dwebcoder.typepad.com/blog/2015/09/comphound-restsharp-mongoose-put-and-post.html#3)
+  - [Enabling PUT to create as well as update](http://the3dwebcoder.typepad.com/blog/2015/09/comphound-restsharp-mongoose-put-and-post.html#4)
+  - [Using RestSharp instead of HttpWebRequest](http://the3dwebcoder.typepad.com/blog/2015/09/comphound-restsharp-mongoose-put-and-post.html#5)
+  - [No need to format data as JSON](http://the3dwebcoder.typepad.com/blog/2015/09/comphound-restsharp-mongoose-put-and-post.html#6)
 
 
 ## Author
