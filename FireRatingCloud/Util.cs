@@ -170,6 +170,11 @@ namespace FireRatingCloud
 
       var content = response.Content; // raw content as string
 
+      // Convert to array of roor objects?
+      // Implement a door data container object?
+      // Use RestSharp templated object transfer?
+      // Set up web server to use {upsert:true} option.
+
       return content;
     }
 
