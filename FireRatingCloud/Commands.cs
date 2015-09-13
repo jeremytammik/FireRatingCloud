@@ -467,8 +467,10 @@ namespace FireRatingCloud
 
       string query = "doors/project/" + project_id;
 
-      string jsonResponse = Util.QueryOrUpsert( query,
-        string.Empty, "GET" );
+      //string jsonResponse = Util.QueryOrUpsert( query,
+      //  string.Empty, "GET" );
+
+      string jsonResponse = Util.Get( query );
 
       object obj = JsonParser.JsonDecode( jsonResponse );
 

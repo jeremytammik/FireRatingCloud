@@ -151,6 +151,28 @@ namespace FireRatingCloud
       return content;
     }
 
+    /// <summary>
+    /// GET JSON document data from 
+    /// the specified mongoDB collection.
+    /// </summary>
+    public static string Get( 
+      string collection_name_and_id )
+    {
+      var client = new RestClient( RestApiBaseUrl );
+
+      var request = new RestRequest( _api_version + "/"
+        + collection_name_and_id, Method.GET );
+
+      //request.RequestFormat = DataFormat.Json;
+
+      // execute the request
+      IRestResponse response = client.Execute( request );
+
+      var content = response.Content; // raw content as string
+
+      return content;
+    }
+
     #region Project
 #if NEED_PROJECT_DOCUMENT
     /// <summary>
