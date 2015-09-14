@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if NEED_JSON_PARSER
+using System;
 using System.Collections;
 using System.Globalization;
 using System.Text;
@@ -609,3 +610,4 @@ namespace FireRatingCloud
     }
   }
 }
+#endif // NEED_JSON_PARSER

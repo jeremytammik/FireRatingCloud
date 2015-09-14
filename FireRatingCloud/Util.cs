@@ -2,9 +2,7 @@
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 using RestSharp;
-using RestSharp.Deserializers;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -58,12 +56,11 @@ namespace FireRatingCloud
     /// </summary>
     public static string Put(
       string collection_name_and_id,
-      object data )
+      DoorData doorData )
     {
       var client = new RestClient( RestApiBaseUrl );
 
       //client.Authenticator = new HttpBasicAuthenticator(username, password);
-
       //var request = new RestRequest( "resource/{id}", Method.POST );
       //request.AddParameter( "name", "value" ); // adds to POST or URL querystring based on Method
       //request.AddUrlSegment( "id", "123" ); // replaces matching token in request.Resource
@@ -73,8 +70,7 @@ namespace FireRatingCloud
 
       request.RequestFormat = DataFormat.Json;
 
-      //request.AddBody( new { A = "foo", B = "bar" } ); // uses JsonSerializer
-      request.AddBody( data ); // uses JsonSerializer
+      request.AddBody( doorData ); // uses JsonSerializer
 
       // If you just want POST params instead (which 
       // would still map to your model and is a lot 
@@ -121,7 +117,8 @@ namespace FireRatingCloud
       //DoorData doorData = deserialiser
       //  .Deserialize<DoorData>( response );
 
-      IRestResponse<List<DoorData>> response2 = client.Execute<List<DoorData>>( request );
+      IRestResponse<List<DoorData>> response2 
+        = client.Execute<List<DoorData>>( request );
 
       return response2.Data;
 
