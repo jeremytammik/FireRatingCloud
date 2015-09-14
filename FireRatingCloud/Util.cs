@@ -7,12 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Net;
 using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web;
 #endregion // Namespaces
 
 namespace FireRatingCloud
@@ -21,12 +16,8 @@ namespace FireRatingCloud
   {
     #region HTTP Access
     /// <summary>
-    /// Timeout for HTTP calls.
-    /// </summary>
-    public static int Timeout = 1000;
-
-    /// <summary>
-    /// HTTP access constant to toggle between local and global server.
+    /// HTTP access constant to toggle 
+    /// between local and global server.
     /// </summary>
     public static bool UseLocalServer = true;
 
@@ -58,52 +49,6 @@ namespace FireRatingCloud
       {
         return RestApiBaseUrl + "/" + _api_version;
       }
-    }
-
-    /// <summary>
-    /// GET, PUT or POST JSON document data from or to 
-    /// the specified mongoDB collection.
-    /// </summary>
-    public static string QueryOrUpsert(
-      string collection_name_id_query,
-      string json,
-      string method )
-    {
-      string uri = Util.RestApiUri + "/"
-        + collection_name_id_query;
-
-      HttpWebRequest request = HttpWebRequest.Create(
-        uri ) as HttpWebRequest;
-
-      request.ContentType = "application/json; charset=utf-8";
-      request.Accept = "application/json, text/javascript, */*";
-      request.Timeout = Util.Timeout;
-      request.Method = method;
-
-      if( 0 < json.Length )
-      {
-        Debug.Assert( !method.Equals( "GET" ),
-          "content is not allowed with GET" );
-
-        using( StreamWriter writer = new StreamWriter(
-          request.GetRequestStream() ) )
-        {
-          writer.Write( json );
-        }
-      }
-      WebResponse response = request.GetResponse();
-      Stream stream = response.GetResponseStream();
-      string jsonResponse = string.Empty;
-
-      using( StreamReader reader = new StreamReader(
-        stream ) )
-      {
-        while( !reader.EndOfStream )
-        {
-          jsonResponse += reader.ReadLine();
-        }
-      }
-      return jsonResponse;
     }
 
     /// <summary>
@@ -155,7 +100,7 @@ namespace FireRatingCloud
     /// GET JSON document data from 
     /// the specified mongoDB collection.
     /// </summary>
-    public static string Get( 
+    public static string Get(
       string collection_name_and_id )
     {
       var client = new RestClient( RestApiBaseUrl );
@@ -287,6 +232,59 @@ namespace FireRatingCloud
 
     #region Test Code
 #if LOTS_OF_TEST_CODE
+    /// <summary>
+    /// Timeout for HTTP calls.
+    /// </summary>
+    //public static int Timeout = 1000;
+
+    /// <summary>
+    /// GET, PUT or POST JSON document data from or to 
+    /// the specified mongoDB collection.
+    /// Obsolete method using HttpWebRequest, later 
+    /// replaced by more succinct code using RestSharp.
+    /// </summary>
+    public static string QueryOrUpsert(
+      string collection_name_id_query,
+      string json,
+      string method )
+    {
+      string uri = Util.RestApiUri + "/"
+        + collection_name_id_query;
+
+      HttpWebRequest request = HttpWebRequest.Create(
+        uri ) as HttpWebRequest;
+
+      request.ContentType = "application/json; charset=utf-8";
+      request.Accept = "application/json, text/javascript, */*";
+      request.Timeout = Util.Timeout;
+      request.Method = method;
+
+      if( 0 < json.Length )
+      {
+        Debug.Assert( !method.Equals( "GET" ),
+          "content is not allowed with GET" );
+
+        using( StreamWriter writer = new StreamWriter(
+          request.GetRequestStream() ) )
+        {
+          writer.Write( json );
+        }
+      }
+      WebResponse response = request.GetResponse();
+      Stream stream = response.GetResponseStream();
+      string jsonResponse = string.Empty;
+
+      using( StreamReader reader = new StreamReader(
+        stream ) )
+      {
+        while( !reader.EndOfStream )
+        {
+          jsonResponse += reader.ReadLine();
+        }
+      }
+      return jsonResponse;
+    }
+
     /// <summary>
     /// POST JSON data to the specified mongoDB collection.
     /// </summary>

@@ -43,6 +43,7 @@ using System.Runtime.InteropServices;
 // 2015-07-09 2016.0.0.7 switched from local database server to Heroku-hosted cloud-based
 // 2015-09-10 2016.0.0.8 implemented Util.Put using RestSharp instead of HttpWebRequest
 // 2015-09-13 2016.0.0.9 implemented Util.Get using RestSharp instead of HttpWebRequest
+// 2015-09-14 2016.0.0.10 removed obsolete HttpWebRequest QueryOrUpsert method and the .NET references it requires
 //
-[assembly: AssemblyVersion( "2016.0.0.9" )]
-[assembly: AssemblyFileVersion( "2016.0.0.9" )]
+[assembly: AssemblyVersion( "2016.0.0.10" )]
+[assembly: AssemblyFileVersion( "2016.0.0.10" )]
