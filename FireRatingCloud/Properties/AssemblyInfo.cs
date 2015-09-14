@@ -44,6 +44,7 @@ using System.Runtime.InteropServices;
 // 2015-09-10 2016.0.0.8 implemented Util.Put using RestSharp instead of HttpWebRequest
 // 2015-09-13 2016.0.0.9 implemented Util.Get using RestSharp instead of HttpWebRequest
 // 2015-09-14 2016.0.0.10 removed obsolete HttpWebRequest QueryOrUpsert method and the .NET references it requires
+// 2015-09-14 2016.0.0.11 implemented DoorData class and added call to JsonDeserializer.Deserialize
 //
-[assembly: AssemblyVersion( "2016.0.0.10" )]
-[assembly: AssemblyFileVersion( "2016.0.0.10" )]
+[assembly: AssemblyVersion( "2016.0.0.11" )]
+[assembly: AssemblyFileVersion( "2016.0.0.11" )]

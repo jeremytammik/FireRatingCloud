@@ -2,6 +2,7 @@
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
 using RestSharp;
+using RestSharp.Deserializers;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -119,6 +120,11 @@ namespace FireRatingCloud
       // Implement a door data container object?
       // Use RestSharp templated object transfer?
       // Set up web server to use {upsert:true} option.
+
+      JsonDeserializer deserialiser = new JsonDeserializer();
+
+      DoorData doorData = deserialiser
+        .Deserialize<DoorData>( response );
 
       return content;
     }

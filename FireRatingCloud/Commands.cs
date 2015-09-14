@@ -264,7 +264,8 @@ namespace FireRatingCloud
     /// <summary>
     /// Retrieve the door instance data to store in 
     /// the external database and return it as a
-    /// dictionary-like object.
+    /// dictionary-like object. Obsolete, replaced
+    /// by DoorData constructor.
     /// </summary>
     object GetDoorData(
       Element door,
@@ -415,12 +416,15 @@ namespace FireRatingCloud
 
       int n = collector.Count<Element>();
 
-      object doorData;
+      //object doorData;
+      DoorData doorData;
       string jsonResponse;
 
       foreach( Element e in collector )
       {
-        doorData = GetDoorData( e, project_id, paramGuid );
+        //doorData = GetDoorData( e, project_id, paramGuid );
+
+        doorData = new DoorData( e, project_id, paramGuid );
 
         Debug.Print( e.Id.IntegerValue.ToString() );
 
