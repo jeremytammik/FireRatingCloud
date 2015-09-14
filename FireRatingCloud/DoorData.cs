@@ -9,28 +9,45 @@ namespace FireRatingCloud
 {
   class DoorData
   {
-    public string UniqueId { get; set; }
-    public string ProjectId { get; set; }
-    public string Level { get; set; }
-    public string Tag { get; set; }
-    public double FireRating { get; set; }
+    public string _id { get; set; }
+    public string project_id { get; set; }
+    public string level { get; set; }
+    public string tag { get; set; }
+    public double firerating { get; set; }
 
+
+    /// <summary>
+    /// Constructor to populate instance by 
+    /// deserialising the REST GET response.
+    /// </summary>
+    public DoorData()
+    {
+    }
+
+    /// <summary>
+    /// Constructor from BIM to serialise for
+    /// the REST POST or PUT request.
+    /// </summary>
+    /// <param name="door"></param>
+    /// <param name="project_id"></param>
+    /// <param name="paramGuid"></param>
     public DoorData(
       Element door,
-      string project_id,
+      string project_id_arg,
       Guid paramGuid )
     {
       Document doc = door.Document;
 
-      UniqueId = door.UniqueId;
-      ProjectId = project_id;
+      _id = door.UniqueId;
 
-      Level = doc.GetElement( door.LevelId ).Name;
+      project_id = project_id_arg;
 
-      Tag = door.get_Parameter( 
+      level = doc.GetElement( door.LevelId ).Name;
+
+      tag = door.get_Parameter( 
         BuiltInParameter.ALL_MODEL_MARK ).AsString();
 
-      FireRating = door.get_Parameter( paramGuid )
+      firerating = door.get_Parameter( paramGuid )
         .AsDouble();
     }
   }

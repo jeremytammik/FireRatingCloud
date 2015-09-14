@@ -101,7 +101,7 @@ namespace FireRatingCloud
     /// GET JSON document data from 
     /// the specified mongoDB collection.
     /// </summary>
-    public static string Get(
+    public static List<DoorData> Get(
       string collection_name_and_id )
     {
       var client = new RestClient( RestApiBaseUrl );
@@ -114,19 +114,21 @@ namespace FireRatingCloud
       // execute the request
       IRestResponse response = client.Execute( request );
 
-      var content = response.Content; // raw content as string
+      //var content = response.Content; // raw content as string
 
-      // Convert to array of roor objects?
+      //JsonDeserializer deserialiser = new JsonDeserializer();
+
+      //DoorData doorData = deserialiser
+      //  .Deserialize<DoorData>( response );
+
+      IRestResponse<List<DoorData>> response2 = client.Execute<List<DoorData>>( request );
+
+      return response2.Data;
+
+      // Convert to array of door objects?
       // Implement a door data container object?
       // Use RestSharp templated object transfer?
       // Set up web server to use {upsert:true} option.
-
-      JsonDeserializer deserialiser = new JsonDeserializer();
-
-      DoorData doorData = deserialiser
-        .Deserialize<DoorData>( response );
-
-      return content;
     }
 
     #region Project

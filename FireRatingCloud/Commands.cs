@@ -1,6 +1,7 @@
 #region Namespaces
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Autodesk.Revit.ApplicationServices;
@@ -474,54 +475,55 @@ namespace FireRatingCloud
       //string jsonResponse = Util.QueryOrUpsert( query,
       //  string.Empty, "GET" );
 
-      string jsonResponse = Util.Get( query );
+      List<DoorData> doors = Util.Get( query );
 
-      object obj = JsonParser.JsonDecode( jsonResponse );
+      //object obj = JsonParser.JsonDecode( jsonResponse );
 
-      if( null != obj )
+      //if( null != obj )
+      //{
+      //  ArrayList doors = obj as ArrayList;
+
+      if( null != doors && 0 < doors.Count )
       {
-        ArrayList doors = obj as ArrayList;
-
-        if( null != doors && 0 < doors.Count )
+        using( Transaction t = new Transaction( doc ) )
         {
-          using( Transaction t = new Transaction( doc ) )
+          t.Start( "Import Fire Rating Values" );
+
+          // Retrieve element unique id and 
+          // FireRating parameter values.
+
+          foreach( DoorData d in doors )
           {
-            t.Start( "Import Fire Rating Values" );
+            //Hashtable d = door as Hashtable;
+            //string uid = d["_id"] as string;
 
-            // Retrieve element unique id and 
-            // FireRating parameter values.
+            string uid = d._id;
+            Element e = doc.GetElement( uid );
 
-            foreach( object door in doors )
+            if( null == e )
             {
-              Hashtable d = door as Hashtable;
-              string uid = d["_id"] as string;
-              Element e = doc.GetElement( uid );
+              message = string.Format( 
+                "Error retrieving element for "
+                + "unique id {0}.", uid );
 
-              if( null == e )
-              {
-                message = string.Format(
-                  "Error retrieving element for unique id {0}.",
-                  uid );
-
-                return Result.Failed;
-              }
-
-              Parameter p = e.get_Parameter( paramGuid );
-
-              if( null == p )
-              {
-                message = string.Format(
-                  "Error retrieving shared parameter on element with unique id {0}.",
-                  uid );
-
-                return Result.Failed;
-              }
-              object fire_rating = d["firerating"];
-
-              p.Set( (double) fire_rating );
+              return Result.Failed;
             }
-            t.Commit();
+
+            Parameter p = e.get_Parameter( paramGuid );
+
+            if( null == p )
+            {
+              message = string.Format(
+                "Error retrieving shared parameter on "
+                + " element with unique id {0}.", uid );
+
+              return Result.Failed;
+            }
+            object fire_rating = d.firerating;
+
+            p.Set( (double) fire_rating );
           }
+          t.Commit();
         }
       }
       return Result.Succeeded;
