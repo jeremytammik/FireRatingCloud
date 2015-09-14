@@ -417,17 +417,15 @@ namespace FireRatingCloud
 
       int n = collector.Count<Element>();
 
-      //object doorData;
       DoorData doorData;
       string jsonResponse;
 
       foreach( Element e in collector )
       {
-        //doorData = GetDoorData( e, project_id, paramGuid );
-
-        doorData = new DoorData( e, project_id, paramGuid );
-
         Debug.Print( e.Id.IntegerValue.ToString() );
+
+        doorData = new DoorData( e, 
+          project_id, paramGuid );
 
         jsonResponse = Util.Put(
           "doors/" + e.UniqueId, doorData );
@@ -472,16 +470,7 @@ namespace FireRatingCloud
 
       string query = "doors/project/" + project_id;
 
-      //string jsonResponse = Util.QueryOrUpsert( query,
-      //  string.Empty, "GET" );
-
       List<DoorData> doors = Util.Get( query );
-
-      //object obj = JsonParser.JsonDecode( jsonResponse );
-
-      //if( null != obj )
-      //{
-      //  ArrayList doors = obj as ArrayList;
 
       if( null != doors && 0 < doors.Count )
       {
@@ -494,9 +483,6 @@ namespace FireRatingCloud
 
           foreach( DoorData d in doors )
           {
-            //Hashtable d = door as Hashtable;
-            //string uid = d["_id"] as string;
-
             string uid = d._id;
             Element e = doc.GetElement( uid );
 

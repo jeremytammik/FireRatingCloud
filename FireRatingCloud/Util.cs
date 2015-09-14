@@ -85,7 +85,6 @@ namespace FireRatingCloud
       // add files to upload (works with compatible verbs)
       //request.AddFile( path );
 
-      // execute the request
       IRestResponse response = client.Execute( request );
 
       var content = response.Content; // raw content as string
@@ -105,22 +104,10 @@ namespace FireRatingCloud
       var request = new RestRequest( _api_version + "/"
         + collection_name_and_id, Method.GET );
 
-      //request.RequestFormat = DataFormat.Json;
-
-      // execute the request
-      IRestResponse response = client.Execute( request );
-
-      //var content = response.Content; // raw content as string
-
-      //JsonDeserializer deserialiser = new JsonDeserializer();
-
-      //DoorData doorData = deserialiser
-      //  .Deserialize<DoorData>( response );
-
-      IRestResponse<List<DoorData>> response2 
+      IRestResponse<List<DoorData>> response
         = client.Execute<List<DoorData>>( request );
 
-      return response2.Data;
+      return response.Data;
 
       // Convert to array of door objects?
       // Implement a door data container object?
