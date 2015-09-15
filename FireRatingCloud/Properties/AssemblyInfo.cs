@@ -47,6 +47,7 @@ using System.Runtime.InteropServices;
 // 2015-09-14 2016.0.0.11 implemented DoorData class and added call to JsonDeserializer.Deserialize
 // 2015-09-14 2016.0.0.11 updated Get to return a list of deserialised DoorData instances
 // 2015-09-14 2016.0.0.12 commented out JsonParser code and pass DoorData instance to Put method
+// 2015-09-15 2016.0.0.13 cleaned up for publication
 //
-[assembly: AssemblyVersion( "2016.0.0.12" )]
-[assembly: AssemblyFileVersion( "2016.0.0.12" )]
+[assembly: AssemblyVersion( "2016.0.0.13" )]
+[assembly: AssemblyFileVersion( "2016.0.0.13" )]

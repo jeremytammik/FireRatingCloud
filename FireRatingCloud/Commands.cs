@@ -8,7 +8,7 @@ using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-#endregion
+#endregion // Namespaces
 
 namespace FireRatingCloud
 {
@@ -424,7 +424,7 @@ namespace FireRatingCloud
       {
         Debug.Print( e.Id.IntegerValue.ToString() );
 
-        doorData = new DoorData( e, 
+        doorData = new DoorData( e,
           project_id, paramGuid );
 
         jsonResponse = Util.Put(
@@ -488,7 +488,7 @@ namespace FireRatingCloud
 
             if( null == e )
             {
-              message = string.Format( 
+              message = string.Format(
                 "Error retrieving element for "
                 + "unique id {0}.", uid );
 

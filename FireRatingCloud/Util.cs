@@ -108,11 +108,6 @@ namespace FireRatingCloud
         = client.Execute<List<DoorData>>( request );
 
       return response.Data;
-
-      // Convert to array of door objects?
-      // Implement a door data container object?
-      // Use RestSharp templated object transfer?
-      // Set up web server to use {upsert:true} option.
     }
 
     #region Project

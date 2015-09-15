@@ -1,9 +1,7 @@
-﻿using Autodesk.Revit.DB;
+﻿#region Namespaces
+using Autodesk.Revit.DB;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+#endregion // Namespaces
 
 namespace FireRatingCloud
 {
@@ -44,7 +42,7 @@ namespace FireRatingCloud
 
       level = doc.GetElement( door.LevelId ).Name;
 
-      tag = door.get_Parameter( 
+      tag = door.get_Parameter(
         BuiltInParameter.ALL_MODEL_MARK ).AsString();
 
       firerating = door.get_Parameter( paramGuid )
