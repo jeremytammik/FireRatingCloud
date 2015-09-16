@@ -262,11 +262,12 @@ namespace FireRatingCloud
 #endif // NEED_PROJECT_DOCUMENT
     #endregion // Project
 
+    #region Obsolete code
     /// <summary>
     /// Retrieve the door instance data to store in 
     /// the external database and return it as a
-    /// dictionary-like object. Obsolete, replaced
-    /// by DoorData constructor.
+    /// dictionary-like object. 
+    /// Obsolete, replaced by DoorData constructor.
     /// </summary>
     object GetDoorData(
       Element door,
@@ -295,6 +296,7 @@ namespace FireRatingCloud
 
       return data;
     }
+    #endregion // Obsolete code
 
     public Result Execute(
       ExternalCommandData commandData,
