@@ -48,6 +48,7 @@ using System.Runtime.InteropServices;
 // 2015-09-14 2016.0.0.11 updated Get to return a list of deserialised DoorData instances
 // 2015-09-14 2016.0.0.12 commented out JsonParser code and pass DoorData instance to Put method
 // 2015-09-15 2016.0.0.13 cleaned up for publication
+// 2015-11-18 2016.0.0.14 readme enhancements and installation instructions for autodesk university
 //
-[assembly: AssemblyVersion( "2016.0.0.13" )]
-[assembly: AssemblyFileVersion( "2016.0.0.13" )]
+[assembly: AssemblyVersion( "2016.0.0.14" )]
+[assembly: AssemblyFileVersion( "2016.0.0.14" )]
