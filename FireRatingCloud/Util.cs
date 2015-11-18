@@ -60,30 +60,12 @@ namespace FireRatingCloud
     {
       var client = new RestClient( RestApiBaseUrl );
 
-      //client.Authenticator = new HttpBasicAuthenticator(username, password);
-      //var request = new RestRequest( "resource/{id}", Method.POST );
-      //request.AddParameter( "name", "value" ); // adds to POST or URL querystring based on Method
-      //request.AddUrlSegment( "id", "123" ); // replaces matching token in request.Resource
-
       var request = new RestRequest( _api_version + "/"
         + collection_name_and_id, Method.PUT );
 
       request.RequestFormat = DataFormat.Json;
 
       request.AddBody( doorData ); // uses JsonSerializer
-
-      // If you just want POST params instead (which 
-      // would still map to your model and is a lot 
-      // more efficient since there's no serialization 
-      // to JSON) do this:
-      //request.AddParameter("A", "foo");
-      //request.AddParameter("B", "bar");
-
-      // easily add HTTP Headers
-      //request.AddHeader( "header", "value" );
-
-      // add files to upload (works with compatible verbs)
-      //request.AddFile( path );
 
       IRestResponse response = client.Execute( request );
 
