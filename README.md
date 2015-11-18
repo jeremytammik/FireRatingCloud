@@ -110,7 +110,7 @@ If you host both the web server and the database on the web, i.e., both `UseLoca
 If you are running some components locally, you need to install and
 run [MongoDB](https://www.mongodb.org)
 and/or [Node](https://nodejs.org) and
-the roomedit app itself on your system.
+the [fireratingdb](https://github.com/jeremytammik/firerating) app itself on your system.
 
 Good luck and have fun!
 
