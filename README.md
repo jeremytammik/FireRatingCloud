@@ -3,7 +3,7 @@
 FireRatingCloud is a C# .NET Revit add-in.
 
 It is a multi-project re-implementation of the FireRating SDK sample using a cloud-based database managed by the
-[fireratingdb](https://github.com/jeremytammik/firerating) node.js mongoDB web server.
+[fireratingdb](https://github.com/jeremytammik/firerating) node.js MongoDB web server.
 
 For more information, please refer to
 [The 3D Web Coder](http://the3dwebcoder.typepad.com),
@@ -64,6 +64,55 @@ the detailed articles describing the entire project implementation and evolution
   - [REST GET returns a list of deserialised DoorData instances](http://the3dwebcoder.typepad.com/blog/2015/09/c-doordata-and-nodejs-doorservice-classes.html#4)
   - [Passing a DoorData instance to the Put method](http://the3dwebcoder.typepad.com/blog/2015/09/c-doordata-and-nodejs-doorservice-classes.html#5)
   - [Implementing a REST API router DoorService class](http://the3dwebcoder.typepad.com/blog/2015/09/c-doordata-and-nodejs-doorservice-classes.html#6)
+
+
+
+
+## Installation
+
+To install:
+
+- Fork the repository.
+- Clone to your local system.
+- Load the solution file in Visual Studio.
+- Compile the add-in, producing the .NET assembly DLL FireRatingCloud.dll.
+- Install in the standard Revit add-in location, for example by copying the add-in manifest file and the .NET DLL assembly to `C:\Users\tammikj\AppData\Roaming\Autodesk\Revit\Addins\2016`.
+
+If you do not know what this means, please refer to the GitHub
+and [Revit programming getting started](http://thebuildingcoder.typepad.com/blog/about-the-author.html#2) guides.
+
+As explaine above, FireRatingCloud interacts with
+the [fireratingdb](https://github.com/jeremytammik/firerating) node.js web server and MongoDB database.
+
+You can run each of these either locally, on your own system, or on the web, for instance
+using [Heroku](http://heroku.com) to host the node.js web server
+and [mongolab.com](https://mongolab.com) for the database.
+
+For the web server, this choice is made by the C# Revit add-in and its the Boolean variable `Util.UseLocalServer`, which toggles the base URL being used between these two constants:
+
+    const string _base_url_local = "http://127.0.0.1:3001";
+    const string _base_url_global = "http://fireratingdb.herokuapp.com";
+
+The web server in turn decides where to look for the database, again by setting the appropriate URL like this in `server.js`:
+
+    var localMongo = false;
+
+    if(localMongo) {
+      // local database
+      var mongo_uri = 'mongodb://localhost/firerating';
+    } else {
+      // mongolab hosted
+      var mongo_uri = 'mongodb://revit:revit@ds047742.mongolab.com:47742/firerating';
+    }
+
+If you host both the web server and the database on the web, i.e., both `UseLocalServer` and `localMongo` are set to `false`, you have no more to set up.
+
+If you are running some components locally, you need to install and
+run [MongoDB](https://www.mongodb.org)
+and/or [Node](https://nodejs.org) and
+the roomedit app itself on your system.
+
+Good luck and have fun!
 
 
 ## Author
