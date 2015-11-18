@@ -84,8 +84,8 @@ and [Revit programming getting started](http://thebuildingcoder.typepad.com/blog
 As explaine above, FireRatingCloud interacts with
 the [fireratingdb](https://github.com/jeremytammik/firerating) node.js web server and MongoDB database.
 
-You can run each of these either locally, on your own system, or on the web, for instance
-using [Heroku](http://heroku.com) to host the node.js web server
+You can run both the web server and the database either locally, on your own system, or on the web, for instance
+using [Heroku](http://heroku.com) to host the web server
 and [mongolab.com](https://mongolab.com) for the database.
 
 For the web server, this choice is made by the C# Revit add-in and its the Boolean variable `Util.UseLocalServer`, which toggles the base URL being used between these two constants:
