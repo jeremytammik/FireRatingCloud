@@ -2,7 +2,9 @@
 
 FireRatingCloud is a C# .NET Revit add-in.
 
-It is a multi-project re-implementation of the FireRating SDK sample using a cloud-based database managed by the
+It is a multi-project re-implementation of the FireRating SDK sample.
+
+It uses a REST API to access a cloud-based database managed by the
 [fireratingdb](https://github.com/jeremytammik/firerating) node.js MongoDB web server.
 
 For more information, please refer to
