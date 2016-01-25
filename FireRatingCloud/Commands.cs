@@ -413,9 +413,14 @@ namespace FireRatingCloud
       // category and export the shared parameter value 
       // specified by paramGuid for each.
 
-      FilteredElementCollector collector
-        = Util.GetTargetInstances( doc,
-          Cmd_1_CreateAndBindSharedParameter.Target );
+      //FilteredElementCollector collector
+      //  = Util.GetTargetInstances( doc,
+      //    Cmd_1_CreateAndBindSharedParameter.Target );
+
+      FilteredElementCollector collector 
+        = new FilteredElementCollector( doc )
+          .OfClass( typeof( FamilyInstance ) )
+          .OfCategory( BuiltInCategory.OST_Doors );
 
       int n = collector.Count<Element>();
 
