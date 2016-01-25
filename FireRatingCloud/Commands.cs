@@ -123,7 +123,7 @@ namespace FireRatingCloud
       // shared parameters using the BindingMap. Note
       // that non-user-visible parameters can still be
       // bound to these categories. In our case, we
-      // make the shared parameter user visibly, if
+      // make the shared parameter user visible, if
       // the category allows it.
 
       bool visible = cat.AllowsBoundParameters;
@@ -417,7 +417,7 @@ namespace FireRatingCloud
       //  = Util.GetTargetInstances( doc,
       //    Cmd_1_CreateAndBindSharedParameter.Target );
 
-      FilteredElementCollector collector 
+      FilteredElementCollector collector
         = new FilteredElementCollector( doc )
           .OfClass( typeof( FamilyInstance ) )
           .OfCategory( BuiltInCategory.OST_Doors );
@@ -426,6 +426,10 @@ namespace FireRatingCloud
 
       DoorData doorData;
       string jsonResponse;
+
+      //collector.Select<Element, string>( 
+      //  d => Util.Put( "doors/" + d.UniqueId, 
+      //    new DoorData( d, project_id, paramGuid ) ) );
 
       foreach( Element e in collector )
       {
