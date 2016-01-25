@@ -40,6 +40,11 @@ namespace FireRatingCloud
   {
     // What element type are we interested in? The standard 
     // SDK FireRating sample uses BuiltInCategory.OST_Doors. 
+
+    static public BuiltInCategory Target = BuiltInCategory.OST_Doors;
+
+    // Previous tests:
+    //
     // We also test using BuiltInCategory.OST_Walls to 
     // demonstrate that the same technique works with system 
     // families just as well as with standard ones.
@@ -51,9 +56,7 @@ namespace FireRatingCloud
     //
     // The last test is for attaching shared parameters 
     // to model groups.
-
-    static public BuiltInCategory Target = BuiltInCategory.OST_Doors;
-
+    //
     //static public BuiltInCategory Target = BuiltInCategory.OST_Walls;
     //static public string Target = "Drawing1.dwg";
     //static public BuiltInCategory Target = BuiltInCategory.OST_IOSModelGroups; // doc.Settings.Categories.get_Item returns null

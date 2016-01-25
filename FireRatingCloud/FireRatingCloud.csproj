@@ -59,7 +59,6 @@
     <Reference Include="System.Security" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="App.cs" />
     <Compile Include="Commands.cs" />
     <Compile Include="DoorData.cs" />
     <Compile Include="JsonParser.cs" />

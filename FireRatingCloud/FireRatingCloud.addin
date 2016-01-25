@@ -27,12 +27,4 @@
     <VendorId>TBC_</VendorId>
     <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
   </AddIn>
-  <AddIn Type="Application">
-    <Name>Application FireRatingCloud</Name>
-    <Assembly>FireRatingCloud.dll</Assembly>
-    <FullClassName>FireRatingCloud.App</FullClassName>
-    <ClientId>6e836140-e5b7-4e1a-b4d4-0147838f75ce</ClientId>
-    <VendorId>TBC_</VendorId>
-    <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
-  </AddIn>
 </RevitAddIns>
