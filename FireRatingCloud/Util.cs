@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Net;
 using System.Security.Cryptography;
 #endregion // Namespaces
 
@@ -54,7 +55,8 @@ namespace FireRatingCloud
     /// PUT JSON document data into 
     /// the specified mongoDB collection.
     /// </summary>
-    public static string Put(
+    public static HttpStatusCode Put(
+      out string content,
       string collection_name_and_id,
       DoorData doorData )
     {
@@ -69,9 +71,9 @@ namespace FireRatingCloud
 
       IRestResponse response = client.Execute( request );
 
-      var content = response.Content; // raw content as string
+      content = response.Content; // raw content as string
 
-      return content;
+      return response.StatusCode;
     }
 
     /// <summary>

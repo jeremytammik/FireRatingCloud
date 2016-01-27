@@ -8,6 +8,7 @@ using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using System.Net;
 #endregion // Namespaces
 
 namespace FireRatingCloud
@@ -251,6 +252,7 @@ namespace FireRatingCloud
       int n = collector.Count<Element>();
 
       DoorData doorData;
+      HttpStatusCode rc;
       string jsonResponse;
 
       //collector.Select<Element, string>( 
@@ -264,7 +266,7 @@ namespace FireRatingCloud
         doorData = new DoorData( e,
           project_id, paramGuid );
 
-        jsonResponse = Util.Put(
+        rc = Util.Put( out jsonResponse, 
           "doors/" + e.UniqueId, doorData );
 
         Debug.Print( jsonResponse );
