@@ -18,7 +18,7 @@ namespace FireRatingCloud
     /// HTTP access constant to toggle 
     /// between local and global server.
     /// </summary>
-    public static bool UseLocalServer = false;
+    public static bool UseLocalServer = true;
 
     // HTTP access constants.
 
