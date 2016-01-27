@@ -251,6 +251,11 @@ namespace FireRatingCloud
 
       int n = collector.Count<Element>();
 
+      Debug.Print( "Exporting {0} elements.", n );
+
+      Stopwatch stopwatch = new Stopwatch();
+      stopwatch.Start();
+
       DoorData doorData;
       HttpStatusCode sc;
       string jsonResponse, errorMessage;
@@ -280,6 +285,12 @@ namespace FireRatingCloud
 
         Debug.Print( jsonResponse );
       }
+      stopwatch.Stop();
+
+      Debug.Print( 
+        "{0} milliseconds to export {1} elements.", 
+        stopwatch.ElapsedMilliseconds, n );
+
       return rc;
     }
   }
