@@ -52,6 +52,7 @@ using System.Runtime.InteropServices;
 // 2016-01-26 2016.0.0.15 beginning to set up for madrid bim programming http://www.bimprogramming.com
 // 2016-01-26 2016.0.0.16 split Commands.cs into three separate modules
 // 2016-01-27 2016.0.0.17 added error message in case of node.js web server not running
+// 2016-01-27 2016.0.0.18 implemented import of tag aka mark as well as fire rating
 //
-[assembly: AssemblyVersion( "2016.0.0.17" )]
-[assembly: AssemblyFileVersion( "2016.0.0.17" )]
+[assembly: AssemblyVersion( "2016.0.0.18" )]
+[assembly: AssemblyFileVersion( "2016.0.0.18" )]
