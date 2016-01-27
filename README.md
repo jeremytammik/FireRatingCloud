@@ -9,7 +9,7 @@ It uses a REST API to access a cloud-based database managed by the
 
 You might be interested in comparing it with the stand-alone Windows forms executable
 [FireRatingClient](https://github.com/jeremytammik/FireRatingClient).
-Similar to FireRatingCloud, but stand-alone instead of a Revit add-in, implemented as a read-write
+Similar to FireRatingCloud, but stand-alone instead of a Revit add-in, it implements a read-write
 [fireratingdb](https://github.com/jeremytammik/firerating) client that you can use to remotely edit the BIM.
 
 For more information, please refer to
