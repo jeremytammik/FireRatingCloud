@@ -283,8 +283,9 @@ namespace FireRatingCloud
           break;
         }
 
-        Debug.Print( jsonResponse );
+        //Debug.Print( jsonResponse );
       }
+
       stopwatch.Stop();
 
       Debug.Print( 

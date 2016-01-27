@@ -40,6 +40,9 @@ namespace FireRatingCloud
 
       string project_id = Util.GetProjectIdentifier( doc );
 
+      Stopwatch stopwatch = new Stopwatch();
+      stopwatch.Start();
+
       // Get all doors referencing this project.
 
       string query = "doors/project/" + project_id;
@@ -100,6 +103,13 @@ namespace FireRatingCloud
           t.Commit();
         }
       }
+
+      stopwatch.Stop();
+
+      Debug.Print(
+        "{0} milliseconds to export {1} elements.",
+        stopwatch.ElapsedMilliseconds, doors.Count );
+
       return Result.Succeeded;
     }
   }
