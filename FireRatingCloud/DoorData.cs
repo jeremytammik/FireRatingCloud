@@ -7,6 +7,12 @@ namespace FireRatingCloud
 {
   class DoorData
   {
+    /// <summary>
+    /// Access Revit Element 'Comment' parameter.
+    /// </summary>
+    public const BuiltInParameter BipMark 
+      = BuiltInParameter.ALL_MODEL_MARK;
+
     public string _id { get; set; }
     public string project_id { get; set; }
     public string level { get; set; }
@@ -42,8 +48,7 @@ namespace FireRatingCloud
 
       level = doc.GetElement( door.LevelId ).Name;
 
-      tag = door.get_Parameter(
-        BuiltInParameter.ALL_MODEL_MARK ).AsString();
+      tag = door.get_Parameter( BipMark ).AsString();
 
       firerating = door.get_Parameter( paramGuid )
         .AsDouble();
