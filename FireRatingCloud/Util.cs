@@ -57,6 +57,7 @@ namespace FireRatingCloud
     /// </summary>
     public static HttpStatusCode Put(
       out string content,
+      out string errorMessage,
       string collection_name_and_id,
       DoorData doorData )
     {
@@ -72,6 +73,7 @@ namespace FireRatingCloud
       IRestResponse response = client.Execute( request );
 
       content = response.Content; // raw content as string
+      errorMessage = response.ErrorMessage;
 
       return response.StatusCode;
     }
