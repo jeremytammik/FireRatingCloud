@@ -252,8 +252,9 @@ namespace FireRatingCloud
       int n = collector.Count<Element>();
 
       DoorData doorData;
-      HttpStatusCode rc;
-      string jsonResponse;
+      HttpStatusCode sc;
+      string jsonResponse, errorMessage;
+      Result rc = Result.Succeeded;
 
       //collector.Select<Element, string>( 
       //  d => Util.Put( "doors/" + d.UniqueId, 
@@ -266,12 +267,20 @@ namespace FireRatingCloud
         doorData = new DoorData( e,
           project_id, paramGuid );
 
-        rc = Util.Put( out jsonResponse, 
+        sc = Util.Put( out jsonResponse, 
+          out errorMessage, 
           "doors/" + e.UniqueId, doorData );
+
+        if( 0 == (int) sc )
+        {
+          message = errorMessage;
+          rc = Result.Failed;
+          break;
+        }
 
         Debug.Print( jsonResponse );
       }
-      return Result.Succeeded;
+      return rc;
     }
   }
 }
