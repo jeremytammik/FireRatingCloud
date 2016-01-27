@@ -8,7 +8,7 @@ namespace FireRatingCloud
   class DoorData
   {
     /// <summary>
-    /// Access Revit Element 'Comment' parameter.
+    /// Access Revit Element ALL_MODEL_MARK parameter.
     /// </summary>
     public const BuiltInParameter BipMark 
       = BuiltInParameter.ALL_MODEL_MARK;

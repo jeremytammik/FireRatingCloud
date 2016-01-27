@@ -82,6 +82,20 @@ namespace FireRatingCloud
             object fire_rating = d.firerating;
 
             p.Set( (double) fire_rating );
+
+            p = e.get_Parameter( DoorData.BipMark );
+
+            if( null == p )
+            {
+              message = string.Format(
+                "Error retrieving ALL_MODEL_MARK "
+                + "built-in parameter on element with "
+                + "unique id {0}.", uid );
+
+              return Result.Failed;
+            }
+
+            p.Set( (string) d.tag );
           }
           t.Commit();
         }
