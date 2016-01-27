@@ -107,7 +107,7 @@ namespace FireRatingCloud
       stopwatch.Stop();
 
       Debug.Print(
-        "{0} milliseconds to export {1} elements.",
+        "{0} milliseconds to import {1} elements.",
         stopwatch.ElapsedMilliseconds, doors.Count );
 
       return Result.Succeeded;
