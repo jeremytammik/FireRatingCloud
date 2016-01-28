@@ -5,13 +5,13 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("FireRating")]
-[assembly: AssemblyDescription( "FireRating utility library defining door data and HTTP REST access" )]
-[assembly: AssemblyConfiguration( "" )]
-[assembly: AssemblyCompany( "Autodesk Inc." )]
-[assembly: AssemblyProduct("FireRating")]
-[assembly: AssemblyCopyright( "Copyright 2016 © Jeremy Tammik Autodesk Inc." )]
-[assembly: AssemblyTrademark( "" )]
+[assembly: AssemblyTitle("FireRatingClient")]
+[assembly: AssemblyDescription("")]
+[assembly: AssemblyConfiguration("")]
+[assembly: AssemblyCompany("")]
+[assembly: AssemblyProduct("FireRatingClient")]
+[assembly: AssemblyCopyright("Copyright (C) 2016 Jose Ignacio Montes, Avatar BIM, and Jeremy Tammik, Autodesk Inc.")]
+[assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("5651a014-5ac0-49e4-b074-f543e78b9307")]
+[assembly: Guid("5764e24f-3aff-491a-8511-772b8e9424a9")]
 
 // Version information for an assembly consists of the following four values:
 //
