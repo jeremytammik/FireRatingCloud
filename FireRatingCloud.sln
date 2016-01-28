@@ -2,6 +2,11 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2012
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FireRatingCloud", "FireRatingCloud\FireRatingCloud.csproj", "{FF39F52A-7FFC-4FBC-88FB-353E38944ED5}"
+	ProjectSection(ProjectDependencies) = postProject
+		{40FF48AF-E87C-45B0-88BB-ED06ECEA8E10} = {40FF48AF-E87C-45B0-88BB-ED06ECEA8E10}
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FireRating", "FireRating\FireRating.csproj", "{40FF48AF-E87C-45B0-88BB-ED06ECEA8E10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,6 +18,10 @@ Global
 		{FF39F52A-7FFC-4FBC-88FB-353E38944ED5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FF39F52A-7FFC-4FBC-88FB-353E38944ED5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FF39F52A-7FFC-4FBC-88FB-353E38944ED5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40FF48AF-E87C-45B0-88BB-ED06ECEA8E10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40FF48AF-E87C-45B0-88BB-ED06ECEA8E10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40FF48AF-E87C-45B0-88BB-ED06ECEA8E10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40FF48AF-E87C-45B0-88BB-ED06ECEA8E10}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

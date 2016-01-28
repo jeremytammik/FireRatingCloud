@@ -47,7 +47,7 @@ namespace FireRatingCloud
 
       string query = "doors/project/" + project_id;
 
-      List<DoorData> doors = Util.Get( query );
+      List<FireRating.DoorData> doors = Util.Get( query );
 
       if( null != doors && 0 < doors.Count )
       {
@@ -58,7 +58,7 @@ namespace FireRatingCloud
           // Retrieve element unique id and 
           // FireRating parameter values.
 
-          foreach( DoorData d in doors )
+          foreach( FireRating.DoorData d in doors )
           {
             string uid = d._id;
             Element e = doc.GetElement( uid );

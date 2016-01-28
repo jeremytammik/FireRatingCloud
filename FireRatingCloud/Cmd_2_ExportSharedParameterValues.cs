@@ -267,7 +267,7 @@ namespace FireRatingCloud
 
       foreach( Element e in collector )
       {
-        Debug.Print( e.Id.IntegerValue.ToString() );
+        //Debug.Print( e.Id.IntegerValue.ToString() );
 
         doorData = new DoorData( e,
           project_id, paramGuid );

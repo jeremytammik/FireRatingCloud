@@ -1,0 +1,38 @@
+public Result Execute(
+  ExternalCommandData commandData,
+  ref string message,
+  ElementSet elements )
+{
+  UIApplication uiapp = commandData.Application;
+  Application app = uiapp.Application;
+  Document doc = uiapp.ActiveUIDocument.Document;
+
+  // Get shared parameter GUID.
+
+  Guid paramGuid;
+  if( !Util.GetSharedParamGuid( app, out paramGuid ) )
+  {
+    message = "Shared parameter GUID not found.";
+    return Result.Failed;
+  }
+
+  // Determine custom project identifier.
+
+  string project_id = Util.GetProjectIdentifier( doc );
+
+  // Loop through all elements of the given target
+  // category and export the shared parameter value
+  // specified by paramGuid for each.
+
+  // Collect all doors: filtered element collector
+
+  Result rc = Result.Succeeded;
+
+  // Loop over each door: foreach
+
+    // Create DoorData instance.
+
+    // REST PUT DoorData to mongo database: Util.Put
+
+  return rc;
+}

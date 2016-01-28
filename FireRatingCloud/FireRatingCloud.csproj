@@ -71,6 +71,12 @@
     <None Include="FireRatingCloud.addin" />
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\FireRating\FireRating.csproj">
+      <Project>{40ff48af-e87c-45b0-88bb-ed06ecea8e10}</Project>
+      <Name>FireRating</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="AfterClean">
     <Delete Files="$(AppData)\Autodesk\REVIT\Addins\2016\FireRatingCloud.addin" />
