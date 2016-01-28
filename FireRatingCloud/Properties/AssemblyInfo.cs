@@ -53,6 +53,7 @@ using System.Runtime.InteropServices;
 // 2016-01-26 2016.0.0.16 split Commands.cs into three separate modules
 // 2016-01-27 2016.0.0.17 added error message in case of node.js web server not running
 // 2016-01-27 2016.0.0.18 implemented import of tag aka mark as well as fire rating
+// 2016-01-28 2016.0.0.19 split all Revit independent utils into separate module
 //
-[assembly: AssemblyVersion( "2016.0.0.18" )]
-[assembly: AssemblyFileVersion( "2016.0.0.18" )]
+[assembly: AssemblyVersion( "2016.0.0.19" )]
+[assembly: AssemblyFileVersion( "2016.0.0.19" )]
