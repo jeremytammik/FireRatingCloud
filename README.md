@@ -7,10 +7,10 @@ It is a multi-project re-implementation of the FireRating SDK sample.
 It uses a REST API to access a cloud-based database managed by the
 [fireratingdb](https://github.com/jeremytammik/firerating) node.js MongoDB web server.
 
-You might be interested in comparing it with the stand-alone Windows forms executable
-[FireRatingClient](https://github.com/jeremytammik/FireRatingClient).
-Similar to FireRatingCloud, but stand-alone instead of a Revit add-in, it implements a read-write
-[fireratingdb](https://github.com/jeremytammik/firerating) client that you can use to remotely edit the BIM.
+This repo also includes FireRatingClient, a stand-alone Windows forms executable implementing a read-write
+fireratingdb client that you can use to remotely edit the BIM without entering or even installing Revit.
+
+- Yodo: add image here!
 
 For more information, please refer to
 [The 3D Web Coder](http://the3dwebcoder.typepad.com),
@@ -122,9 +122,18 @@ the [fireratingdb](https://github.com/jeremytammik/firerating) app itself on you
 Good luck and have fun!
 
 
+## Todo
+
+- Implement an external event for real-time BIM update subscription like the [room editor](https://github.com/jeremytammik/RoomEditorApp).
+- Implement a push notification from fireratingdb to trigger the external event whenever changes are made, instead of continuous polling like the room editor.
+
 ## Author
 
-Jeremy Tammik,
+- Jose Ignacio Montes,
+[@montesherraiz](https://github.com/Montesherraiz),
+[Avatar BIM](http://avatarbim.com),
+implemented FireRatingClient.
+- Jeremy Tammik,
 [The Building Coder](http://thebuildingcoder.typepad.com) and
 [The 3D Web Coder](http://the3dwebcoder.typepad.com),
 [ADN](http://www.autodesk.com/adn)
