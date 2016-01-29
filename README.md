@@ -127,7 +127,7 @@ Good luck and have fun!
 - Implement an external event for real-time BIM update subscription like the [room editor](https://github.com/jeremytammik/RoomEditorApp).
 - Implement a push notification from fireratingdb to trigger the external event whenever changes are made, instead of continuous polling like the room editor.
 
-## Author
+## Authors
 
 - Jose Ignacio Montes,
 [@montesherraiz](https://github.com/Montesherraiz),
