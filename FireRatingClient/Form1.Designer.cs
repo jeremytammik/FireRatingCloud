@@ -58,8 +58,8 @@
             this.olvColumn4,
             this.olvColumn5});
       this.FOLV_Puertas.Cursor = System.Windows.Forms.Cursors.Default;
-      this.FOLV_Puertas.HighlightBackgroundColor = System.Drawing.Color.Empty;
-      this.FOLV_Puertas.HighlightForegroundColor = System.Drawing.Color.Empty;
+      this.FOLV_Puertas.SelectedBackColor = System.Drawing.Color.Empty;
+      this.FOLV_Puertas.SelectedForeColor = System.Drawing.Color.Empty;
       this.FOLV_Puertas.Location = new System.Drawing.Point(12, 9);
       this.FOLV_Puertas.Name = "FOLV_Puertas";
       this.FOLV_Puertas.ShowGroups = false;
