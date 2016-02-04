@@ -10,7 +10,7 @@ It uses a REST API to access a cloud-based database managed by the
 This repo also includes FireRatingClient, a stand-alone Windows forms executable implementing a read-write
 fireratingdb client that you can use to remotely edit the BIM without entering or even installing Revit.
 
-- Yodo: add image here!
+- Todo: add image here!
 
 For more information, please refer to
 [The 3D Web Coder](http://the3dwebcoder.typepad.com),
@@ -127,6 +127,8 @@ Good luck and have fun!
 - Implement an external event for real-time BIM update subscription like the [room editor](https://github.com/jeremytammik/RoomEditorApp).
 - Subscribe to a push notification event from fireratingdb to trigger the external event whenever changes are made, instead of continuous polling like the room editor.
 - On document change, update the fireratingdb push notification subscriptionn to the new current docuemnt.
+- Implement batch upload. Currently, data upload is processed element by element, while download is implemented as one single much more effective batch call.
+
 
 ## Authors
 
