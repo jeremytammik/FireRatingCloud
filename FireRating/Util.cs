@@ -17,7 +17,7 @@ namespace FireRating
     /// HTTP access constant to toggle 
     /// between local and global server.
     /// </summary>
-    public static bool UseLocalServer = false;
+    public static bool UseLocalServer = true;
 
     // HTTP access constants.
 
@@ -77,33 +77,6 @@ namespace FireRating
     }
 
     /// <summary>
-    /// Batch PUT JSON document data into 
-    /// the specified mongoDB collection.
-    /// </summary>
-    public static HttpStatusCode PutBatch(
-      out string content,
-      out string errorMessage,
-      string collection_name,
-      List<DoorData> doorData )
-    {
-      var client = new RestClient( RestApiBaseUrl );
-
-      var request = new RestRequest( _api_version + "/"
-        + collection_name, Method.PUT );
-
-      request.RequestFormat = DataFormat.Json;
-
-      request.AddBody( doorData ); // uses JsonSerializer
-
-      IRestResponse response = client.Execute( request );
-
-      content = response.Content; // raw content as string
-      errorMessage = response.ErrorMessage;
-
-      return response.StatusCode;
-    }
-
-    /// <summary>
     /// GET JSON document data from 
     /// the specified mongoDB collection.
     /// </summary>
@@ -120,6 +93,51 @@ namespace FireRating
 
       return response.Data;
     }
+
+    /// <summary>
+    /// Delete all door data for this project
+    /// from the specified mongoDB collection.
+    /// </summary>
+    public static string Delete(
+      string collection_name_and_id )
+    {
+      var client = new RestClient( RestApiBaseUrl );
+
+      var request = new RestRequest( _api_version + "/"
+        + collection_name_and_id, Method.DELETE );
+
+      IRestResponse response = client.Execute( request );
+
+      return response.Content;
+    }
+
+    /// <summary>
+    /// Batch PUT JSON document data into 
+    /// the specified mongoDB collection.
+    /// </summary>
+    public static HttpStatusCode PostBatch(
+      out string content,
+      out string errorMessage,
+      string collection_name,
+      List<DoorData> doorData )
+    {
+      var client = new RestClient( RestApiBaseUrl );
+
+      var request = new RestRequest( _api_version + "/"
+        + collection_name, Method.POST );
+
+      request.RequestFormat = DataFormat.Json;
+
+      request.AddBody( doorData ); // uses JsonSerializer
+
+      IRestResponse response = client.Execute( request );
+
+      content = response.Content; // raw content as string
+      errorMessage = response.ErrorMessage;
+
+      return response.StatusCode;
+    }
+
 
     #region Project
 #if NEED_PROJECT_DOCUMENT

@@ -289,7 +289,11 @@ namespace FireRatingCloud
         //Debug.Print( jsonResponse );
       }
 
-      sc = Util.PutBatch( out jsonResponse,
+      string query = "doors/project/" + project_id;
+
+      string content = Util.Delete( query );
+
+      sc = Util.PostBatch( out jsonResponse,
         out errorMessage, "doors/", doorData );
 
       if( 0 == (int) sc )
