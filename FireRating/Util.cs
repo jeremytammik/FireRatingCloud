@@ -77,6 +77,33 @@ namespace FireRating
     }
 
     /// <summary>
+    /// Batch PUT JSON document data into 
+    /// the specified mongoDB collection.
+    /// </summary>
+    public static HttpStatusCode PutBatch(
+      out string content,
+      out string errorMessage,
+      string collection_name,
+      List<DoorData> doorData )
+    {
+      var client = new RestClient( RestApiBaseUrl );
+
+      var request = new RestRequest( _api_version + "/"
+        + collection_name, Method.PUT );
+
+      request.RequestFormat = DataFormat.Json;
+
+      request.AddBody( doorData ); // uses JsonSerializer
+
+      IRestResponse response = client.Execute( request );
+
+      content = response.Content; // raw content as string
+      errorMessage = response.ErrorMessage;
+
+      return response.StatusCode;
+    }
+
+    /// <summary>
     /// GET JSON document data from 
     /// the specified mongoDB collection.
     /// </summary>

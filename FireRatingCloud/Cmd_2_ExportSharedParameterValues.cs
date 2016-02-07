@@ -21,6 +21,11 @@ namespace FireRatingCloud
   public class Cmd_2_ExportSharedParameterValues
     : IExternalCommand
   {
+    /// <summary>
+    /// Toggle export of doors one by one or batch mode.
+    /// </summary>
+    static bool _useBatch = true;
+
     #region Project
 #if NEED_PROJECT_DOCUMENT
     /// <summary>
@@ -125,28 +130,12 @@ namespace FireRatingCloud
     }
     #endregion // Obsolete code
 
-    public Result Execute(
-      ExternalCommandData commandData,
-      ref string message,
-      ElementSet elements )
+    public Result ExecuteOneByOne(
+      FilteredElementCollector doors,
+      Guid paramGuid,
+      string project_id,
+      ref string message )
     {
-      UIApplication uiapp = commandData.Application;
-      Application app = uiapp.Application;
-      Document doc = uiapp.ActiveUIDocument.Document;
-
-      // Get shared parameter GUID.
-
-      Guid paramGuid;
-      if( !Util.GetSharedParamGuid( app, out paramGuid ) )
-      {
-        message = "Shared parameter GUID not found.";
-        return Result.Failed;
-      }
-
-      // Determine custom project identifier.
-
-      string project_id = Util.GetProjectIdentifier( doc );
-
       #region Project
 #if NEED_PROJECT_DOCUMENT
       // Post project data.
@@ -236,25 +225,8 @@ namespace FireRatingCloud
 #endif // NEED_PROJECT_DOCUMENT
       #endregion // Project
 
-      // Loop through all elements of the given target
-      // category and export the shared parameter value 
-      // specified by paramGuid for each.
-
-      //FilteredElementCollector collector
-      //  = Util.GetTargetInstances( doc,
-      //    Cmd_1_CreateAndBindSharedParameter.Target );
-
-      FilteredElementCollector collector
-        = new FilteredElementCollector( doc )
-          .OfClass( typeof( FamilyInstance ) )
-          .OfCategory( BuiltInCategory.OST_Doors );
-
-      int n = collector.Count<Element>();
-
-      Debug.Print( "Exporting {0} elements.", n );
-
-      Stopwatch stopwatch = new Stopwatch();
-      stopwatch.Start();
+      // Loop through the selected doors and export 
+      // their shared parameter value one by one.
 
       DoorData doorData;
       HttpStatusCode sc;
@@ -265,7 +237,7 @@ namespace FireRatingCloud
       //  d => Util.Put( "doors/" + d.UniqueId, 
       //    new DoorData( d, project_id, paramGuid ) ) );
 
-      foreach( Element e in collector )
+      foreach( Element e in doors )
       {
         //Debug.Print( e.Id.IntegerValue.ToString() );
 
@@ -285,14 +257,105 @@ namespace FireRatingCloud
 
         //Debug.Print( jsonResponse );
       }
+      return rc;
+    }
+
+    public Result ExecuteBatch(
+      FilteredElementCollector doors,
+      Guid paramGuid,
+      string project_id,
+      ref string message )
+    {
+      // Loop through the selected doors and export 
+      // their shared parameter value in one single 
+      // batch call.
+
+      int n = doors.Count<Element>();
+
+      List<FireRating.DoorData> doorData 
+        = new List<FireRating.DoorData>( n );
+      
+      HttpStatusCode sc;
+      string jsonResponse, errorMessage;
+      Result rc = Result.Succeeded;
+
+      foreach( Element e in doors )
+      {
+        //Debug.Print( e.Id.IntegerValue.ToString() );
+
+        doorData.Add( new DoorData( e,
+          project_id, paramGuid ) );
+
+        //Debug.Print( jsonResponse );
+      }
+
+      sc = Util.PutBatch( out jsonResponse,
+        out errorMessage, "doors/", doorData );
+
+      if( 0 == (int) sc )
+      {
+        message = errorMessage;
+        rc = Result.Failed;
+      }
+      return rc;
+    }
+
+    public Result Execute(
+      ExternalCommandData commandData,
+      ref string message,
+      ElementSet elements )
+    {
+      UIApplication uiapp = commandData.Application;
+      Application app = uiapp.Application;
+      Document doc = uiapp.ActiveUIDocument.Document;
+
+      // Get shared parameter GUID.
+
+      Guid paramGuid;
+      if( !Util.GetSharedParamGuid( app, out paramGuid ) )
+      {
+        message = "Shared parameter GUID not found.";
+        return Result.Failed;
+      }
+
+      // Determine custom project identifier.
+
+      string project_id = Util.GetProjectIdentifier( doc );
+
+      // Loop through all elements of the given target
+      // category and export the shared parameter value 
+      // specified by paramGuid for each.
+
+      //FilteredElementCollector collector
+      //  = Util.GetTargetInstances( doc,
+      //    Cmd_1_CreateAndBindSharedParameter.Target );
+
+      FilteredElementCollector collector
+        = new FilteredElementCollector( doc )
+          .OfClass( typeof( FamilyInstance ) )
+          .OfCategory( BuiltInCategory.OST_Doors );
+
+      int n = collector.Count<Element>();
+
+      Debug.Print( "Exporting {0} elements {1}.", n,
+        (_useBatch ? "in batch" : "one by one" ) );
+
+      Stopwatch stopwatch = new Stopwatch();
+      stopwatch.Start();
+
+      Result rc = _useBatch
+        ? ExecuteBatch( collector, paramGuid, project_id, ref message )
+        : ExecuteOneByOne( collector, paramGuid, project_id, ref message );
 
       stopwatch.Stop();
 
-      Debug.Print( 
-        "{0} milliseconds to export {1} elements.", 
-        stopwatch.ElapsedMilliseconds, n );
+      Debug.Print(
+        "{0} milliseconds to export {1} elements: {2}.",
+        stopwatch.ElapsedMilliseconds, n, rc );
 
       return rc;
+
+
     }
   }
 }
