@@ -55,7 +55,7 @@ using System.Runtime.InteropServices;
 // 2016-01-27 2016.0.0.18 implemented import of tag aka mark as well as fire rating
 // 2016-01-28 2016.0.0.19 split all Revit independent utils into separate module
 // 2016-01-28 2016.0.0.20 integrated FireRatingClient
-// 2016-02-07 2016.0.0.21 implemented batch upload using Delete > deleteAllForProject and PostBatch > insertBatch
+// 2016-02-07 2016.0.0.21 implemented batch upload using C# Delete + PostBatch calling fireratingdb deleteAllForProject + insertBatch
 //
 [assembly: AssemblyVersion( "2016.0.0.21" )]
 [assembly: AssemblyFileVersion( "2016.0.0.21" )]
