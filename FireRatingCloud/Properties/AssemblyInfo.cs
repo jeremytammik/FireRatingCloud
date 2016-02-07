@@ -56,6 +56,7 @@ using System.Runtime.InteropServices;
 // 2016-01-28 2016.0.0.19 split all Revit independent utils into separate module
 // 2016-01-28 2016.0.0.20 integrated FireRatingClient
 // 2016-02-07 2016.0.0.21 implemented batch upload using C# Delete + PostBatch calling fireratingdb deleteAllForProject + insertBatch
+// 2016-02-07 2016.0.0.22 batch upload worked fine locally but not on web server so switched back to one by one upload
 //
-[assembly: AssemblyVersion( "2016.0.0.21" )]
-[assembly: AssemblyFileVersion( "2016.0.0.21" )]
+[assembly: AssemblyVersion( "2016.0.0.22" )]
+[assembly: AssemblyFileVersion( "2016.0.0.22" )]

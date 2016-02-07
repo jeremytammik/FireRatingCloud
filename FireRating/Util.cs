@@ -138,7 +138,6 @@ namespace FireRating
       return response.StatusCode;
     }
 
-
     #region Project
 #if NEED_PROJECT_DOCUMENT
     /// <summary>

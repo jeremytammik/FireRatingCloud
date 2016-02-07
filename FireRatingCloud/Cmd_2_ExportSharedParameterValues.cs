@@ -24,7 +24,7 @@ namespace FireRatingCloud
     /// <summary>
     /// Toggle export of doors one by one or batch mode.
     /// </summary>
-    static bool _useBatch = true;
+    static bool _useBatch = false;
 
     #region Project
 #if NEED_PROJECT_DOCUMENT
@@ -294,7 +294,7 @@ namespace FireRatingCloud
       string content = Util.Delete( query );
 
       sc = Util.PostBatch( out jsonResponse,
-        out errorMessage, "doors/", doorData );
+        out errorMessage, "doors", doorData );
 
       if( 0 == (int) sc )
       {
