@@ -75,6 +75,7 @@ the detailed articles describing the entire project implementation and evolution
   - [Implementing a REST API router DoorService class](http://the3dwebcoder.typepad.com/blog/2015/09/c-doordata-and-nodejs-doorservice-classes.html#6)
 - [FireRating in the Cloud presentation and project overview at RTC](http://thebuildingcoder.typepad.com/blog/2015/11/connecting-desktop-and-cloud-room-editor-update.html#4)
 - [Connecting Desktop and Cloud recording for the AEC booth at AU](http://thebuildingcoder.typepad.com/blog/2015/11/connecting-desktop-and-cloud-at-au-and-devdays.html#2)
+- [FireRatingClient and the Spanish nature of connectivity](http://thebuildingcoder.typepad.com/blog/2016/01/bim-programming-madrid-and-spanish-connectivity.html#3)
 
 
 ## Installation
