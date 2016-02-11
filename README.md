@@ -171,7 +171,7 @@ All door fire rating values for the entire project are read from the database in
 - The stand-alone FireRatingClient displays data from all projects and therefore needs a different global subscription, not tied to a specific project.
 
 
-## Done
+### Done
 
 - Implement batch upload. Previously, data upload was only processed element by element, whereas download is implemented using one single much more effective batch call.
 
