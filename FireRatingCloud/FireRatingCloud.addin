@@ -10,11 +10,20 @@
     <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
   </AddIn>
   <AddIn Type="Command">
-    <Text>FireRating in the Cloud 2: Export</Text>
-    <Description>Export shared parameter values</Description>
+    <Text>FireRating in the Cloud 2a: Export one by one</Text>
+    <Description>Export shared parameter values one by one creating new and updating existing documents</Description>
     <Assembly>FireRatingCloud.dll</Assembly>
-    <FullClassName>FireRatingCloud.Cmd_2_ExportSharedParameterValues</FullClassName>
+    <FullClassName>FireRatingCloud.Cmd_2a_ExportSharedParameterValues</FullClassName>
     <ClientId>f8093574-a012-41e5-9ade-5d08219fb3fc</ClientId>
+    <VendorId>TBC_</VendorId>
+    <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
+  </AddIn>
+  <AddIn Type="Command">
+    <Text>FireRating in the Cloud 2b: Export batch</Text>
+    <Description>Export shared parameter values in batch after deleting all existing project documents</Description>
+    <Assembly>FireRatingCloud.dll</Assembly>
+    <FullClassName>FireRatingCloud.Cmd_2b_ExportSharedParameterValuesBatch</FullClassName>
+    <ClientId>9fa4a5b1-0a69-4974-a313-5be9f420565d</ClientId>
     <VendorId>TBC_</VendorId>
     <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
   </AddIn>

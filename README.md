@@ -124,12 +124,55 @@ the [fireratingdb](https://github.com/jeremytammik/firerating) app itself on you
 Good luck and have fun!
 
 
+## Commands
+
+FireRatingCloud implements four commands:
+
+- Create and bind shared parameter &ndash; `Cmd_1_CreateAndBindSharedParameter`
+- Export shared parameter values one by one &ndash; `Cmd_2a_ExportSharedParameterValues`
+- Export shared parameter values in batch &ndash; `Cmd_2b_ExportSharedParameterValuesBatch`
+- Import shared parameter values &ndash; `Cmd_3_ImportSharedParameterValues`
+
+### Create and Bind Shared Parameter
+
+This standard procedure is unchanged from the original FireRating Revit SDK sample.
+
+### Export Shared Parameter Values One by One
+
+Gather the door data element by element and export each data record to a MongoDB JSON document.
+
+If a corresonding document already exists in the dtabase, it is updated.
+
+If not, a new document is created.
+
+This requires a separate REST call for each door element.
+
+### Export Shared Parameter Values in Batch
+
+Export all door data records for the entire project to MongoDB JSON documents in one single batch call.
+
+No possibility to update existing documents was found, so all existing documents related to this project are first deleted.
+
+In other words, this export operation requires two REST calls: one to delete existing records, and one to export the data.
+
+As soon as more than two doors are present in the project, the batch export will be faster than the individual export.
+
+### Import Shared Parameter Values
+
+All door fire rating values for the entire project are read from the database in one single REST call and used to update the existing element data.
+
+
+
 ## Todo
 
 - Implement an external event for real-time BIM update subscription like the [room editor](https://github.com/jeremytammik/RoomEditorApp).
-- Subscribe to a push notification event from fireratingdb to trigger the external event whenever changes are made, instead of continuous polling like the room editor.
-- On document change, update the fireratingdb push notification subscriptionn to the new current docuemnt.
-- Implement batch upload. Currently, data upload is processed element by element, while download is implemented as one single much more effective batch call.
+- Subscribe to a push notification event from fireratingdb to trigger the external event whenever changes are made, instead of continuous polling like the room editor. This subscription is obviously project specific; only documents realted to the current project are of interest.
+- On document change, update the fireratingdb push notification subscriptionn to the new current document.
+- The stand-alone FireRatingClient displays data from all projects and therefore needs a different global subscription, not tied to a specific project.
+
+## Done
+
+- Implement batch upload. Previously, data upload was only processed element by element, whereas download is implemented using one single much more effective batch call.
 
 
 ## Authors

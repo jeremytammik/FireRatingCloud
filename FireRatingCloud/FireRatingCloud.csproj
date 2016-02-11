@@ -60,7 +60,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Cmd_1_CreateAndBindSharedParameter.cs" />
-    <Compile Include="Cmd_2_ExportSharedParameterValues.cs" />
+    <Compile Include="Cmd_2b_ExportSharedParameterValuesBatch.cs" />
+    <Compile Include="Cmd_2a_ExportSharedParameterValues.cs" />
     <Compile Include="Cmd_3_ImportSharedParameterValues.cs" />
     <Compile Include="DoorData.cs" />
     <Compile Include="JsonParser.cs" />

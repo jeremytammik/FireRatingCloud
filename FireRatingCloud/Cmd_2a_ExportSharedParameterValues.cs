@@ -18,14 +18,9 @@ namespace FireRatingCloud
   /// FireRating parameter values to external database.
   /// </summary>
   [Transaction( TransactionMode.ReadOnly )]
-  public class Cmd_2_ExportSharedParameterValues
+  public class Cmd_2a_ExportSharedParameterValues
     : IExternalCommand
   {
-    /// <summary>
-    /// Toggle export of doors one by one or batch mode.
-    /// </summary>
-    static bool _useBatch = false;
-
     #region Project
 #if NEED_PROJECT_DOCUMENT
     /// <summary>
@@ -130,7 +125,7 @@ namespace FireRatingCloud
     }
     #endregion // Obsolete code
 
-    public Result ExecuteOneByOne(
+    public static Result ExecuteOneByOne(
       FilteredElementCollector doors,
       Guid paramGuid,
       string project_id,
@@ -260,7 +255,7 @@ namespace FireRatingCloud
       return rc;
     }
 
-    public Result ExecuteBatch(
+    public static Result ExecuteBatch(
       FilteredElementCollector doors,
       Guid paramGuid,
       string project_id,
@@ -304,10 +299,10 @@ namespace FireRatingCloud
       return rc;
     }
 
-    public Result Execute(
+    public static Result ExecuteMain(
+      bool useBatch,
       ExternalCommandData commandData,
-      ref string message,
-      ElementSet elements )
+      ref string message )
     {
       UIApplication uiapp = commandData.Application;
       Application app = uiapp.Application;
@@ -342,12 +337,12 @@ namespace FireRatingCloud
       int n = collector.Count<Element>();
 
       Debug.Print( "Exporting {0} elements {1}.", n,
-        (_useBatch ? "in batch" : "one by one" ) );
+        (useBatch ? "in batch" : "one by one" ) );
 
       Stopwatch stopwatch = new Stopwatch();
       stopwatch.Start();
 
-      Result rc = _useBatch
+      Result rc = useBatch
         ? ExecuteBatch( collector, paramGuid, project_id, ref message )
         : ExecuteOneByOne( collector, paramGuid, project_id, ref message );
 
@@ -358,8 +353,15 @@ namespace FireRatingCloud
         stopwatch.ElapsedMilliseconds, n, rc );
 
       return rc;
+    }
 
-
+    public Result Execute(
+      ExternalCommandData commandData,
+      ref string message,
+      ElementSet elements )
+    {
+      return ExecuteMain( false, 
+        commandData, ref message );
     }
   }
 }
