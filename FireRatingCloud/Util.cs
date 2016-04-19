@@ -140,5 +140,34 @@ namespace FireRatingCloud
       return !paramGuid.Equals( Guid.Empty );
     }
     #endregion // Shared Parameter Definition
+
+    #region Timestamp
+    static DateTime _1970_01_01
+      = new DateTime( 1970, 1, 1 );
+
+    /// <summary>
+    /// Converts a given DateTime into a Unix 
+    /// timestamp, i.e., number of seconds since 
+    /// 1970-01-01.
+    /// </summary>
+    public static int ToUnixTimestamp( DateTime a )
+    {
+      return (int) Math.Truncate(
+        a.ToUniversalTime().Subtract( _1970_01_01 )
+            .TotalSeconds );
+    }
+
+    /// <summary>
+    /// Gets a Unix timestamp representing 
+    /// the current moment, i.e., the number 
+    /// of seconds since 1970-01-01.
+    /// </summary>
+    public static int UnixTimestamp()
+    {
+      return (int) Math.Truncate(
+        DateTime.UtcNow.Subtract( _1970_01_01 )
+          .TotalSeconds );
+    }
+    #endregion // Timestamp
   }
 }

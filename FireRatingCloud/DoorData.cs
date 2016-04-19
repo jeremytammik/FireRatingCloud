@@ -8,18 +8,16 @@ namespace FireRatingCloud
   class DoorData : FireRating.DoorData
   {
     /// <summary>
-    /// Access Revit Element ALL_MODEL_MARK parameter.
+    /// Access the Revit Element ALL_MODEL_MARK 
+    /// built-in parameter.
     /// </summary>
-    public const BuiltInParameter BipMark 
+    public const BuiltInParameter BipMark
       = BuiltInParameter.ALL_MODEL_MARK;
 
     /// <summary>
-    /// Constructor from BIM to serialise for
-    /// the REST POST or PUT request.
+    /// DoorData constructor to generate the data to
+    /// serialise for the REST POST or PUT request.
     /// </summary>
-    /// <param name="door"></param>
-    /// <param name="project_id"></param>
-    /// <param name="paramGuid"></param>
     public DoorData(
       Element door,
       string project_id_arg,
@@ -37,6 +35,8 @@ namespace FireRatingCloud
 
       firerating = door.get_Parameter( paramGuid )
         .AsDouble();
+
+      modified = Util.UnixTimestamp();
     }
   }
 }
