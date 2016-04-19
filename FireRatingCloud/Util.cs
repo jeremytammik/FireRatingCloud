@@ -123,10 +123,16 @@ namespace FireRatingCloud
       string defName )
     {
       DefinitionFile file = app.OpenSharedParameterFile();
-      DefinitionGroup group = file.Groups.get_Item( defGroup );
-      Definition definition = group.Definitions.get_Item( defName );
-      ExternalDefinition externalDefinition = definition as ExternalDefinition;
-      return externalDefinition.GUID;
+      DefinitionGroup group = (null == file) 
+        ? null : file.Groups.get_Item( defGroup );
+      Definition definition = ( null == group ) 
+        ? null : group.Definitions.get_Item( defName );
+      ExternalDefinition externalDefinition 
+        = ( null == definition ) 
+          ? null : definition as ExternalDefinition;
+      return ( null == externalDefinition ) 
+        ? Guid.Empty 
+        : externalDefinition.GUID;
     }
 
     public static bool GetSharedParamGuid(
