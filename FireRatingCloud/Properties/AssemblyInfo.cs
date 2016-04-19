@@ -58,6 +58,7 @@ using System.Runtime.InteropServices;
 // 2016-02-07 2016.0.0.21 implemented batch upload using C# Delete + PostBatch calling fireratingdb deleteAllForProject + insertBatch
 // 2016-02-07 2016.0.0.22 batch upload worked fine locally but not on web server so switched back to one by one upload
 // 2016-02-11 2016.0.0.23 batch upload works fine on mongolab too, implemented separate upload commands for batch versus one by one 
+// 2016-04-19 2016.0.0.24 implemented unix timestamp and DoorData modified field
 //
-[assembly: AssemblyVersion( "2016.0.0.23" )]
-[assembly: AssemblyFileVersion( "2016.0.0.23" )]
+[assembly: AssemblyVersion( "2016.0.0.24" )]
+[assembly: AssemblyFileVersion( "2016.0.0.24" )]

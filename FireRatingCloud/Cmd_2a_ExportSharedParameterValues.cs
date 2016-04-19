@@ -129,6 +129,7 @@ namespace FireRatingCloud
       FilteredElementCollector doors,
       Guid paramGuid,
       string project_id,
+      int timestamp,
       ref string message )
     {
       #region Project
@@ -237,7 +238,7 @@ namespace FireRatingCloud
         //Debug.Print( e.Id.IntegerValue.ToString() );
 
         doorData = new DoorData( e,
-          project_id, paramGuid );
+          project_id, paramGuid, timestamp );
 
         sc = Util.Put( out jsonResponse, 
           out errorMessage, 
@@ -259,6 +260,7 @@ namespace FireRatingCloud
       FilteredElementCollector doors,
       Guid paramGuid,
       string project_id,
+      int timestamp,
       ref string message )
     {
       // Loop through the selected doors and export 
@@ -279,7 +281,7 @@ namespace FireRatingCloud
         //Debug.Print( e.Id.IntegerValue.ToString() );
 
         doorData.Add( new DoorData( e,
-          project_id, paramGuid ) );
+          project_id, paramGuid, timestamp ) );
 
         //Debug.Print( jsonResponse );
       }
@@ -321,6 +323,10 @@ namespace FireRatingCloud
 
       string project_id = Util.GetProjectIdentifier( doc );
 
+      // Determine timestamp.
+
+      int timestamp = Util.UnixTimestamp();
+
       // Loop through all elements of the given target
       // category and export the shared parameter value 
       // specified by paramGuid for each.
@@ -343,8 +349,8 @@ namespace FireRatingCloud
       stopwatch.Start();
 
       Result rc = useBatch
-        ? ExecuteBatch( collector, paramGuid, project_id, ref message )
-        : ExecuteOneByOne( collector, paramGuid, project_id, ref message );
+        ? ExecuteBatch( collector, paramGuid, project_id, timestamp, ref message )
+        : ExecuteOneByOne( collector, paramGuid, project_id, timestamp, ref message );
 
       stopwatch.Stop();
 

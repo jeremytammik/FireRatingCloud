@@ -21,7 +21,8 @@ namespace FireRatingCloud
     public DoorData(
       Element door,
       string project_id_arg,
-      Guid paramGuid )
+      Guid paramGuid, 
+      int timestamp )
     {
       Document doc = door.Document;
 
@@ -36,7 +37,7 @@ namespace FireRatingCloud
       firerating = door.get_Parameter( paramGuid )
         .AsDouble();
 
-      modified = Util.UnixTimestamp();
+      modified = timestamp;
     }
   }
 }
