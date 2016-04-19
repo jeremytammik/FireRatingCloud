@@ -50,12 +50,12 @@ namespace FireRatingCloud
     public static DefinitionFile GetSharedParamsFile(
       Application app )
     {
-      string sharedParamsFileName = app
-        .SharedParametersFilename;
+      string sharedParamsFileName 
+        = app.SharedParametersFilename;
 
-      if( 0 == sharedParamsFileName.Length )
+      if( 0 == sharedParamsFileName.Length
+        || null == app.OpenSharedParameterFile() )
       {
-
         StreamWriter stream;
         stream = new StreamWriter( SharedParameterFilePath );
         stream.Close();
@@ -64,10 +64,10 @@ namespace FireRatingCloud
         sharedParamsFileName = app.SharedParametersFilename;
       }
 
-      // Get the current file object and return it
+      // Get the current file object and return it.
 
-      DefinitionFile sharedParametersFile = app
-        .OpenSharedParameterFile();
+      DefinitionFile sharedParametersFile 
+        = app.OpenSharedParameterFile();
 
       return sharedParametersFile;
     }
