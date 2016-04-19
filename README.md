@@ -125,6 +125,12 @@ the [fireratingdb](https://github.com/jeremytammik/firerating) app itself on you
 Good luck and have fun!
 
 
+## Quick Test
+
+Just to check whether the node.js mongodb web server is up and running and see its version number, navigate
+to [fireratingdb.herokuapp.com](http://fireratingdb.herokuapp.com).
+
+
 ## Commands
 
 FireRatingCloud implements four commands:
