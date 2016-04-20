@@ -23,7 +23,7 @@ namespace FireRatingCloud
     /// <summary>
     /// Test retrieving only recently modified records.
     /// </summary>
-    static bool _test_newer = true;
+    static bool _test_newer = false;
 
     public Result Execute(
       ExternalCommandData commandData,
@@ -60,8 +60,8 @@ namespace FireRatingCloud
 
         timestamp -= 30; // go back half a minute
 
-        Debug.Print( 
-          "Retrieving door documents modified after {0}", 
+        Debug.Print(
+          "Retrieving door documents modified after {0}",
           timestamp );
 
         query += "/newer/" + timestamp.ToString();
