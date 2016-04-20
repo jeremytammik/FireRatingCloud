@@ -59,7 +59,7 @@ using System.Runtime.InteropServices;
 // 2016-02-07 2016.0.0.22 batch upload worked fine locally but not on web server so switched back to one by one upload
 // 2016-02-11 2016.0.0.23 batch upload works fine on mongolab too, implemented separate upload commands for batch versus one by one 
 // 2016-04-19 2016.0.0.24 implemented unix timestamp and DoorData modified field
-// 2016-04-20 2016.0.0.25 implemented test code to query modified doors only
+// 2016-04-20 2016.0.0.25 implemented test code to query doors modified after specific timestamp only
 //
 [assembly: AssemblyVersion( "2016.0.0.25" )]
 [assembly: AssemblyFileVersion( "2016.0.0.25" )]
