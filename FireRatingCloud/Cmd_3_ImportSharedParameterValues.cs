@@ -20,6 +20,11 @@ namespace FireRatingCloud
   public class Cmd_3_ImportSharedParameterValues
     : IExternalCommand
   {
+    /// <summary>
+    /// Test retrieving only recently modified records.
+    /// </summary>
+    bool _test_newer = false;
+
     public Result Execute(
       ExternalCommandData commandData,
       ref string message,
@@ -46,6 +51,17 @@ namespace FireRatingCloud
       // Get all doors referencing this project.
 
       string query = "doors/project/" + project_id;
+
+      if( _test_newer )
+      {
+        // Add timestamp to query.
+
+        int timestamp = Util.UnixTimestamp();
+
+        timestamp -= 30; // go back half a minute
+
+        query += "/newer/" + timestamp.ToString();
+      }
 
       List<FireRating.DoorData> doors = Util.Get( query );
 
