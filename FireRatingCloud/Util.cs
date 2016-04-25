@@ -1,19 +1,78 @@
 ﻿#region Namespaces
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.DB;
-using RestSharp;
+using Autodesk.Revit.UI;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Net;
 using System.Security.Cryptography;
 #endregion // Namespaces
 
 namespace FireRatingCloud
 {
+  /// <summary>
+  /// Temporary external application placeholder class.
+  /// </summary>
+  class App
+  {
+    public const string Caption = "FireRatingCloud";
+  }
+
   class Util : FireRating.Util
   {
+    #region Messages
+    /// <summary>
+    /// Display a short big message.
+    /// </summary>
+    public static void InfoMsg(string msg)
+    {
+      Debug.Print(msg);
+      TaskDialog.Show(App.Caption, msg);
+    }
+
+    /// <summary>
+    /// Display a longer message in smaller font.
+    /// </summary>
+    public static void InfoMsg2(
+      string instruction,
+      string msg,
+      bool prompt = true)
+    {
+      Debug.Print("{0}: {1}", instruction, msg);
+      if (prompt)
+      {
+        TaskDialog dlg = new TaskDialog(App.Caption);
+        dlg.MainInstruction = instruction;
+        dlg.MainContent = msg;
+        dlg.Show();
+      }
+    }
+
+    /// <summary>
+    /// Display an error message.
+    /// </summary>
+    public static void ErrorMsg(string msg)
+    {
+      Debug.Print(msg);
+      TaskDialog dlg = new TaskDialog(App.Caption);
+      dlg.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
+      dlg.MainInstruction = msg;
+      dlg.Show();
+    }
+
+    /// <summary>
+    /// Print a debug log message with a time stamp
+    /// to the Visual Studio debug output window.
+    /// </summary>
+    public static void Log(string msg)
+    {
+      string timestamp = DateTime.Now.ToString(
+        "HH:mm:ss.fff");
+
+      Debug.Print(timestamp + " " + msg);
+    }
+    #endregion // Messages
+
     #region HTTP Access
     /// <summary>
     /// Define a project identifier for the 

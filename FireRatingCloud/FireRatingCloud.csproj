@@ -59,6 +59,7 @@
     <Reference Include="System.Security" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Cmd_0_About.cs" />
     <Compile Include="Cmd_1_CreateAndBindSharedParameter.cs" />
     <Compile Include="Cmd_2b_ExportSharedParameterValuesBatch.cs" />
     <Compile Include="Cmd_2a_ExportSharedParameterValues.cs" />
