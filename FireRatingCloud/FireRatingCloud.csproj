@@ -44,6 +44,10 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AdWindows">
+      <HintPath>..\..\..\..\Program Files\Autodesk\Revit 2017\AdWindows.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="RestSharp">
       <HintPath>..\packages\RestSharp.105.2.2\lib\net452\RestSharp.dll</HintPath>
@@ -68,6 +72,7 @@
     <Compile Include="Cmd_2b_ExportSharedParameterValuesBatch.cs" />
     <Compile Include="Cmd_2a_ExportSharedParameterValues.cs" />
     <Compile Include="Cmd_3_ImportSharedParameterValues.cs" />
+    <Compile Include="DbUpdater.cs" />
     <Compile Include="DoorData.cs" />
     <Compile Include="JsonParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

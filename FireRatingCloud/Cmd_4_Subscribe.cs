@@ -6,16 +6,6 @@ using Autodesk.Revit.UI;
 
 namespace FireRatingCloud
 {
-  /// <summary>
-  /// Temporary dummy placeholder class.
-  /// </summary>
-  class DbUpdater
-  {
-    public static int LastSequence;
-    public static void SetTimestamp() { }
-    public static void ToggleSubscription( UIApplication a) { }
-  }
-
   [Transaction( TransactionMode.ReadOnly )]
   class Cmd_4_Subscribe : IExternalCommand
   {
@@ -25,7 +15,7 @@ namespace FireRatingCloud
       ElementSet elements )
     {
       if( !App.Subscribed
-        && -1 == DbUpdater.LastSequence )
+        && -1 == DbUpdater.Timestamp )
       {
         DbUpdater.SetTimestamp();
       }

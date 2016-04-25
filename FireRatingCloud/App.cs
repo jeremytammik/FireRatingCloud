@@ -209,7 +209,6 @@ namespace FireRatingCloud
     /// cloud updates. Return true when subscribed.
     /// </summary>
     public static bool ToggleSubscription2(
-      // EventHandler<IdlingEventArgs> handler
       IExternalEventHandler handler ) 
     {
       if( Subscribed )
