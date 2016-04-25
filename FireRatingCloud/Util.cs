@@ -10,14 +10,6 @@ using System.Security.Cryptography;
 
 namespace FireRatingCloud
 {
-  /// <summary>
-  /// Temporary external application placeholder class.
-  /// </summary>
-  class App
-  {
-    public const string Caption = "FireRatingCloud";
-  }
-
   class Util : FireRating.Util
   {
     #region Messages
