@@ -7,7 +7,7 @@ using Autodesk.Revit.UI;
 namespace FireRatingCloud
 {
   [Transaction( TransactionMode.ReadOnly )]
-  class CmdAbout : IExternalCommand
+  class Cmd_0_About : IExternalCommand
   {
     const string _description
       = "Demonstrate round-trip editing of shared prameter "
