@@ -77,6 +77,8 @@ the detailed articles describing the entire project implementation and evolution
 - [Connecting Desktop and Cloud recording for the AEC booth at AU](http://thebuildingcoder.typepad.com/blog/2015/11/connecting-desktop-and-cloud-at-au-and-devdays.html#2)
 - [FireRatingClient and the Spanish nature of connectivity](http://thebuildingcoder.typepad.com/blog/2016/01/bim-programming-madrid-and-spanish-connectivity.html#3)
 - [FireRatingCloud REST API batch upload and Windows client](http://the3dwebcoder.typepad.com/blog/2016/03/fireratingcloud-rest-api-batch-upload-and-windows-client.html)
+- [Database document modification timestamp](http://the3dwebcoder.typepad.com/blog/2016/04/fireratingcloud-document-modification-timestamp.html)
+- [Retrieving updated docs](http://the3dwebcoder.typepad.com/blog/2016/04/fireratingcloud-query-retrieving-updated-docs.html)
 
 
 ## Installation
@@ -87,12 +89,12 @@ To install:
 - Clone to your local system.
 - Load the solution file in Visual Studio.
 - Compile the add-in, producing the .NET assembly DLL FireRatingCloud.dll.
-- Install in the standard Revit add-in location, for example by copying the add-in manifest file and the .NET DLL assembly to `C:\Users\tammikj\AppData\Roaming\Autodesk\Revit\Addins\2016`.
+- Install by copying the add-in manifest file and the .NET DLL assembly to on of the standard Revit add-in locations, for example  `C:\Users\tammikj\AppData\Roaming\Autodesk\Revit\Addins\2017`.
 
 If you do not know what this means, please refer to the GitHub
 and [Revit programming getting started](http://thebuildingcoder.typepad.com/blog/about-the-author.html#2) guides.
 
-As explaine above, FireRatingCloud interacts with
+As explained above, FireRatingCloud interacts with
 the [fireratingdb](https://github.com/jeremytammik/firerating) node.js web server and MongoDB database.
 
 You can run both the web server and the database either locally, on your own system, or on the web, for instance
