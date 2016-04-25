@@ -44,7 +44,7 @@ namespace FireRatingCloud
 
     /// <summary>
     /// Separate thread running loop to
-    /// check for pending database changes.
+    /// poll for pending database changes.
     /// </summary>
     static Thread _thread = null;
 
@@ -60,6 +60,21 @@ namespace FireRatingCloud
     /// </summary>
     public void Execute( UIApplication a )
     {
+      Document doc = a.ActiveUIDocument.Document;
+      string error_message = null;
+
+      bool rc = Cmd_3_ImportSharedParameterValues
+        .UpdateBimFromDb( doc, Timestamp, 
+          ref error_message );
+
+      if ( rc )
+      {
+        SetTimestamp();
+      }
+      else
+      {
+        throw new SystemException( error_message );
+      }
     }
 
     /// <summary>
@@ -94,7 +109,7 @@ namespace FireRatingCloud
     /// CPU control before next check for pending
     /// database updates.
     /// </summary>
-    static int _timeout = 100;
+    static int _timeout = 500;
 
     // DLL imports from user32.dll to set focus to
     // Revit to force it to forward the external event
