@@ -1,5 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <RevitAddIns>
+  <AddIn Type="Application">
+    <Name>FireRatingCloud</Name>
+    <Assembly>C:\a\vs\FireRatingCloud\FireRatingCloud\bin\Debug\FireRatingCloud.dll</Assembly>
+    <FullClassName>FireRatingCloud.App</FullClassName>
+    <ClientId>fec7d0c1-19a7-4d96-8b06-2bad3faf1748</ClientId>
+    <VendorId>TBC_</VendorId>
+    <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
+  </AddIn>
   <AddIn Type="Command">
     <Text>FireRating in the Cloud 1: Bind</Text>
     <Description>Create and bind shared parameter definition</Description>

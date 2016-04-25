@@ -77,6 +77,26 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Icon\1Down.png" />
+    <EmbeddedResource Include="Icon\1Down16.png" />
+    <EmbeddedResource Include="Icon\1Down32.png" />
+    <EmbeddedResource Include="Icon\1Up.png" />
+    <EmbeddedResource Include="Icon\1Up16.png" />
+    <EmbeddedResource Include="Icon\1Up32.png" />
+    <EmbeddedResource Include="Icon\2Up.png" />
+    <EmbeddedResource Include="Icon\2Up16.png" />
+    <EmbeddedResource Include="Icon\2Up32.png" />
+    <EmbeddedResource Include="Icon\Knot.png" />
+    <EmbeddedResource Include="Icon\Knot16.png" />
+    <EmbeddedResource Include="Icon\Knot32.png" />
+    <EmbeddedResource Include="Icon\Question.png" />
+    <EmbeddedResource Include="Icon\Question16.png" />
+    <EmbeddedResource Include="Icon\Question32.png" />
+    <EmbeddedResource Include="Icon\ZigZagRed.png" />
+    <EmbeddedResource Include="Icon\ZigZagRed16.png" />
+    <EmbeddedResource Include="Icon\ZigZagRed32.png" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\FireRating\FireRating.csproj">
       <Project>{40ff48af-e87c-45b0-88bb-ed06ecea8e10}</Project>
       <Name>FireRating</Name>

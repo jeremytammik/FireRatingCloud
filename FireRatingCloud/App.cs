@@ -109,30 +109,34 @@ namespace FireRatingCloud
       UIControlledApplication a )
     {
       string[] tooltip = new string[] {
-        "Upload selected rooms to cloud.",
-        "Upload all rooms to cloud.",
-        "Update furniture from the last cloud edit.",
+        "Create and bind shared parameter definition.",
+        "Export shared parameter values one by one creating new and updating existing documents.",
+        "Export shared parameter values in batch after deleting all existing project documents.",
+        "Import shared parameter values.",
         "Subscribe to or unsubscribe from updates.",
         "About " + Caption + ": ..."
       };
 
       string[] text = new string[] {
-        "Upload Rooms",
-        "Upload All Rooms",
-        "Update Furniture",
+        "Bind Shared Parameter",
+        "Export one by one",
+        "Export batch",
+        "Import",
         "Subscribe",
         "About..."
       };
 
       string[] classNameStem = new string[] {
-        "UploadRooms",
-        "UploadAllRooms",
-        "Update",
-        "Subscribe",
+        "1_CreateAndBindSharedParameter",
+        "2a_ExportSharedParameterValues",
+        "2b_ExportSharedParameterValuesBatch",
+        "3_ImportSharedParameterValues",
+        "4_Subscribe",
         "0_About"
       };
 
       string[] iconName = new string[] {
+        "Knot",
         "1Up",
         "2Up",
         "1Down",
