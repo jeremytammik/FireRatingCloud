@@ -60,6 +60,8 @@ using System.Runtime.InteropServices;
 // 2016-02-11 2016.0.0.23 batch upload works fine on mongolab too, implemented separate upload commands for batch versus one by one 
 // 2016-04-19 2016.0.0.24 implemented unix timestamp and DoorData modified field
 // 2016-04-20 2016.0.0.25 implemented test code to query doors modified after specific timestamp only
+// 2016-04-25 2017.0.0.0 flat migration to Revit 2017
+// 2016-04-25 2017.0.0.1 implemented real-time bim update: external app, external event, ribbon ui, subscribe command and toggle button
 //
-[assembly: AssemblyVersion( "2017.0.0.0" )]
-[assembly: AssemblyFileVersion("2017.0.0.0")]
+[assembly: AssemblyVersion( "2017.0.0.1" )]
+[assembly: AssemblyFileVersion("2017.0.0.1")]
