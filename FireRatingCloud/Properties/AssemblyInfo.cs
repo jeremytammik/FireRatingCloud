@@ -61,5 +61,5 @@ using System.Runtime.InteropServices;
 // 2016-04-19 2016.0.0.24 implemented unix timestamp and DoorData modified field
 // 2016-04-20 2016.0.0.25 implemented test code to query doors modified after specific timestamp only
 //
-[assembly: AssemblyVersion( "2016.0.0.25" )]
-[assembly: AssemblyFileVersion( "2016.0.0.25" )]
+[assembly: AssemblyVersion( "2017.0.0.0" )]
+[assembly: AssemblyFileVersion("2017.0.0.0")]
