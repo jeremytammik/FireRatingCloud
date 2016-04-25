@@ -11,6 +11,10 @@ namespace FireRatingCloud
 {
   class DbUpdater : IExternalEventHandler
   {
+    /// <summary>
+    /// Retrieve database records 
+    /// modified after this timestamp.
+    /// </summary>
     static public int Timestamp
     {
       get;
@@ -19,7 +23,7 @@ namespace FireRatingCloud
 
     /// <summary>
     /// Determine and set the timestamp 
-    /// after updating database.
+    /// after exporting BIM data to database.
     /// </summary>
     static public int SetTimestamp()
     {
@@ -34,24 +38,19 @@ namespace FireRatingCloud
     }
 
     /// <summary>
-    /// Revit UI application.
-    /// </summary>
-    UIApplication _uiapp = null;
-
-    /// <summary>
-    /// Current document porject id.
+    /// Current document project id.
+    /// Todo: update this when switching Revit documents.
     /// </summary>
     static string _project_id = null;
 
     /// <summary>
-    /// Separate thread running loop to
-    /// poll for pending database changes.
+    /// Separate thread running the loop
+    /// polling for pending database changes.
     /// </summary>
     static Thread _thread = null;
 
     public DbUpdater( UIApplication uiapp )
     {
-      _uiapp = uiapp;
       _project_id = Util.GetProjectIdentifier( 
         uiapp.ActiveUIDocument.Document );
     }

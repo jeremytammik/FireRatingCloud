@@ -191,7 +191,7 @@ namespace FireRatingCloud
     }
     #endregion // Icon resource, bitmap image and ribbon panel stuff
 
-    #region Idling subscription and external event creation
+    #region External event subscription and handling
     /// <summary>
     /// Are we currently subscribed 
     /// to automatic cloud updates?
@@ -256,7 +256,7 @@ namespace FireRatingCloud
     {
       get { return _event; }
     }
-    #endregion // Idling subscription and external event creation
+    #endregion // External event subscription and handling
 
     public Result OnStartup(
       UIControlledApplication a )
