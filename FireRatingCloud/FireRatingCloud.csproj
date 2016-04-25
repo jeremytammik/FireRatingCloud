@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.cs" />
+    <Compile Include="Cmd_4_Subscribe.cs" />
     <Compile Include="Cmd_0_About.cs" />
     <Compile Include="Cmd_1_CreateAndBindSharedParameter.cs" />
     <Compile Include="Cmd_2b_ExportSharedParameterValuesBatch.cs" />

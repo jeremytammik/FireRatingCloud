@@ -216,8 +216,6 @@ namespace FireRatingCloud
       {
         Debug.Print( "Unsubscribing..." );
 
-        //_uiapp.Idling -= _handler; 
-        //_handler = null; 
         _event.Dispose();
         _event = null;
 
@@ -233,8 +231,7 @@ namespace FireRatingCloud
       else
       {
         Debug.Print( "Subscribing..." );
-        //_uiapp.Idling += handler;
-        //_handler = handler;
+
         _event = ExternalEvent.Create( handler );
 
         _buttons[_subscribeButtonIndex].ItemText 
