@@ -54,7 +54,7 @@ namespace FireRatingCloud
     /// </summary>
     static RibbonItem[] _buttons;
 
-    static int _subscribeButtonIndex = 3;
+    static int _subscribeButtonIndex = 4;
 
     #region Icon resource, bitmap image and ribbon panel stuff
     /// <summary>
@@ -146,8 +146,14 @@ namespace FireRatingCloud
 
       int n = classNameStem.Length;
 
-      Debug.Assert( text.Length == n,
+      Debug.Assert( text.Length == n
+        && tooltip.Length == n
+        && iconName.Length == n,
         "expected equal number of text and class name entries" );
+
+      Debug.Assert(
+        text[_subscribeButtonIndex].Equals( _subscribe ),
+        "Did you set the correct _subscribeButtonIndex?" );
 
       _buttons = new RibbonItem[n];
 

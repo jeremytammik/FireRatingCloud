@@ -23,12 +23,45 @@ namespace FireRatingCloud
     /// </summary>
     static int _test_newer_timestamp = -1;
 
+    static List<FireRating.DoorData> GetDoorRecords(
+      string project_id,
+      int timestamp )
+    {
+      // Get all doors referencing this project.
+
+      string query = "doors/project/" + project_id;
+
+      if ( -1 < timestamp )
+      {
+        // Add timestamp to query.
+
+        Debug.Print(
+          "Retrieving door documents modified after {0}",
+          timestamp );
+
+        query += "/newer/" + timestamp.ToString();
+      }
+
+      return Util.Get( query );
+    }
+
+    public static bool UpdatesArePending(
+      string project_id,
+      int timestamp )
+    {
+      List<FireRating.DoorData> doors = GetDoorRecords(
+        project_id, timestamp );
+
+      return null != doors && 0 < doors.Count;
+    }
+
     public static bool UpdateBimFromDb(
       Document doc,
       int timestamp,
       ref string error_message )
     {
       Guid paramGuid;
+
       if ( !Util.GetSharedParamGuid( doc.Application,
         out paramGuid ) )
       {
@@ -45,24 +78,8 @@ namespace FireRatingCloud
 
       // Get all doors referencing this project.
 
-      string query = "doors/project/" + project_id;
-
-      if ( -1 < timestamp )
-      {
-        // Add timestamp to query.
-
-        //int timestamp = Util.UnixTimestamp();
-
-        //timestamp -= 30; // go back half a minute
-
-        Debug.Print(
-          "Retrieving door documents modified after {0}",
-          timestamp );
-
-        query += "/newer/" + timestamp.ToString();
-      }
-
-      List<FireRating.DoorData> doors = Util.Get( query );
+      List<FireRating.DoorData> doors = GetDoorRecords( 
+        project_id, timestamp );
 
       if ( null != doors && 0 < doors.Count )
       {

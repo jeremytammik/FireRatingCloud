@@ -39,6 +39,11 @@ namespace FireRatingCloud
     UIApplication _uiapp = null;
 
     /// <summary>
+    /// Current document porject id.
+    /// </summary>
+    static string _project_id = null;
+
+    /// <summary>
     /// Separate thread running loop to
     /// poll for pending database changes.
     /// </summary>
@@ -47,6 +52,8 @@ namespace FireRatingCloud
     public DbUpdater( UIApplication uiapp )
     {
       _uiapp = uiapp;
+      _project_id = Util.GetProjectIdentifier( 
+        uiapp.ActiveUIDocument.Document );
     }
 
     /// <summary>
@@ -63,9 +70,9 @@ namespace FireRatingCloud
         .UpdateBimFromDb( doc, Timestamp, 
           ref error_message );
 
-      if ( rc )
+      if( rc )
       {
-        SetTimestamp();
+        Timestamp = Util.UnixTimestamp();
       }
       else
       {
@@ -128,25 +135,18 @@ namespace FireRatingCloud
       IntPtr hWnd );
 
     /// <summary>
-    /// Repeatedly check database status and raise 
-    /// external event when updates are pending.
-    /// Relinquish control and wait for timeout
-    /// period between each attempt. Run in a 
-    /// separate thread.
+    /// This method runs in a separate thread and
+    /// continuously polls the database for modified
+    /// records. If any are detected, raise an 
+    /// external event to update the BIM.
+    /// Relinquish control and wait for the specified
+    /// timeout period between each attempt.
     /// </summary>
     static void CheckForPendingDatabaseChanges()
     {
       while( null != App.Event )
       {
         ++_nLoopCount;
-
-        //Debug.Assert( null != _event,
-        //"expected non-null external event" );
-
-        //if( null == _event )
-        //{
-        //  break;
-        //}
 
         if( App.Event.IsPending )
         {
@@ -167,10 +167,9 @@ namespace FireRatingCloud
               + "check for changes {1}",
               _nLoopCount, _nCheckCount ) );
 
-            //RoomEditorDb rdb = new RoomEditorDb();
-
-            //if( rdb.LastSequenceNumberChanged(
-            //  DbUpdater.LastSequence ) )
+            if ( Cmd_3_ImportSharedParameterValues
+              .UpdatesArePending( _project_id, 
+                Timestamp ) )
             {
               App.Event.Raise();
 
