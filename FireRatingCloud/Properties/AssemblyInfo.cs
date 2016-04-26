@@ -65,6 +65,7 @@ using System.Runtime.InteropServices;
 // 2016-04-26 2017.0.0.2 converted timestamp to unsigned
 // 2016-04-26 2017.0.0.3 moved GetDoorRecords from Cmd_3_ImportSharedParameterValues to DbUpdater
 // 2016-04-26 2017.0.0.3 split DbUpdater into separate DbAccessor and BimUpdater classes
+// 2016-04-26 2017.0.0.4 moved and renamed UpdateBimFromDb to BimUpdater.UpdateBim
 //
-[assembly: AssemblyVersion( "2017.0.0.3" )]
-[assembly: AssemblyFileVersion("2017.0.0.3")]
+[assembly: AssemblyVersion( "2017.0.0.4" )]
+[assembly: AssemblyFileVersion("2017.0.0.4")]
