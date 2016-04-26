@@ -11,23 +11,14 @@ using System.Diagnostics;
 
 namespace FireRatingCloud
 {
+  /// <summary>
+  /// BIM updater, driven both via external 
+  /// command and external event handler.
+  /// </summary>
   class BimUpdater : IExternalEventHandler
   {
-    ///// <summary>
-    ///// Current document project id.
-    ///// Todo: update this when switching Revit documents.
-    ///// </summary>
-    //static string _project_id = null;
-
-    //public BimUpdater( UIApplication uiapp )
-    //{
-    //  _project_id = Util.GetProjectIdentifier( 
-    //    uiapp.ActiveUIDocument.Document );
-    //}
-
     /// <summary>
-    /// Update the BIM by retrieving database records 
-    /// and applying the changes.
+    /// Update the BIM with the given database records.
     /// </summary>
     public static bool UpdateBim(
       Document doc,
@@ -43,19 +34,8 @@ namespace FireRatingCloud
         return false;
       }
 
-      //// Determine custom project identifier.
-
-      //string project_id = Util.GetProjectIdentifier( doc );
-
       Stopwatch stopwatch = new Stopwatch();
       stopwatch.Start();
-
-      //// Retrieve all doors referencing this project, 
-      //// optionally modified after the given timestamp.
-
-      //List<FireRating.DoorData> doors
-      //  = DbAccessor.GetDoorRecords(
-      //    project_id, timestamp );
 
       // Loop through the doors and update   
       // their firerating parameter values.

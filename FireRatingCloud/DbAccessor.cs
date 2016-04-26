@@ -79,12 +79,6 @@ namespace FireRatingCloud
     }
 
     /// <summary>
-    /// Separate thread running the loop
-    /// polling for pending database changes.
-    /// </summary>
-    static Thread _thread = null;
-
-    /// <summary>
     /// Retrieve all door documents for the specified 
     /// Revit project identifier, optionally filtering 
     /// for documents modified after the specified timestamp.
@@ -227,6 +221,12 @@ namespace FireRatingCloud
         Thread.Sleep( _timeout );
       }
     }
+
+    /// <summary>
+    /// Separate thread running the loop
+    /// polling for pending database changes.
+    /// </summary>
+    static Thread _thread = null;
 
     /// <summary>
     /// Toggle subscription to automatic database 

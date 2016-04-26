@@ -17,7 +17,7 @@ namespace FireRatingCloud
       + "A Revit add-in exports the data to a cloud-based "
       + "MongoDB NoSQL database. The database can be edited "
       + "from anywhere, whether mobile device or stand-"
-      + "alone Windows client. Modified vlues are saved "
+      + "alone Windows client. Modified values are saved "
       + "back to the cloud database. The Revit add-in picks "
       + "up the changes and updates the BIM in real-time. "
       + "All of the components used are completely open "

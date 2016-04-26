@@ -65,7 +65,7 @@ namespace FireRatingCloud
     }
     #endregion // Messages
 
-    #region HTTP Access
+    #region Project Identifier
     /// <summary>
     /// Define a project identifier for the 
     /// given Revit document.
@@ -86,7 +86,7 @@ namespace FireRatingCloud
 
       return hashb64.Replace( '/', '_' );
     }
-    #endregion // HTTP Access
+    #endregion // Project Identifier
 
     #region Shared Parameter Definition
     // Shared parameter definition constants.

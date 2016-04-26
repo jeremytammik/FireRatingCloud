@@ -1,6 +1,4 @@
 ﻿#region Namespaces
-using System;
-using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -18,7 +16,7 @@ namespace FireRatingCloud
       ElementSet elements )
     {
       return Cmd_2a_ExportSharedParameterValues
-        .ExecuteMain( true, commandData, ref message );
+        .ExportMain( true, commandData, ref message );
     }
   }
 }

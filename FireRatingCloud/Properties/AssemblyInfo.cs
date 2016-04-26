@@ -70,6 +70,7 @@ using System.Runtime.InteropServices;
 // 2016-04-26 2017.0.0.6 rewrote UpdateBim to take list of modified doors from DbAccessor or import command
 // 2016-04-26 2017.0.0.6 initialise DbAccessor project identifier
 // 2016-04-26 2017.0.0.7 remove obsolete external commands from add-in manifest
+// 2016-04-26 2017.0.0.7 cleanup
 //
 [assembly: AssemblyVersion( "2017.0.0.7" )]
 [assembly: AssemblyFileVersion("2017.0.0.7")]

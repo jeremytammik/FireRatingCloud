@@ -124,7 +124,7 @@ namespace FireRatingCloud
     }
     #endregion // Obsolete code
 
-    public static Result ExecuteOneByOne(
+    public static Result ExportOneByOne(
       FilteredElementCollector doors,
       Guid paramGuid,
       string project_id,
@@ -255,7 +255,7 @@ namespace FireRatingCloud
       return rc;
     }
 
-    public static Result ExecuteBatch(
+    public static Result ExportBatch(
       FilteredElementCollector doors,
       Guid paramGuid,
       string project_id,
@@ -300,7 +300,7 @@ namespace FireRatingCloud
       return rc;
     }
 
-    public static Result ExecuteMain(
+    public static Result ExportMain(
       bool useBatch,
       ExternalCommandData commandData,
       ref string message )
@@ -348,8 +348,10 @@ namespace FireRatingCloud
       stopwatch.Start();
 
       Result rc = useBatch
-        ? ExecuteBatch( collector, paramGuid, project_id, timestamp, ref message )
-        : ExecuteOneByOne( collector, paramGuid, project_id, timestamp, ref message );
+        ? ExportBatch( collector, paramGuid, 
+          project_id, timestamp, ref message )
+        : ExportOneByOne( collector, paramGuid, 
+          project_id, timestamp, ref message );
 
       stopwatch.Stop();
 
@@ -365,8 +367,8 @@ namespace FireRatingCloud
       ref string message,
       ElementSet elements )
     {
-      return ExecuteMain( false, 
-        commandData, ref message );
+      return ExportMain( false, commandData, 
+        ref message );
     }
   }
 }
