@@ -15,7 +15,7 @@ namespace FireRatingCloud
     /// Retrieve database records 
     /// modified after this timestamp.
     /// </summary>
-    static public int Timestamp
+    static public uint Timestamp
     {
       get;
       set;
@@ -25,7 +25,7 @@ namespace FireRatingCloud
     /// Determine and set the timestamp 
     /// after exporting BIM data to database.
     /// </summary>
-    static public int SetTimestamp()
+    static public uint SetTimestamp()
     {
       Timestamp = Util.UnixTimestamp();
 

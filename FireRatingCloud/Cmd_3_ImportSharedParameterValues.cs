@@ -21,7 +21,7 @@ namespace FireRatingCloud
     /// <summary>
     /// Test retrieving only recently modified records.
     /// </summary>
-    static int _test_newer_timestamp = -1;
+    static uint _test_newer_timestamp = 0;
 
     /// <summary>
     /// Retireve all door documents for the specified 
@@ -30,13 +30,13 @@ namespace FireRatingCloud
     /// </summary>
     static List<FireRating.DoorData> GetDoorRecords(
       string project_id,
-      int timestamp )
+      uint timestamp )
     {
       // Get all doors referencing this project.
 
       string query = "doors/project/" + project_id;
 
-      if ( -1 < timestamp )
+      if ( 0 < timestamp )
       {
         // Add timestamp to query.
 
@@ -57,7 +57,7 @@ namespace FireRatingCloud
     /// </summary>
     public static bool UpdatesArePending(
       string project_id,
-      int timestamp )
+      uint timestamp )
     {
       List<FireRating.DoorData> doors = GetDoorRecords(
         project_id, timestamp );
@@ -71,7 +71,7 @@ namespace FireRatingCloud
     /// </summary>
     public static bool UpdateBimFromDb(
       Document doc,
-      int timestamp,
+      uint timestamp,
       ref string error_message )
     {
       Guid paramGuid;

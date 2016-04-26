@@ -16,10 +16,10 @@ namespace FireRatingCloud
     /// <summary>
     /// Display a short big message.
     /// </summary>
-    public static void InfoMsg(string msg)
+    public static void InfoMsg( string msg )
     {
-      Debug.Print(msg);
-      TaskDialog.Show(App.Caption, msg);
+      Debug.Print( msg );
+      TaskDialog.Show( App.Caption, msg );
     }
 
     /// <summary>
@@ -28,12 +28,12 @@ namespace FireRatingCloud
     public static void InfoMsg2(
       string instruction,
       string msg,
-      bool prompt = true)
+      bool prompt = true )
     {
-      Debug.Print("{0}: {1}", instruction, msg);
-      if (prompt)
+      Debug.Print( "{0}: {1}", instruction, msg );
+      if ( prompt )
       {
-        TaskDialog dlg = new TaskDialog(App.Caption);
+        TaskDialog dlg = new TaskDialog( App.Caption );
         dlg.MainInstruction = instruction;
         dlg.MainContent = msg;
         dlg.Show();
@@ -43,10 +43,10 @@ namespace FireRatingCloud
     /// <summary>
     /// Display an error message.
     /// </summary>
-    public static void ErrorMsg(string msg)
+    public static void ErrorMsg( string msg )
     {
-      Debug.Print(msg);
-      TaskDialog dlg = new TaskDialog(App.Caption);
+      Debug.Print( msg );
+      TaskDialog dlg = new TaskDialog( App.Caption );
       dlg.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
       dlg.MainInstruction = msg;
       dlg.Show();
@@ -56,12 +56,12 @@ namespace FireRatingCloud
     /// Print a debug log message with a time stamp
     /// to the Visual Studio debug output window.
     /// </summary>
-    public static void Log(string msg)
+    public static void Log( string msg )
     {
       string timestamp = DateTime.Now.ToString(
-        "HH:mm:ss.fff");
+        "HH:mm:ss.fff" );
 
-      Debug.Print(timestamp + " " + msg);
+      Debug.Print( timestamp + " " + msg );
     }
     #endregion // Messages
 
@@ -101,10 +101,10 @@ namespace FireRatingCloud
     public static DefinitionFile GetSharedParamsFile(
       Application app )
     {
-      string sharedParamsFileName 
+      string sharedParamsFileName
         = app.SharedParametersFilename;
 
-      if( 0 == sharedParamsFileName.Length
+      if ( 0 == sharedParamsFileName.Length
         || null == app.OpenSharedParameterFile() )
       {
         StreamWriter stream;
@@ -117,7 +117,7 @@ namespace FireRatingCloud
 
       // Get the current file object and return it.
 
-      DefinitionFile sharedParametersFile 
+      DefinitionFile sharedParametersFile
         = app.OpenSharedParameterFile();
 
       return sharedParametersFile;
@@ -138,7 +138,7 @@ namespace FireRatingCloud
       bool isName = targetCategory.GetType().Equals(
         typeof( string ) );
 
-      if( isName )
+      if ( isName )
       {
         Category cat = doc.Settings.Categories
           .get_Item( targetCategory as string );
@@ -174,15 +174,15 @@ namespace FireRatingCloud
       string defName )
     {
       DefinitionFile file = app.OpenSharedParameterFile();
-      DefinitionGroup group = (null == file) 
+      DefinitionGroup group = ( null == file )
         ? null : file.Groups.get_Item( defGroup );
-      Definition definition = ( null == group ) 
+      Definition definition = ( null == group )
         ? null : group.Definitions.get_Item( defName );
-      ExternalDefinition externalDefinition 
-        = ( null == definition ) 
+      ExternalDefinition externalDefinition
+        = ( null == definition )
           ? null : definition as ExternalDefinition;
-      return ( null == externalDefinition ) 
-        ? Guid.Empty 
+      return ( null == externalDefinition )
+        ? Guid.Empty
         : externalDefinition.GUID;
     }
 

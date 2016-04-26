@@ -22,7 +22,7 @@ namespace FireRatingCloud
       Element door,
       string project_id_arg,
       Guid paramGuid, 
-      int timestamp )
+      uint timestamp )
     {
       Document doc = door.Document;
 

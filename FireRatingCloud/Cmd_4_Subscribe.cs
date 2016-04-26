@@ -15,7 +15,7 @@ namespace FireRatingCloud
       ElementSet elements )
     {
       if( !App.Subscribed
-        && -1 == DbUpdater.Timestamp )
+        && 0 == DbUpdater.Timestamp )
       {
         DbUpdater.SetTimestamp();
       }

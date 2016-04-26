@@ -128,7 +128,7 @@ namespace FireRatingCloud
       FilteredElementCollector doors,
       Guid paramGuid,
       string project_id,
-      int timestamp,
+      uint timestamp,
       ref string message )
     {
       #region Project
@@ -259,7 +259,7 @@ namespace FireRatingCloud
       FilteredElementCollector doors,
       Guid paramGuid,
       string project_id,
-      int timestamp,
+      uint timestamp,
       ref string message )
     {
       // Loop through the selected doors and export 
@@ -324,7 +324,7 @@ namespace FireRatingCloud
 
       // Determine timestamp.
 
-      int timestamp = Util.UnixTimestamp();
+      uint timestamp = Util.UnixTimestamp();
 
       // Loop through all elements of the given target
       // category and export the shared parameter value 

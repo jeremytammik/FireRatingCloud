@@ -503,11 +503,12 @@ namespace FireRating
     /// timestamp, i.e., number of seconds since 
     /// 1970-01-01.
     /// </summary>
-    public static int ToUnixTimestamp( DateTime a )
+    public static uint ToUnixTimestamp( DateTime a )
     {
-      return (int) Math.Truncate(
-        a.ToUniversalTime().Subtract( _1970_01_01 )
-            .TotalSeconds );
+      return (uint) Math.Truncate(
+        a.ToUniversalTime()
+          .Subtract( _1970_01_01 )
+          .TotalSeconds );
     }
 
     /// <summary>
@@ -515,9 +516,9 @@ namespace FireRating
     /// the current moment, i.e., the number 
     /// of seconds since 1970-01-01.
     /// </summary>
-    public static int UnixTimestamp()
+    public static uint UnixTimestamp()
     {
-      return (int) Math.Truncate(
+      return (uint) Math.Truncate(
         DateTime.UtcNow.Subtract( _1970_01_01 )
           .TotalSeconds );
     }

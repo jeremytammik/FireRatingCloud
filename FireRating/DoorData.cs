@@ -11,7 +11,7 @@ namespace FireRating
     public string level { get; set; }
     public string tag { get; set; }
     public double firerating { get; set; }
-    public int modified { get; set; }
+    public uint modified { get; set; }
 
 
     /// <summary>
