@@ -276,6 +276,7 @@ namespace FireRatingCloud
       if( Subscribed )
       {
         _event.Dispose();
+        _event = null;
       }
       return Result.Succeeded;
     }

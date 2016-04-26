@@ -8,6 +8,7 @@
     <VendorId>TBC_</VendorId>
     <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
   </AddIn>
+  <!---
   <AddIn Type="Command">
     <Text>FireRating in the Cloud 1: Bind</Text>
     <Description>Create and bind shared parameter definition</Description>
@@ -44,4 +45,5 @@
     <VendorId>TBC_</VendorId>
     <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
   </AddIn>
+  -->
 </RevitAddIns>
