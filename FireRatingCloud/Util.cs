@@ -1,11 +1,11 @@
 ﻿#region Namespaces
-using Autodesk.Revit.ApplicationServices;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
 using System;
 using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
+using Autodesk.Revit.ApplicationServices;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 #endregion // Namespaces
 
 namespace FireRatingCloud
@@ -14,11 +14,20 @@ namespace FireRatingCloud
   {
     #region Messages
     /// <summary>
+    /// Return an English plural suffix 's' or
+    /// nothing for the given number of items.
+    /// </summary>
+    public static string PluralSuffix( int n )
+    {
+      return 1 == n ? "" : "s";
+    }
+
+    /// <summary>
     /// Display a short big message.
     /// </summary>
     public static void InfoMsg( string msg )
     {
-      Debug.Print( msg );
+      Util.Log( msg );
       TaskDialog.Show( App.Caption, msg );
     }
 
@@ -30,7 +39,9 @@ namespace FireRatingCloud
       string msg,
       bool prompt = true )
     {
-      Debug.Print( "{0}: {1}", instruction, msg );
+      Util.Log( string.Format( "{0}: {1}", 
+        instruction, msg ) );
+
       if ( prompt )
       {
         TaskDialog dlg = new TaskDialog( App.Caption );
@@ -45,7 +56,7 @@ namespace FireRatingCloud
     /// </summary>
     public static void ErrorMsg( string msg )
     {
-      Debug.Print( msg );
+      Util.Log( msg );
       TaskDialog dlg = new TaskDialog( App.Caption );
       dlg.MainIcon = TaskDialogIcon.TaskDialogIconWarning;
       dlg.MainInstruction = msg;
@@ -61,7 +72,7 @@ namespace FireRatingCloud
       string timestamp = DateTime.Now.ToString(
         "HH:mm:ss.fff" );
 
-      Debug.Print( timestamp + " " + msg );
+      Util.Log( timestamp + " " + msg );
     }
     #endregion // Messages
 

@@ -1,12 +1,9 @@
 ﻿#region Namespaces
 using System;
-using System.Runtime.InteropServices;
-using System.Threading;
-using Autodesk.Revit.DB;
-using Autodesk.Revit.UI;
-using Autodesk.Windows;
 using System.Collections.Generic;
 using System.Diagnostics;
+using Autodesk.Revit.DB;
+using Autodesk.Revit.UI;
 #endregion
 
 namespace FireRatingCloud
@@ -97,9 +94,10 @@ namespace FireRatingCloud
 
       stopwatch.Stop();
 
-      Debug.Print(
-        "{0} milliseconds to import {1} elements.",
-        stopwatch.ElapsedMilliseconds, doors.Count );
+      Util.Log( string.Format(
+        "{0} milliseconds to import {1} element{2}.",
+        stopwatch.ElapsedMilliseconds, doors.Count, 
+        Util.PluralSuffix( doors.Count) ) );
 
       return true;
     }

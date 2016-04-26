@@ -223,7 +223,7 @@ namespace FireRatingCloud
     {
       if( Subscribed )
       {
-        Debug.Print( "Unsubscribing..." );
+        Util.Log( "Unsubscribing..." );
 
         _event.Dispose();
         _event = null;
@@ -235,11 +235,11 @@ namespace FireRatingCloud
         //_timer.Report( "Subscription timing" );
         //_timer = null;
 
-        Debug.Print( "Unsubscribed." );
+        Util.Log( "Unsubscribed." );
       }
       else
       {
-        Debug.Print( "Subscribing..." );
+        Util.Log( "Subscribing..." );
 
         _event = ExternalEvent.Create( handler );
 
@@ -248,7 +248,7 @@ namespace FireRatingCloud
 
         //_timer = new JtTimer( "Subscription" );
 
-        Debug.Print( "Subscribed." );
+        Util.Log( "Subscribed." );
       }
       return null != _event;
     }

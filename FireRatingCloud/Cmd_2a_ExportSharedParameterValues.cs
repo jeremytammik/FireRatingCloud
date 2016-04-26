@@ -250,7 +250,7 @@ namespace FireRatingCloud
           break;
         }
 
-        //Debug.Print( jsonResponse );
+        //Util.Log( jsonResponse );
       }
       return rc;
     }
@@ -277,12 +277,12 @@ namespace FireRatingCloud
 
       foreach( Element e in doors )
       {
-        //Debug.Print( e.Id.IntegerValue.ToString() );
+        //Util.Log( e.Id.IntegerValue.ToString() );
 
         doorData.Add( new DoorData( e,
           project_id, paramGuid, timestamp ) );
 
-        //Debug.Print( jsonResponse );
+        //Util.Log( jsonResponse );
       }
 
       string query = "doors/project/" + project_id;
@@ -341,8 +341,10 @@ namespace FireRatingCloud
 
       int n = collector.Count<Element>();
 
-      Debug.Print( "Exporting {0} elements {1}.", n,
-        (useBatch ? "in batch" : "one by one" ) );
+      Util.Log( string.Format( 
+        "Exporting {0} element{1} {2}.", 
+        n, Util.PluralSuffix( n ),
+        (useBatch ? "in batch" : "one by one" ) ) );
 
       Stopwatch stopwatch = new Stopwatch();
       stopwatch.Start();
@@ -355,9 +357,10 @@ namespace FireRatingCloud
 
       stopwatch.Stop();
 
-      Debug.Print(
-        "{0} milliseconds to export {1} elements: {2}.",
-        stopwatch.ElapsedMilliseconds, n, rc );
+      Util.Log( string.Format(
+        "{0} milliseconds to export {1} element{2}: {3}.",
+        stopwatch.ElapsedMilliseconds, 
+        n, Util.PluralSuffix( n ), rc ) );
 
       return rc;
     }

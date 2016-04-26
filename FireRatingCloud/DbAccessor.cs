@@ -1,12 +1,11 @@
 ﻿#region Namespaces
 using System;
+using System.Collections.Generic;
 using System.Runtime.InteropServices;
 using System.Threading;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Windows;
-using System.Collections.Generic;
-using System.Diagnostics;
 #endregion
 
 namespace FireRatingCloud
@@ -95,9 +94,9 @@ namespace FireRatingCloud
       {
         // Add timestamp to query.
 
-        Debug.Print(
+        Util.Log( string.Format(
           "Retrieving door documents modified after {0}",
-          timestamp );
+          timestamp ) );
 
         query += "/newer/" + timestamp.ToString();
       }

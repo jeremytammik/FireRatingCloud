@@ -310,15 +310,15 @@ namespace FireRating
         }
         catch( HttpRequestException hre )
         {
-          Debug.Print( "Error:" + hre.Message );
+          Util.Log( "Error:" + hre.Message );
         }
         catch( TaskCanceledException )
         {
-          Debug.Print( "Request canceled." );
+          Util.Log( "Request canceled." );
         }
         catch( Exception ex )
         {
-          Debug.Print( ex.Message );
+          Util.Log( ex.Message );
         }
       }
     }
