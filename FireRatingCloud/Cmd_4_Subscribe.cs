@@ -1,4 +1,5 @@
 ﻿#region Namespaces
+using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
@@ -15,10 +16,15 @@ namespace FireRatingCloud
       ElementSet elements )
     {
       UIApplication uiapp = commandData.Application;
+      Document doc = uiapp.ActiveUIDocument.Document;
+
+      // Determine custom project identifier.
+
+      string project_id = Util.GetProjectIdentifier( doc );
 
       if ( !App.Subscribed && 0 == DbAccessor.Timestamp )
       {
-        DbAccessor.SetTimestamp();
+        DbAccessor.Init( project_id );
       }
 
       DbAccessor.ToggleSubscription( uiapp );

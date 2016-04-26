@@ -29,7 +29,6 @@ namespace FireRatingCloud
       ElementSet elements )
     {
       UIApplication uiapp = commandData.Application;
-      Application app = uiapp.Application;
       Document doc = uiapp.ActiveUIDocument.Document;
 
       // Determine custom project identifier.

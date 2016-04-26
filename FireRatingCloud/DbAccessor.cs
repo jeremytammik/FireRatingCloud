@@ -14,33 +14,6 @@ namespace FireRatingCloud
   class DbAccessor
   {
     /// <summary>
-    /// For subscription to automatic BIM updates,
-    /// retrieve database records modified after 
-    /// this timestamp.
-    /// </summary>
-    static public uint Timestamp
-    {
-      get;
-      set;
-    }
-
-    /// <summary>
-    /// Determine and set the timestamp 
-    /// after exporting BIM data to database.
-    /// </summary>
-    static public uint SetTimestamp()
-    {
-      Timestamp = Util.UnixTimestamp();
-
-      Util.InfoMsg( string.Format(
-        "Timestamp set to {0}."
-        + "\nChanges from now on will be retrieved.",
-        Timestamp ) );
-
-      return Timestamp;
-    }
-
-    /// <summary>
     /// Current document project id.
     /// Todo: update this when switching Revit documents.
     /// </summary>
@@ -55,6 +28,35 @@ namespace FireRatingCloud
       {
         return _project_id;
       }
+    }
+
+    /// <summary>
+    /// For subscription to automatic BIM updates,
+    /// retrieve database records modified after 
+    /// this timestamp.
+    /// </summary>
+    static public uint Timestamp
+    {
+      get;
+      set;
+    }
+
+    /// <summary>
+    /// Initialise project id and set the timestamp 
+    /// to start polling for database updates.
+    /// </summary>
+    static public uint Init( string project_id )
+    {
+      _project_id = project_id;
+
+      Timestamp = Util.UnixTimestamp();
+
+      Util.InfoMsg( string.Format(
+        "Timestamp set to {0}."
+        + "\nChanges from now on will be retrieved.",
+        Timestamp ) );
+
+      return Timestamp;
     }
 
     /// <summary>
@@ -109,21 +111,6 @@ namespace FireRatingCloud
       return Util.Get( query );
     }
 
-    ///// <summary>
-    ///// Boolean predicate to determine whether updates
-    ///// are pending. If so, raise an external event to
-    ///// modify the BIM.
-    ///// </summary>
-    //static bool UpdatesArePending(
-    //  string project_id,
-    //  uint timestamp )
-    //{
-    //  List<FireRating.DoorData> doors = GetDoorRecords(
-    //    project_id, timestamp );
-
-    //  return null != doors && 0 < doors.Count;
-    //}
-
     /// <summary>
     /// Count total number of checks for
     /// database updates made so far.
@@ -149,6 +136,7 @@ namespace FireRatingCloud
     /// </summary>
     static int _timeout = 500;
 
+    #region Windows API DLL Imports
     // DLL imports from user32.dll to set focus to
     // Revit to force it to forward the external event
     // Raise to actually call the external event 
@@ -168,6 +156,7 @@ namespace FireRatingCloud
     [DllImport( "user32.dll" )]
     static extern bool SetForegroundWindow(
       IntPtr hWnd );
+    #endregion // Windows API DLL Imports
 
     /// <summary>
     /// This method runs in a separate thread and
