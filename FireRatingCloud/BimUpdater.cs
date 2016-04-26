@@ -13,17 +13,17 @@ namespace FireRatingCloud
 {
   class BimUpdater : IExternalEventHandler
   {
-    /// <summary>
-    /// Current document project id.
-    /// Todo: update this when switching Revit documents.
-    /// </summary>
-    static string _project_id = null;
+    ///// <summary>
+    ///// Current document project id.
+    ///// Todo: update this when switching Revit documents.
+    ///// </summary>
+    //static string _project_id = null;
 
-    public BimUpdater( UIApplication uiapp )
-    {
-      _project_id = Util.GetProjectIdentifier( 
-        uiapp.ActiveUIDocument.Document );
-    }
+    //public BimUpdater( UIApplication uiapp )
+    //{
+    //  _project_id = Util.GetProjectIdentifier( 
+    //    uiapp.ActiveUIDocument.Document );
+    //}
 
     /// <summary>
     /// Update the BIM by retrieving database records 
@@ -31,7 +31,7 @@ namespace FireRatingCloud
     /// </summary>
     public static bool UpdateBim(
       Document doc,
-      uint timestamp,
+      List<FireRating.DoorData> doors,
       ref string error_message )
     {
       Guid paramGuid;
@@ -43,19 +43,19 @@ namespace FireRatingCloud
         return false;
       }
 
-      // Determine custom project identifier.
+      //// Determine custom project identifier.
 
-      string project_id = Util.GetProjectIdentifier( doc );
+      //string project_id = Util.GetProjectIdentifier( doc );
 
       Stopwatch stopwatch = new Stopwatch();
       stopwatch.Start();
 
-      // Retrieve all doors referencing this project, 
-      // optionally modified after the given timestamp.
+      //// Retrieve all doors referencing this project, 
+      //// optionally modified after the given timestamp.
 
-      List<FireRating.DoorData> doors
-        = DbAccessor.GetDoorRecords(
-          project_id, timestamp );
+      //List<FireRating.DoorData> doors
+      //  = DbAccessor.GetDoorRecords(
+      //    project_id, timestamp );
 
       // Loop through the doors and update   
       // their firerating parameter values.
@@ -135,10 +135,16 @@ namespace FireRatingCloud
         = Util.UnixTimestamp();
 
       Document doc = a.ActiveUIDocument.Document;
+
+      Debug.Assert( Util.GetProjectIdentifier( doc )
+        .Equals( DbAccessor.ProjectId ), 
+        "expected same project" );
+
       string error_message = null;
 
       bool rc = UpdateBim( doc, 
-        DbAccessor.Timestamp, ref error_message );
+        DbAccessor.ModifiedDoors, 
+        ref error_message );
 
       if( rc )
       {

@@ -14,8 +14,9 @@ namespace FireRatingCloud
   class DbAccessor
   {
     /// <summary>
-    /// Retrieve database records 
-    /// modified after this timestamp.
+    /// For subscription to automatic BIM updates,
+    /// retrieve database records modified after 
+    /// this timestamp.
     /// </summary>
     static public uint Timestamp
     {
@@ -33,7 +34,7 @@ namespace FireRatingCloud
 
       Util.InfoMsg( string.Format(
         "Timestamp set to {0}."
-        + "\nChanges from now on will be applied.",
+        + "\nChanges from now on will be retrieved.",
         Timestamp ) );
 
       return Timestamp;
@@ -46,19 +47,49 @@ namespace FireRatingCloud
     static string _project_id = null;
 
     /// <summary>
+    /// Return the current Revit project id.
+    /// </summary>
+    public static string ProjectId
+    {
+      get
+      {
+        return _project_id;
+      }
+    }
+
+    /// <summary>
+    /// Store the modified door records 
+    /// retrieved from the database.
+    /// </summary>
+    static List<FireRating.DoorData> 
+      _modified_door_records = null;
+
+    /// <summary>
+    /// Return the current modified door records 
+    /// retrieved from the cloud database.
+    /// </summary>
+    public static List<FireRating.DoorData> ModifiedDoors
+    {
+      get
+      {
+        return _modified_door_records;
+      }
+    }
+
+    /// <summary>
     /// Separate thread running the loop
     /// polling for pending database changes.
     /// </summary>
     static Thread _thread = null;
 
     /// <summary>
-    /// Retireve all door documents for the specified 
+    /// Retrieve all door documents for the specified 
     /// Revit project identifier, optionally filtering 
     /// for documents modified after the specified timestamp.
     /// </summary>
     public static List<FireRating.DoorData> GetDoorRecords(
       string project_id,
-      uint timestamp )
+      uint timestamp = 0 )
     {
       // Get all doors referencing this project.
 
@@ -78,20 +109,20 @@ namespace FireRatingCloud
       return Util.Get( query );
     }
 
-    /// <summary>
-    /// Boolean predicate to determine whether updates
-    /// are pending. If so, raise an external event to
-    /// modify the BIM.
-    /// </summary>
-    static bool UpdatesArePending(
-      string project_id,
-      uint timestamp )
-    {
-      List<FireRating.DoorData> doors = GetDoorRecords(
-        project_id, timestamp );
+    ///// <summary>
+    ///// Boolean predicate to determine whether updates
+    ///// are pending. If so, raise an external event to
+    ///// modify the BIM.
+    ///// </summary>
+    //static bool UpdatesArePending(
+    //  string project_id,
+    //  uint timestamp )
+    //{
+    //  List<FireRating.DoorData> doors = GetDoorRecords(
+    //    project_id, timestamp );
 
-      return null != doors && 0 < doors.Count;
-    }
+    //  return null != doors && 0 < doors.Count;
+    //}
 
     /// <summary>
     /// Count total number of checks for
@@ -171,8 +202,11 @@ namespace FireRatingCloud
               + "check for changes {1}",
               _nLoopCount, _nCheckCount ) );
 
-            if ( UpdatesArePending(
-              _project_id, Timestamp ) )
+            _modified_door_records = GetDoorRecords( 
+              _project_id, Timestamp );
+
+            if ( null != _modified_door_records 
+              && 0 < _modified_door_records.Count )
             {
               App.Event.Raise();
 
@@ -184,8 +218,9 @@ namespace FireRatingCloud
 
               // Set focus to Revit for a moment.
               // Otherwise, it may take a while before 
-              // Revit forwards the event Raise to the
-              // event handler Execute method.
+              // Revit reacts to the raised event and
+              // actually calls the event handler Execute 
+              // method.
 
               IntPtr hBefore = GetForegroundWindow();
 
@@ -197,7 +232,7 @@ namespace FireRatingCloud
           }
         }
 
-        // Wait a moment and relinquish control before
+        // Wait and relinquish control before
         // next check for pending database updates.
 
         Thread.Sleep( _timeout );
@@ -217,7 +252,7 @@ namespace FireRatingCloud
     {
       // Todo: stop thread first!
 
-      if ( App.ToggleSubscription2( new BimUpdater( uiapp ) ) )
+      if ( App.ToggleSubscription2( new BimUpdater() ) )
       {
         // Start a new thread to regularly check the
         // database status and raise the external event

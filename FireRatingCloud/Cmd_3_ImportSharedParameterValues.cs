@@ -32,10 +32,26 @@ namespace FireRatingCloud
       Application app = uiapp.Application;
       Document doc = uiapp.ActiveUIDocument.Document;
 
-      return BimUpdater.UpdateBim( 
-        doc, _test_timestamp, ref message )
+      // Determine custom project identifier.
+
+      string project_id = Util.GetProjectIdentifier( doc );
+
+      // Retrieve all doors referencing this project, 
+      // optionally modified after the given timestamp.
+
+      List<FireRating.DoorData> doors
+        = DbAccessor.GetDoorRecords(
+          project_id, _test_timestamp );
+
+      Result rc = Result.Succeeded;
+
+      if ( null != doors && 0 < doors.Count )
+      {
+        rc = BimUpdater.UpdateBim( doc, doors, ref message )
           ? Result.Succeeded
           : Result.Failed;
+      }
+      return rc;
     }
   }
 }

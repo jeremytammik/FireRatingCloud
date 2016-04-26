@@ -67,6 +67,7 @@ using System.Runtime.InteropServices;
 // 2016-04-26 2017.0.0.3 split DbUpdater into separate DbAccessor and BimUpdater classes
 // 2016-04-26 2017.0.0.4 moved and renamed UpdateBimFromDb to BimUpdater.UpdateBim
 // 2016-04-26 2017.0.0.5 cleanup: all except DbAccessor and BimUpdater is now clear
+// 2016-04-26 2017.0.0.6 rewrote UpdateBim to take list of modified doors from DbAccessor or import command
 //
-[assembly: AssemblyVersion( "2017.0.0.5" )]
-[assembly: AssemblyFileVersion("2017.0.0.5")]
+[assembly: AssemblyVersion( "2017.0.0.6" )]
+[assembly: AssemblyFileVersion("2017.0.0.6")]
