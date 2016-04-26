@@ -2,7 +2,7 @@
 
 FireRating is a C# .NET library used both by
 the [FireRatingCloud](https://github.com/jeremytammik/FireRatingCloud) Revit API add-in and
-the [FireRatingClient](https://github.com/jeremytammik/FireRatingClient) stand-alone Windows REST API client.
+the [FireRatingClient](https://github.com/jeremytammik/FireRatingCloud/tree/master/FireRatingClient) stand-alone Windows REST API client.
 
 ## Author
 
