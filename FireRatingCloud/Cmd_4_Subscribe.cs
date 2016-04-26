@@ -15,12 +15,12 @@ namespace FireRatingCloud
       ElementSet elements )
     {
       if( !App.Subscribed
-        && 0 == DbUpdater.Timestamp )
+        && 0 == BimUpdater.Timestamp )
       {
-        DbUpdater.SetTimestamp();
+        BimUpdater.SetTimestamp();
       }
 
-      DbUpdater.ToggleSubscription(
+      BimUpdater.ToggleSubscription(
         commandData.Application );
 
       return Result.Succeeded;

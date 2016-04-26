@@ -11,7 +11,7 @@ using System.Diagnostics;
 
 namespace FireRatingCloud
 {
-  class DbUpdater : IExternalEventHandler
+  class BimUpdater : IExternalEventHandler
   {
     /// <summary>
     /// Retrieve database records 
@@ -93,7 +93,7 @@ namespace FireRatingCloud
       return null != doors && 0 < doors.Count;
     }
 
-    public DbUpdater( UIApplication uiapp )
+    public BimUpdater( UIApplication uiapp )
     {
       _project_id = Util.GetProjectIdentifier( 
         uiapp.ActiveUIDocument.Document );
@@ -256,7 +256,7 @@ namespace FireRatingCloud
     {
       // Todo: stop thread first!
 
-      if( App.ToggleSubscription2( new DbUpdater( uiapp ) ) )
+      if( App.ToggleSubscription2( new BimUpdater( uiapp ) ) )
       {
         // Start a new thread to regularly check the
         // database status and raise the external event

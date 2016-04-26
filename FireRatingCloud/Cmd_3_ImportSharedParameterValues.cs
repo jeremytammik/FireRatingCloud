@@ -48,11 +48,15 @@ namespace FireRatingCloud
       Stopwatch stopwatch = new Stopwatch();
       stopwatch.Start();
 
-      // Get all doors referencing this project.
+      // Retrieve all doors referencing this project, 
+      // optionally modified after the given timestamp.
 
       List<FireRating.DoorData> doors 
-        = DbUpdater.GetDoorRecords( 
+        = BimUpdater.GetDoorRecords( 
           project_id, timestamp );
+
+      // Loop through the doors and update   
+      // their firerating parameter values.
 
       if ( null != doors && 0 < doors.Count )
       {
