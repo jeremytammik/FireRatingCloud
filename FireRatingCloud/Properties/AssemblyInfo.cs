@@ -73,6 +73,9 @@ using System.Runtime.InteropServices;
 // 2016-04-26 2017.0.0.7 cleanup
 // 2016-04-26 2017.0.0.8 replace Debug.Print by Util.Log and clean up using namespace statements
 // 2016-04-26 2017.0.0.9 oops, one Util.Log call too many caused infinite recursion
+// 2016-04-26 2017.0.0.10 added readme documents for the two subprojects
+// 2016-04-26 2017.0.0.11 polishing for publication
+// 2016-04-26 2017.0.0.12 reduced tooltip bitmap image size
 //
-[assembly: AssemblyVersion( "2017.0.0.9" )]
-[assembly: AssemblyFileVersion("2017.0.0.9")]
+[assembly: AssemblyVersion( "2017.0.0.12" )]
+[assembly: AssemblyFileVersion("2017.0.0.12")]
