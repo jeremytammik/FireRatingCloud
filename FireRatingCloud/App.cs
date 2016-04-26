@@ -113,40 +113,40 @@ namespace FireRatingCloud
       UIControlledApplication a )
     {
       string[] tooltip = new string[] {
-        "Create and bind shared parameter definition.",
-        "Export shared parameter values one by one creating new and updating existing documents.",
-        "Export shared parameter values in batch after deleting all existing project documents.",
-        "Import shared parameter values.",
-        "Subscribe to or unsubscribe from updates.",
-        "About " + Caption + ": ..."
-      };
+      "Create and bind shared parameter definition.",
+      "Export shared parameter values one by one creating new and updating existing documents.",
+      "Export shared parameter values in batch after deleting all existing project documents.",
+      "Import shared parameter values.",
+      "Subscribe to or unsubscribe from updates.",
+      "About " + Caption + ": ..."
+    };
 
       string[] text = new string[] {
-        "Bind Shared Parameter",
-        "Export one by one",
-        "Export batch",
-        "Import",
-        "Subscribe",
-        "About..."
-      };
+      "Bind Shared Parameter",
+      "Export one by one",
+      "Export batch",
+      "Import",
+      "Subscribe",
+      "About..."
+    };
 
       string[] classNameStem = new string[] {
-        "1_CreateAndBindSharedParameter",
-        "2a_ExportSharedParameterValues",
-        "2b_ExportSharedParameterValuesBatch",
-        "3_ImportSharedParameterValues",
-        "4_Subscribe",
-        "0_About"
-      };
+      "1_CreateAndBindSharedParameter",
+      "2a_ExportSharedParameterValues",
+      "2b_ExportSharedParameterValuesBatch",
+      "3_ImportSharedParameterValues",
+      "4_Subscribe",
+      "0_About"
+    };
 
       string[] iconName = new string[] {
-        "Knot",
-        "1Up",
-        "2Up",
-        "1Down",
-        "ZigZagRed",
-        "Question"
-      };
+      "Knot",
+      "1Up",
+      "2Up",
+      "1Down",
+      "ZigZagRed",
+      "Question"
+    };
 
       int n = classNameStem.Length;
 
@@ -172,7 +172,7 @@ namespace FireRatingCloud
 
       Assembly asm = typeof( App ).Assembly;
 
-      for( int i = 0; i < n; ++i )
+      for ( int i = 0; i < n; ++i )
       {
         PushButtonData d = new PushButtonData(
           classNameStem[i], text[i], _path,
@@ -207,7 +207,7 @@ namespace FireRatingCloud
         bool rc = _buttons[_subscribeButtonIndex]
           .ItemText.Equals( _unsubscribe );
 
-        Debug.Assert( ( _event != null ) == rc, 
+        Debug.Assert( ( _event != null ) == rc,
           "expected synchronised handler and button text" );
 
         return rc;
@@ -219,16 +219,16 @@ namespace FireRatingCloud
     /// cloud updates. Return true when subscribed.
     /// </summary>
     public static bool ToggleSubscription2(
-      IExternalEventHandler handler ) 
+      IExternalEventHandler handler )
     {
-      if( Subscribed )
+      if ( Subscribed )
       {
         Util.Log( "Unsubscribing..." );
 
         _event.Dispose();
         _event = null;
 
-        _buttons[_subscribeButtonIndex].ItemText 
+        _buttons[_subscribeButtonIndex].ItemText
           = _subscribe;
 
         //_timer.Stop();
@@ -243,7 +243,7 @@ namespace FireRatingCloud
 
         _event = ExternalEvent.Create( handler );
 
-        _buttons[_subscribeButtonIndex].ItemText 
+        _buttons[_subscribeButtonIndex].ItemText
           = _unsubscribe;
 
         //_timer = new JtTimer( "Subscription" );
@@ -273,7 +273,7 @@ namespace FireRatingCloud
     public Result OnShutdown(
       UIControlledApplication a )
     {
-      if( Subscribed )
+      if ( Subscribed )
       {
         _event.Dispose();
         _event = null;

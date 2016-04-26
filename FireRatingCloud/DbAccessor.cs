@@ -10,6 +10,12 @@ using Autodesk.Windows;
 
 namespace FireRatingCloud
 {
+  /// <summary>
+  /// Read records from the database, optionally filtering 
+  /// according to the modified timestamp, and manage the 
+  /// separate thread running the database polling loop 
+  /// for the subscription command.
+  /// </summary>
   class DbAccessor
   {
     /// <summary>
@@ -62,7 +68,7 @@ namespace FireRatingCloud
     /// Store the modified door records 
     /// retrieved from the database.
     /// </summary>
-    static List<FireRating.DoorData> 
+    static List<FireRating.DoorData>
       _modified_door_records = null;
 
     /// <summary>
@@ -184,10 +190,10 @@ namespace FireRatingCloud
               + "check for changes {1}",
               _nLoopCount, _nCheckCount ) );
 
-            _modified_door_records = GetDoorRecords( 
+            _modified_door_records = GetDoorRecords(
               _project_id, Timestamp );
 
-            if ( null != _modified_door_records 
+            if ( null != _modified_door_records
               && 0 < _modified_door_records.Count )
             {
               App.Event.Raise();

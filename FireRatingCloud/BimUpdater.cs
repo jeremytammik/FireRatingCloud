@@ -96,8 +96,8 @@ namespace FireRatingCloud
 
       Util.Log( string.Format(
         "{0} milliseconds to import {1} element{2}.",
-        stopwatch.ElapsedMilliseconds, doors.Count, 
-        Util.PluralSuffix( doors.Count) ) );
+        stopwatch.ElapsedMilliseconds, doors.Count,
+        Util.PluralSuffix( doors.Count ) ) );
 
       return true;
     }
@@ -109,22 +109,22 @@ namespace FireRatingCloud
     /// </summary>
     public void Execute( UIApplication a )
     {
-      uint timestamp_before_bim_update 
+      uint timestamp_before_bim_update
         = Util.UnixTimestamp();
 
       Document doc = a.ActiveUIDocument.Document;
 
       Debug.Assert( Util.GetProjectIdentifier( doc )
-        .Equals( DbAccessor.ProjectId ), 
+        .Equals( DbAccessor.ProjectId ),
         "expected same project" );
 
       string error_message = null;
 
-      bool rc = UpdateBim( doc, 
-        DbAccessor.ModifiedDoors, 
+      bool rc = UpdateBim( doc,
+        DbAccessor.ModifiedDoors,
         ref error_message );
 
-      if( rc )
+      if ( rc )
       {
         DbAccessor.Timestamp = timestamp_before_bim_update;
       }
