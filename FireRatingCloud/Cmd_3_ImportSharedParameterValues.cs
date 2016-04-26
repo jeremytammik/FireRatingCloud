@@ -24,48 +24,6 @@ namespace FireRatingCloud
     static uint _test_newer_timestamp = 0;
 
     /// <summary>
-    /// Retireve all door documents for the specified 
-    /// Revit project identifier, optionally filtering 
-    /// for documents modified after the specified timestamp.
-    /// </summary>
-    static List<FireRating.DoorData> GetDoorRecords(
-      string project_id,
-      uint timestamp )
-    {
-      // Get all doors referencing this project.
-
-      string query = "doors/project/" + project_id;
-
-      if ( 0 < timestamp )
-      {
-        // Add timestamp to query.
-
-        Debug.Print(
-          "Retrieving door documents modified after {0}",
-          timestamp );
-
-        query += "/newer/" + timestamp.ToString();
-      }
-
-      return Util.Get( query );
-    }
-
-    /// <summary>
-    /// Boolean predicate to determine whether updates
-    /// are pending. If so, raise an external event to
-    /// modify the BIM.
-    /// </summary>
-    public static bool UpdatesArePending(
-      string project_id,
-      uint timestamp )
-    {
-      List<FireRating.DoorData> doors = GetDoorRecords(
-        project_id, timestamp );
-
-      return null != doors && 0 < doors.Count;
-    }
-
-    /// <summary>
     /// Update the BIM by retrieving database records 
     /// and applying the changes.
     /// </summary>
@@ -92,8 +50,9 @@ namespace FireRatingCloud
 
       // Get all doors referencing this project.
 
-      List<FireRating.DoorData> doors = GetDoorRecords( 
-        project_id, timestamp );
+      List<FireRating.DoorData> doors 
+        = DbUpdater.GetDoorRecords( 
+          project_id, timestamp );
 
       if ( null != doors && 0 < doors.Count )
       {

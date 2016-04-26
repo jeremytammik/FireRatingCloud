@@ -63,6 +63,7 @@ using System.Runtime.InteropServices;
 // 2016-04-25 2017.0.0.0 flat migration to Revit 2017
 // 2016-04-25 2017.0.0.1 implemented real-time bim update: external app, external event, ribbon ui, subscribe command and toggle button
 // 2016-04-26 2017.0.0.2 converted timestamp to unsigned
+// 2016-04-26 2017.0.0.3 moved GetDoorRecords from Cmd_3_ImportSharedParameterValues to DbUpdater
 //
-[assembly: AssemblyVersion( "2017.0.0.2" )]
-[assembly: AssemblyFileVersion("2017.0.0.2")]
+[assembly: AssemblyVersion( "2017.0.0.3" )]
+[assembly: AssemblyFileVersion("2017.0.0.3")]

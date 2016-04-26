@@ -5,6 +5,8 @@ using System.Threading;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using Autodesk.Windows;
+using System.Collections.Generic;
+using System.Diagnostics;
 #endregion
 
 namespace FireRatingCloud
@@ -48,6 +50,48 @@ namespace FireRatingCloud
     /// polling for pending database changes.
     /// </summary>
     static Thread _thread = null;
+
+    /// <summary>
+    /// Retireve all door documents for the specified 
+    /// Revit project identifier, optionally filtering 
+    /// for documents modified after the specified timestamp.
+    /// </summary>
+    public static List<FireRating.DoorData> GetDoorRecords(
+      string project_id,
+      uint timestamp )
+    {
+      // Get all doors referencing this project.
+
+      string query = "doors/project/" + project_id;
+
+      if ( 0 < timestamp )
+      {
+        // Add timestamp to query.
+
+        Debug.Print(
+          "Retrieving door documents modified after {0}",
+          timestamp );
+
+        query += "/newer/" + timestamp.ToString();
+      }
+
+      return Util.Get( query );
+    }
+
+    /// <summary>
+    /// Boolean predicate to determine whether updates
+    /// are pending. If so, raise an external event to
+    /// modify the BIM.
+    /// </summary>
+    static bool UpdatesArePending(
+      string project_id,
+      uint timestamp )
+    {
+      List<FireRating.DoorData> doors = GetDoorRecords(
+        project_id, timestamp );
+
+      return null != doors && 0 < doors.Count;
+    }
 
     public DbUpdater( UIApplication uiapp )
     {
@@ -166,9 +210,8 @@ namespace FireRatingCloud
               + "check for changes {1}",
               _nLoopCount, _nCheckCount ) );
 
-            if ( Cmd_3_ImportSharedParameterValues
-              .UpdatesArePending( _project_id, 
-                Timestamp ) )
+            if ( UpdatesArePending( 
+              _project_id, Timestamp ) )
             {
               App.Event.Raise();
 
