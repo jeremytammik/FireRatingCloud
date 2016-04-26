@@ -75,7 +75,6 @@
     <Compile Include="BimUpdater.cs" />
     <Compile Include="DbAccessor.cs" />
     <Compile Include="DoorData.cs" />
-    <Compile Include="JsonParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Util.cs" />
   </ItemGroup>
