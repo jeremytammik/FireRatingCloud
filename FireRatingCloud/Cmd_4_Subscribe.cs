@@ -10,9 +10,9 @@ namespace FireRatingCloud
   class Cmd_4_Subscribe : IExternalCommand
   {
     public Result Execute(
-    ExternalCommandData commandData,
-    ref string message,
-    ElementSet elements )
+      ExternalCommandData commandData,
+      ref string message,
+      ElementSet elements )
     {
       UIApplication uiapp = commandData.Application;
       Document doc = uiapp.ActiveUIDocument.Document;
