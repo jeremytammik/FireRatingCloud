@@ -72,7 +72,7 @@ namespace FireRatingCloud
       string timestamp = DateTime.Now.ToString(
         "HH:mm:ss.fff" );
 
-      Util.Log( timestamp + " " + msg );
+      Debug.Print( timestamp + " " + msg );
     }
     #endregion // Messages
 
