@@ -14,14 +14,14 @@ namespace FireRatingCloud
       ref string message,
       ElementSet elements )
     {
-      if( !App.Subscribed
-        && 0 == DbAccessor.Timestamp )
+      UIApplication uiapp = commandData.Application;
+
+      if ( !App.Subscribed && 0 == DbAccessor.Timestamp )
       {
         DbAccessor.SetTimestamp();
       }
 
-      DbAccessor.ToggleSubscription(
-        commandData.Application );
+      DbAccessor.ToggleSubscription( uiapp );
 
       return Result.Succeeded;
     }

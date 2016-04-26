@@ -66,6 +66,7 @@ using System.Runtime.InteropServices;
 // 2016-04-26 2017.0.0.3 moved GetDoorRecords from Cmd_3_ImportSharedParameterValues to DbUpdater
 // 2016-04-26 2017.0.0.3 split DbUpdater into separate DbAccessor and BimUpdater classes
 // 2016-04-26 2017.0.0.4 moved and renamed UpdateBimFromDb to BimUpdater.UpdateBim
+// 2016-04-26 2017.0.0.5 cleanup: all except DbAccessor and BimUpdater is now clear
 //
-[assembly: AssemblyVersion( "2017.0.0.4" )]
-[assembly: AssemblyFileVersion("2017.0.0.4")]
+[assembly: AssemblyVersion( "2017.0.0.5" )]
+[assembly: AssemblyFileVersion("2017.0.0.5")]

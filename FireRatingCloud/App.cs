@@ -49,11 +49,15 @@ namespace FireRatingCloud
       .Assembly.Location;
 
     /// <summary>
-    /// Keep track of our ribbon buttons to toggle
-    /// them on and off later and change their text.
+    /// Keep track of our ribbon  
+    /// buttons to toggle their text.
     /// </summary>
     static RibbonItem[] _buttons;
 
+    /// <summary>
+    /// Kepp track of subscription command 
+    /// button whose text is toggled.
+    /// </summary>
     static int _subscribeButtonIndex = 4;
 
     #region Icon resource, bitmap image and ribbon panel stuff
@@ -101,7 +105,7 @@ namespace FireRatingCloud
     }
 
     /// <summary>
-    /// Create a custom ribbon panel and populate
+    /// Create our custom ribbon panel and populate
     /// it with our commands, saving the resulting
     /// ribbon items for later access.
     /// </summary>
