@@ -52,7 +52,7 @@ namespace FireRatingCloud
       // optionally modified after the given timestamp.
 
       List<FireRating.DoorData> doors 
-        = BimUpdater.GetDoorRecords( 
+        = DbAccessor.GetDoorRecords( 
           project_id, timestamp );
 
       // Loop through the doors and update   
