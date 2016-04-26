@@ -6,7 +6,7 @@ the [FireRatingClient](https://github.com/jeremytammik/FireRatingClient) stand-a
 
 ## Author
 
-- Jeremy Tammik,
+Jeremy Tammik,
 [The Building Coder](http://thebuildingcoder.typepad.com) and
 [The 3D Web Coder](http://the3dwebcoder.typepad.com),
 [ADN](http://www.autodesk.com/adn)
