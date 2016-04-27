@@ -15,8 +15,8 @@ namespace FireRatingClient
     public Form1()
     {
       InitializeComponent();
-      List<DoorData> puertas = Util.Get( _collection_name );
-      FOLV_doors.SetObjects( puertas );
+      List<DoorData> doors = Util.Get( _collection_name );
+      FOLV_doors.SetObjects( doors );
     }
 
     private void ExportData( DoorData dd )
@@ -37,11 +37,11 @@ namespace FireRatingClient
       object sender, 
       EventArgs e )
     {
-      List<DoorData> puertas = Util.Get( _collection_name );
-      FOLV_doors.SetObjects( puertas );
+      List<DoorData> doors = Util.Get( _collection_name );
+      FOLV_doors.SetObjects( doors );
     }
 
-    private void FOLV_Puertas_CellEditFinished( 
+    private void OnDoorsCellEditFinished( 
       object sender, 
       BrightIdeasSoftware.CellEditEventArgs e )
     {

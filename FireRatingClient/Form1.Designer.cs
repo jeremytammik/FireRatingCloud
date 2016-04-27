@@ -74,7 +74,7 @@
       this.FOLV_doors.UseFiltering = true;
       this.FOLV_doors.View = System.Windows.Forms.View.Details;
       this.FOLV_doors.VirtualMode = true;
-      this.FOLV_doors.CellEditFinished += new BrightIdeasSoftware.CellEditEventHandler(this.FOLV_Puertas_CellEditFinished);
+      this.FOLV_doors.CellEditFinished += new BrightIdeasSoftware.CellEditEventHandler(this.OnDoorsCellEditFinished);
       // 
       // olvColumn2
       // 
