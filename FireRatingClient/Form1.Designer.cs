@@ -102,6 +102,7 @@
       // olvColumn4
       // 
       this.olvColumn4.AspectName = "tag";
+      this.olvColumn4.IsEditable = false;
       this.olvColumn4.Text = "Tag";
       this.olvColumn4.Width = 80;
       // 
@@ -125,6 +126,7 @@
       // olvColumn6
       // 
       this.olvColumn6.AspectName = "modified";
+      this.olvColumn6.IsEditable = false;
       this.olvColumn6.Text = "Modified";
       this.olvColumn6.Width = 114;
       // 
