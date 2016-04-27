@@ -19,8 +19,20 @@ namespace FireRatingClient
       FOLV_doors.SetObjects( doors );
     }
 
-    private void ExportData( DoorData dd )
+    void Refresh_Click(
+      object sender,
+      EventArgs e )
     {
+      List<DoorData> doors = Util.Get( _collection_name );
+      FOLV_doors.SetObjects( doors );
+    }
+
+    void ExportData( DoorData dd )
+    {
+      uint timestamp = Util.UnixTimestamp();
+
+      dd.modified = timestamp;
+
       HttpStatusCode sc;
       string jsonResponse, errorMessage;
 
@@ -33,16 +45,8 @@ namespace FireRatingClient
       //Util.Log( jsonResponse );
     }
 
-    private void Refresh_Click(
-      object sender, 
-      EventArgs e )
-    {
-      List<DoorData> doors = Util.Get( _collection_name );
-      FOLV_doors.SetObjects( doors );
-    }
-
-    private void OnDoorsCellEditFinished( 
-      object sender, 
+    void OnDoorsCellEditFinished(
+      object sender,
       BrightIdeasSoftware.CellEditEventArgs e )
     {
       ExportData( e.RowObject as DoorData );
