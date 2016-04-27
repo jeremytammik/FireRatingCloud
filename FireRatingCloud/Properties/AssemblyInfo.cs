@@ -76,6 +76,7 @@ using System.Runtime.InteropServices;
 // 2016-04-26 2017.0.0.10 added readme documents for the two subprojects
 // 2016-04-26 2017.0.0.11 polishing for publication
 // 2016-04-26 2017.0.0.12 reduced tooltip bitmap image size
+// 2016-04-27 2017.0.0.13 FireRatingClient cleanup
 //
-[assembly: AssemblyVersion( "2017.0.0.12" )]
-[assembly: AssemblyFileVersion("2017.0.0.12")]
+[assembly: AssemblyVersion( "2017.0.0.13" )]
+[assembly: AssemblyFileVersion("2017.0.0.13")]
