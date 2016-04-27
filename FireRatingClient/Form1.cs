@@ -33,13 +33,12 @@ namespace FireRatingClient
 
       dd.modified = timestamp;
 
-      HttpStatusCode sc;
       string jsonResponse, errorMessage;
 
       //Util.Log( dd._id.ToString() );
 
-      sc = Util.Put( out jsonResponse,
-        out errorMessage,
+      HttpStatusCode sc = Util.Put( 
+        out jsonResponse, out errorMessage,
         "doors/" + dd._id, dd );
 
       //Util.Log( jsonResponse );
