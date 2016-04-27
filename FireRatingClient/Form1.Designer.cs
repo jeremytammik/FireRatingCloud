@@ -28,49 +28,49 @@
         /// </summary>
         private void InitializeComponent()
         {
-      this.FOLV_Puertas = new BrightIdeasSoftware.FastObjectListView();
+      this.FOLV_doors = new BrightIdeasSoftware.FastObjectListView();
       this.olvColumn2 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvColumn1 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvColumn3 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvColumn4 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvColumn5 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.Refresh = new System.Windows.Forms.Button();
-      ((System.ComponentModel.ISupportInitialize)(this.FOLV_Puertas)).BeginInit();
+      ((System.ComponentModel.ISupportInitialize)(this.FOLV_doors)).BeginInit();
       this.SuspendLayout();
       // 
-      // FOLV_Puertas
+      // FOLV_doors
       // 
-      this.FOLV_Puertas.Activation = System.Windows.Forms.ItemActivation.TwoClick;
-      this.FOLV_Puertas.AllColumns.Add(this.olvColumn2);
-      this.FOLV_Puertas.AllColumns.Add(this.olvColumn1);
-      this.FOLV_Puertas.AllColumns.Add(this.olvColumn3);
-      this.FOLV_Puertas.AllColumns.Add(this.olvColumn4);
-      this.FOLV_Puertas.AllColumns.Add(this.olvColumn5);
-      this.FOLV_Puertas.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+      this.FOLV_doors.Activation = System.Windows.Forms.ItemActivation.TwoClick;
+      this.FOLV_doors.AllColumns.Add(this.olvColumn2);
+      this.FOLV_doors.AllColumns.Add(this.olvColumn1);
+      this.FOLV_doors.AllColumns.Add(this.olvColumn3);
+      this.FOLV_doors.AllColumns.Add(this.olvColumn4);
+      this.FOLV_doors.AllColumns.Add(this.olvColumn5);
+      this.FOLV_doors.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-      this.FOLV_Puertas.CellEditActivation = BrightIdeasSoftware.ObjectListView.CellEditActivateMode.DoubleClick;
-      this.FOLV_Puertas.CellEditUseWholeCell = false;
-      this.FOLV_Puertas.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
+      this.FOLV_doors.CellEditActivation = BrightIdeasSoftware.ObjectListView.CellEditActivateMode.DoubleClick;
+      this.FOLV_doors.CellEditUseWholeCell = false;
+      this.FOLV_doors.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvColumn2,
             this.olvColumn1,
             this.olvColumn3,
             this.olvColumn4,
             this.olvColumn5});
-      this.FOLV_Puertas.Cursor = System.Windows.Forms.Cursors.Default;
-      this.FOLV_Puertas.SelectedBackColor = System.Drawing.Color.Empty;
-      this.FOLV_Puertas.SelectedForeColor = System.Drawing.Color.Empty;
-      this.FOLV_Puertas.Location = new System.Drawing.Point(12, 9);
-      this.FOLV_Puertas.Name = "FOLV_Puertas";
-      this.FOLV_Puertas.ShowGroups = false;
-      this.FOLV_Puertas.Size = new System.Drawing.Size(852, 389);
-      this.FOLV_Puertas.TabIndex = 0;
-      this.FOLV_Puertas.UseCompatibleStateImageBehavior = false;
-      this.FOLV_Puertas.UseFilterIndicator = true;
-      this.FOLV_Puertas.UseFiltering = true;
-      this.FOLV_Puertas.View = System.Windows.Forms.View.Details;
-      this.FOLV_Puertas.VirtualMode = true;
-      this.FOLV_Puertas.CellEditFinished += new BrightIdeasSoftware.CellEditEventHandler(this.FOLV_Puertas_CellEditFinished);
+      this.FOLV_doors.Cursor = System.Windows.Forms.Cursors.Default;
+      this.FOLV_doors.SelectedBackColor = System.Drawing.Color.Empty;
+      this.FOLV_doors.SelectedForeColor = System.Drawing.Color.Empty;
+      this.FOLV_doors.Location = new System.Drawing.Point(12, 9);
+      this.FOLV_doors.Name = "FOLV_doors";
+      this.FOLV_doors.ShowGroups = false;
+      this.FOLV_doors.Size = new System.Drawing.Size(852, 389);
+      this.FOLV_doors.TabIndex = 0;
+      this.FOLV_doors.UseCompatibleStateImageBehavior = false;
+      this.FOLV_doors.UseFilterIndicator = true;
+      this.FOLV_doors.UseFiltering = true;
+      this.FOLV_doors.View = System.Windows.Forms.View.Details;
+      this.FOLV_doors.VirtualMode = true;
+      this.FOLV_doors.CellEditFinished += new BrightIdeasSoftware.CellEditEventHandler(this.FOLV_Puertas_CellEditFinished);
       // 
       // olvColumn2
       // 
@@ -123,17 +123,17 @@
       this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
       this.ClientSize = new System.Drawing.Size(876, 434);
       this.Controls.Add(this.Refresh);
-      this.Controls.Add(this.FOLV_Puertas);
+      this.Controls.Add(this.FOLV_doors);
       this.Name = "Form1";
       this.Text = "Form1";
-      ((System.ComponentModel.ISupportInitialize)(this.FOLV_Puertas)).EndInit();
+      ((System.ComponentModel.ISupportInitialize)(this.FOLV_doors)).EndInit();
       this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private BrightIdeasSoftware.FastObjectListView FOLV_Puertas;
+        private BrightIdeasSoftware.FastObjectListView FOLV_doors;
         private BrightIdeasSoftware.OLVColumn olvColumn1;
         private BrightIdeasSoftware.OLVColumn olvColumn2;
         private BrightIdeasSoftware.OLVColumn olvColumn3;

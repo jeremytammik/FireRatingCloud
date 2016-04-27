@@ -1,17 +1,9 @@
 ﻿#region Namespaces
-using FireRating;
 using System;
 using System.Collections.Generic;
-//using System.ComponentModel;
-//using System.Data;
-//using System.Diagnostics;
-//using System.Drawing;
-//using System.Linq;
 using System.Net;
-//using System.Text;
-//using System.Threading.Tasks;
 using System.Windows.Forms;
-using DoorData = FireRating.DoorData;
+using FireRating;
 #endregion // Namespaces
 
 namespace FireRatingClient
@@ -24,7 +16,7 @@ namespace FireRatingClient
     {
       InitializeComponent();
       List<DoorData> puertas = Util.Get( _collection_name );
-      FOLV_Puertas.SetObjects( puertas );
+      FOLV_doors.SetObjects( puertas );
     }
 
     private void ExportData( DoorData dd )
@@ -46,7 +38,7 @@ namespace FireRatingClient
       EventArgs e )
     {
       List<DoorData> puertas = Util.Get( _collection_name );
-      FOLV_Puertas.SetObjects( puertas );
+      FOLV_doors.SetObjects( puertas );
     }
 
     private void FOLV_Puertas_CellEditFinished( 
