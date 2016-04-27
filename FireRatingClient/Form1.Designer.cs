@@ -28,14 +28,15 @@
         /// </summary>
         private void InitializeComponent()
         {
+      System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
       this.FOLV_doors = new BrightIdeasSoftware.FastObjectListView();
       this.olvColumn2 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvColumn1 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvColumn3 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvColumn4 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
       this.olvColumn5 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
-      this.Refresh = new System.Windows.Forms.Button();
       this.olvColumn6 = ((BrightIdeasSoftware.OLVColumn)(new BrightIdeasSoftware.OLVColumn()));
+      this.Refresh = new System.Windows.Forms.Button();
       ((System.ComponentModel.ISupportInitialize)(this.FOLV_doors)).BeginInit();
       this.SuspendLayout();
       // 
@@ -62,8 +63,8 @@
             this.olvColumn5,
             this.olvColumn6});
       this.FOLV_doors.Cursor = System.Windows.Forms.Cursors.Default;
-      this.FOLV_doors.SelectedBackColor = System.Drawing.Color.Empty;
-      this.FOLV_doors.SelectedForeColor = System.Drawing.Color.Empty;
+      this.FOLV_doors.HighlightBackgroundColor = System.Drawing.Color.Empty;
+      this.FOLV_doors.HighlightForegroundColor = System.Drawing.Color.Empty;
       this.FOLV_doors.Location = new System.Drawing.Point(1, 1);
       this.FOLV_doors.Name = "FOLV_doors";
       this.FOLV_doors.ShowGroups = false;
@@ -112,6 +113,13 @@
       this.olvColumn5.Text = "API FireRating";
       this.olvColumn5.Width = 109;
       // 
+      // olvColumn6
+      // 
+      this.olvColumn6.AspectName = "modified";
+      this.olvColumn6.IsEditable = false;
+      this.olvColumn6.Text = "Modified";
+      this.olvColumn6.Width = 114;
+      // 
       // Refresh
       // 
       this.Refresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
@@ -123,13 +131,6 @@
       this.Refresh.UseVisualStyleBackColor = true;
       this.Refresh.Click += new System.EventHandler(this.Refresh_Click);
       // 
-      // olvColumn6
-      // 
-      this.olvColumn6.AspectName = "modified";
-      this.olvColumn6.IsEditable = false;
-      this.olvColumn6.Text = "Modified";
-      this.olvColumn6.Width = 114;
-      // 
       // Form1
       // 
       this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -137,6 +138,7 @@
       this.ClientSize = new System.Drawing.Size(584, 339);
       this.Controls.Add(this.Refresh);
       this.Controls.Add(this.FOLV_doors);
+      this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
       this.Name = "Form1";
       this.Text = "FireRatingClient";
       ((System.ComponentModel.ISupportInitialize)(this.FOLV_doors)).EndInit();
