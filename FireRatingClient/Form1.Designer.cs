@@ -62,8 +62,8 @@
             this.olvColumn5,
             this.olvColumn6});
       this.FOLV_doors.Cursor = System.Windows.Forms.Cursors.Default;
-      this.FOLV_doors.HighlightBackgroundColor = System.Drawing.Color.Empty;
-      this.FOLV_doors.HighlightForegroundColor = System.Drawing.Color.Empty;
+      this.FOLV_doors.SelectedBackColor = System.Drawing.Color.Empty;
+      this.FOLV_doors.SelectedForeColor = System.Drawing.Color.Empty;
       this.FOLV_doors.Location = new System.Drawing.Point(1, 1);
       this.FOLV_doors.Name = "FOLV_doors";
       this.FOLV_doors.ShowGroups = false;
