@@ -96,6 +96,8 @@ the detailed articles describing the entire project implementation and evolution
 - [FireRatingCloud REST API batch upload and Windows client](http://the3dwebcoder.typepad.com/blog/2016/03/fireratingcloud-rest-api-batch-upload-and-windows-client.html)
 - [Database document modification timestamp](http://the3dwebcoder.typepad.com/blog/2016/04/fireratingcloud-document-modification-timestamp.html)
 - [Retrieving updated db docs](http://the3dwebcoder.typepad.com/blog/2016/04/fireratingcloud-query-retrieving-updated-docs.html)
+- [Real-time BIM update with FireRatingCloud 2017](http://thebuildingcoder.typepad.com/blog/2016/04/real-time-bim-update-with-fireratingcloud-2017.html)
+- [Real-time BIM update via a Windows Forms client](http://thebuildingcoder.typepad.com/blog/2016/04/real-time-bim-update-via-fireratingcloud-windows-client.html)
 
 
 ## Installation
