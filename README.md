@@ -18,7 +18,7 @@ fireratingdb client that you can use to remotely edit the BIM without entering o
 
 ## Context and Architecture
 
-Here is an image showing the links and relationships between BIM, cloud, Revit, node.js and MongoDB and explaining how and where these three components fit into the picture:
+Here is an image showing the links and relationships between BIM, cloud, Revit, node.js and MongoDB and explaining how and where the three FireRatingCloud components fit into the picture:
 
 ![fireratingcloud_architecture](img/fireratingcloud_architecture.png)
 
