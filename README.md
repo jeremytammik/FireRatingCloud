@@ -155,12 +155,15 @@ to [fireratingdb.herokuapp.com](http://fireratingdb.herokuapp.com).
 
 ## Commands
 
-FireRatingCloud implements four commands:
+FireRatingCloud implements five commands:
+
+![firerating_2017_ribbon_tab](img/firerating_2017_ribbon_tab.png)
 
 - Create and bind shared parameter &ndash; `Cmd_1_CreateAndBindSharedParameter`
 - Export shared parameter values one by one &ndash; `Cmd_2a_ExportSharedParameterValues`
 - Export shared parameter values in batch &ndash; `Cmd_2b_ExportSharedParameterValuesBatch`
 - Import shared parameter values &ndash; `Cmd_3_ImportSharedParameterValues`
+- Subscribe to real-time BIM update &ndash; `Cmd_4_Subscribe`
 
 ### Create and Bind Shared Parameter
 
@@ -189,6 +192,17 @@ As soon as more than two doors are present in the project, the batch export will
 ### Import Shared Parameter Values
 
 All door fire rating values for the entire project are read from the database in one single REST call and used to update the existing element data.
+
+### Subscribe to real-time BIM update
+
+This command implements a Revit ribbon toggle button that switches back and forth between `Subscribe` and `Unsubscribe`.
+
+When subscribing, a continuous database polling loop is started that checks the database for updated door data documents pertaining to the current Revit project every 500 milliseconds or so.
+
+When updated documents are detected, an external event is raised. The event handler provides a valid Revit API context in which the updates can be applied to the BIM.
+
+The detailed implemenation is discussed in the post on [real-time BIM update with FireRatingCloud 2017](http://thebuildingcoder.typepad.com/blog/2016/04/real-time-bim-update-with-fireratingcloud-2017.html).
+
 
 
 
