@@ -194,8 +194,7 @@ All door fire rating values for the entire project are read from the database in
 
 ## Todo
 
-- Implement an external event for real-time BIM update subscription like the [room editor](https://github.com/jeremytammik/RoomEditorApp).
-- Subscribe to a push notification event from fireratingdb to trigger the external event whenever changes are made, instead of continuous polling like the room editor. This subscription is obviously project specific; only documents realted to the current project are of interest.
+- Subscribe to a push notification event from fireratingdb to trigger the external event whenever changes are made, instead of continuous polling like the room editor. Does this exist at all? Is it possible? This subscription is obviously project specific; only documents realted to the current project are of interest.
 - On document change, update the fireratingdb push notification subscriptionn to the new current document.
 - The stand-alone FireRatingClient displays data from all projects and therefore needs a different global subscription, not tied to a specific project.
 
@@ -203,6 +202,8 @@ All door fire rating values for the entire project are read from the database in
 ### Done
 
 - Implement batch upload. Previously, data upload was only processed element by element, whereas download is implemented using one single much more effective batch call.
+- Implement an external event for real-time BIM update subscription like the [room editor](https://github.com/jeremytammik/RoomEditorApp).
+
 
 
 ## Authors
