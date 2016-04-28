@@ -15,9 +15,9 @@ This repo also includes two other projects:
 fireratingdb client that you can use to remotely edit the BIM without entering or even installing Revit.
 - [FireRating](https://github.com/jeremytammik/FireRatingCloud/tree/master/FireRating), a shared library used by both FireRatingClient and FireRatingCloud.
 
-Todo:
+Here is an image showing the links and relationships between BIM, cloud, Revit, node.js and MongoDB and explaining how and where these three components fit into the picture:
 
-- Add image here showing the links and relationships between BIM, cloud, Revit, node.js and MongoDB and explaining how and where these three components fit into the picture.
+![fireratingcloud_architecture](img/fireratingcloud_architecture.svg)
 
 For more information, please refer to
 [The 3D Web Coder](http://the3dwebcoder.typepad.com),
