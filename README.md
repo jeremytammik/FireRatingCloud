@@ -15,6 +15,9 @@ This repo also includes two other projects:
 fireratingdb client that you can use to remotely edit the BIM without entering or even installing Revit.
 - [FireRating](https://github.com/jeremytammik/FireRatingCloud/tree/master/FireRating), a shared library used by both FireRatingClient and FireRatingCloud.
 
+
+## Context and Architecture
+
 Here is an image showing the links and relationships between BIM, cloud, Revit, node.js and MongoDB and explaining how and where these three components fit into the picture:
 
 ![fireratingcloud_architecture](img/fireratingcloud_architecture.png)
@@ -24,6 +27,9 @@ I created this drawing using [draw.io](https://www.draw.io), and the source [XML
 All REST API calls on the desktop are handled by the shared .NET class library FireRating.dll and passed to the `firerating` database in MongoDB via the node.js web server. It contains one single collection `doors` containing door data JSON documents. Other clients can connect to that server as well, from any kind of device.
 
 Only a few technical users will interact with fullfledged Revit and the BIM. A much larger number of all kinds of users can be provided access to relevant subsets of the BIM data using this technology. This and others samples demonstrate how that access can include real-time editing and BIM updating, if you so please. The FireRatingCloud sample is intentionally kept simple and limited to managing and providing access to one single shared parameter value. The [RoomEditorApp](https://github.com/jeremytammik/RoomEditorApp) shows how you can extract and interact with graphical data as well, including graphical interaction on any mobile device with a simplified 2D view rendered using SVG in the browser.
+
+
+## More Information and Full Description of all Development Steps
 
 For more information, please refer to
 [The 3D Web Coder](http://the3dwebcoder.typepad.com),
