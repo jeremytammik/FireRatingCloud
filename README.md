@@ -98,6 +98,7 @@ the detailed articles describing the entire project implementation and evolution
 - [Retrieving updated db docs](http://the3dwebcoder.typepad.com/blog/2016/04/fireratingcloud-query-retrieving-updated-docs.html)
 - [Real-time BIM update with FireRatingCloud 2017](http://thebuildingcoder.typepad.com/blog/2016/04/real-time-bim-update-with-fireratingcloud-2017.html)
 - [Real-time BIM update via a Windows Forms client](http://thebuildingcoder.typepad.com/blog/2016/04/real-time-bim-update-via-fireratingcloud-windows-client.html)
+- [FireRatingCloud Context and Architecture](http://thebuildingcoder.typepad.com/blog/2016/04/fireratingcloud-context-and-architecture.html)
 
 
 ## Installation
