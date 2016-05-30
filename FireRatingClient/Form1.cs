@@ -44,7 +44,7 @@ namespace FireRatingClient
       //Util.Log( jsonResponse );
     }
 
-    void OnDoorsCellEditFinished(
+    void OnDoorsCellEditFinishing(
       object sender,
       BrightIdeasSoftware.CellEditEventArgs e )
     {
