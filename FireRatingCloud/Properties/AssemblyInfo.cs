@@ -78,6 +78,7 @@ using System.Runtime.InteropServices;
 // 2016-04-26 2017.0.0.12 reduced tooltip bitmap image size
 // 2016-04-27 2017.0.0.13 FireRatingClient cleanup, added modified field
 // 2016-04-27 2017.0.0.14 FireRatingClient auto-updates modified field
+// 2016-05-30 2017.0.0.15 installed ObjectListView NuGet package
 //
-[assembly: AssemblyVersion( "2017.0.0.14" )]
-[assembly: AssemblyFileVersion("2017.0.0.14")]
+[assembly: AssemblyVersion( "2017.0.0.15" )]
+[assembly: AssemblyFileVersion("2017.0.0.15")]
