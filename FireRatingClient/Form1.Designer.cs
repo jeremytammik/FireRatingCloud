@@ -76,6 +76,7 @@
       this.FOLV_doors.View = System.Windows.Forms.View.Details;
       this.FOLV_doors.VirtualMode = true;
       //this.FOLV_doors.CellEditFinished += new BrightIdeasSoftware.CellEditEventHandler(this.OnDoorsCellEditFinished); // NuGet package 2.7.1.31255 does not support this
+      this.FOLV_doors.CellEditValidating += OnDoorsCellEditValidating;
       this.FOLV_doors.CellEditFinishing += OnDoorsCellEditFinishing;
       // 
       // olvColumn2

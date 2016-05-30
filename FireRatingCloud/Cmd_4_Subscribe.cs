@@ -21,7 +21,7 @@ namespace FireRatingCloud
 
       string project_id = Util.GetProjectIdentifier( doc );
 
-      if ( !App.Subscribed && 0 == DbAccessor.Timestamp )
+      if ( !App.Subscribed /*&& 0 == DbAccessor.Timestamp*/ )
       {
         DbAccessor.Init( project_id );
       }

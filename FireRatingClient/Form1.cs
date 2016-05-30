@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Windows.Forms;
 using FireRating;
+using System.Diagnostics;
 #endregion // Namespaces
 
 namespace FireRatingClient
@@ -16,6 +17,16 @@ namespace FireRatingClient
     {
       InitializeComponent();
       List<DoorData> doors = Util.Get( _collection_name );
+
+#if DEBUG
+      if( null == doors )
+      {
+        doors = new List<DoorData>( 1 );
+        doors.Add( new DoorData() );
+        doors[0].firerating = 123;
+      }
+#endif
+
       FOLV_doors.SetObjects( doors );
     }
 
@@ -35,20 +46,36 @@ namespace FireRatingClient
 
       string jsonResponse, errorMessage;
 
-      //Util.Log( dd._id.ToString() );
+      Debug.Print(
+        "{0}: set door {1} firerating to {2}",
+        timestamp, dd._id, dd.firerating );
 
-      HttpStatusCode sc = Util.Put( 
+      HttpStatusCode sc = Util.Put(
         out jsonResponse, out errorMessage,
         "doors/" + dd._id, dd );
 
       //Util.Log( jsonResponse );
     }
 
+    void OnDoorsCellEditValidating(
+      object sender,
+      BrightIdeasSoftware.CellEditEventArgs e )
+    {
+      if ( !e.Cancel )
+      {
+        ( (DoorData) e.RowObject ).firerating 
+          = double.Parse( e.Control.Text );
+      }
+    }
+
     void OnDoorsCellEditFinishing(
       object sender,
       BrightIdeasSoftware.CellEditEventArgs e )
     {
-      ExportData( e.RowObject as DoorData );
+      if ( !e.Cancel )
+      {
+        ExportData( e.RowObject as DoorData );
+      }
     }
   }
 }

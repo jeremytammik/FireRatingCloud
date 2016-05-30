@@ -80,6 +80,7 @@ using System.Runtime.InteropServices;
 // 2016-04-27 2017.0.0.14 FireRatingClient auto-updates modified field
 // 2016-05-30 2017.0.0.17 installed ObjectListView NuGet package
 // 2016-05-30 2017.0.0.17 replaced OnDoorsCellEditFinished by OnDoorsCellEditFinishing
+// 2016-05-30 2017.0.0.18 implemented OnDoorsCellEditValidating to update row DoorData object
 //
-[assembly: AssemblyVersion( "2017.0.0.17" )]
-[assembly: AssemblyFileVersion("2017.0.0.17")]
+[assembly: AssemblyVersion( "2017.0.0.18" )]
+[assembly: AssemblyFileVersion("2017.0.0.18")]
