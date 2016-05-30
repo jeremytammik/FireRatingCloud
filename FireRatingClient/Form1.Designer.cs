@@ -54,7 +54,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
       this.FOLV_doors.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
       this.FOLV_doors.CellEditActivation = BrightIdeasSoftware.ObjectListView.CellEditActivateMode.DoubleClick;
-      //this.FOLV_doors.CellEditUseWholeCell = false;
+      //this.FOLV_doors.CellEditUseWholeCell = false; // NuGet package does not support this
       this.FOLV_doors.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.olvColumn2,
             this.olvColumn1,
@@ -75,7 +75,7 @@
       this.FOLV_doors.UseFiltering = true;
       this.FOLV_doors.View = System.Windows.Forms.View.Details;
       this.FOLV_doors.VirtualMode = true;
-      //this.FOLV_doors.CellEditFinished += new BrightIdeasSoftware.CellEditEventHandler(this.OnDoorsCellEditFinished);
+      //this.FOLV_doors.CellEditFinished += new BrightIdeasSoftware.CellEditEventHandler(this.OnDoorsCellEditFinished); // NuGet package does not support this
       // 
       // olvColumn2
       // 
