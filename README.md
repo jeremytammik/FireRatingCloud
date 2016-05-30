@@ -153,6 +153,13 @@ Good luck and have fun!
 Just to check whether the node.js mongodb web server is up and running and see its version number, navigate
 to [fireratingdb.herokuapp.com](http://fireratingdb.herokuapp.com).
 
+The online database is hosted on [mLab](https://mlab.com). Look at 
+the [doors](https://mlab.com/databases/firerating/collections/doors) collection in 
+the [firerating](https://mlab.com/databases/firerating) database.
+
+You can filter for your specific test data by setting the Revit Mark under Identity data in the BIM properties, and search for it in the database under the `tag` property, 
+e.g. [`{"tag": "jeremy"}`](https://mlab.com/databases/firerating/collections/doors?q=%7B%22tag%22%3A%22jeremy%22%7D).
+
 
 ## Commands
 
