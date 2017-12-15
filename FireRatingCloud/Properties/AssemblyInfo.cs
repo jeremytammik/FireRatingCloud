@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration( "" )]
 [assembly: AssemblyCompany( "Autodesk Inc." )]
 [assembly: AssemblyProduct( "FireRatingCloud Revit Add-In" )]
-[assembly: AssemblyCopyright( "Copyright 2015-2016 © Jeremy Tammik Autodesk Inc." )]
+[assembly: AssemblyCopyright( "Copyright 2015-2017 © Jeremy Tammik Autodesk Inc." )]
 [assembly: AssemblyTrademark( "" )]
 [assembly: AssemblyCulture( "" )]
 
@@ -81,6 +81,7 @@ using System.Runtime.InteropServices;
 // 2016-05-30 2017.0.0.17 installed ObjectListView NuGet package
 // 2016-05-30 2017.0.0.17 replaced OnDoorsCellEditFinished by OnDoorsCellEditFinishing
 // 2016-05-30 2017.0.0.18 implemented OnDoorsCellEditValidating to update row DoorData object
+// 2017-12-15 2018.0.0.0 flat migration to Revit 2018
 //
-[assembly: AssemblyVersion( "2017.0.0.18" )]
-[assembly: AssemblyFileVersion("2017.0.0.18")]
+[assembly: AssemblyVersion( "2018.0.0.0" )]
+[assembly: AssemblyFileVersion("2018.0.0.0")]

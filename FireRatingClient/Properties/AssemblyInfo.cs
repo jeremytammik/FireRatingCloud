@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("FireRatingClient")]
-[assembly: AssemblyCopyright("Copyright (C) 2016 Jose Ignacio Montes, Avatar BIM, and Jeremy Tammik, Autodesk Inc.")]
+[assembly: AssemblyCopyright("Copyright (C) 2016-2017 Jose Ignacio Montes, Avatar BIM, and Jeremy Tammik, Autodesk Inc.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -32,5 +32,5 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Build and Revision Numbers 
 // by using the '*' as shown below:
 // [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("2017.0.0.18")]
-[assembly: AssemblyFileVersion("2017.0.0.18")]
+[assembly: AssemblyVersion("2018.0.0.0")]
+[assembly: AssemblyFileVersion("2018.0.0.0")]
